@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx
+    					http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/aop
+    					http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd">
+     <!-- 启动Spring AOP的动态代理-->
+    <aop:aspectj-autoproxy/>
+    
+    <!-- 加载数据库属性配置文件 -->
+	<context:property-placeholder location="classpath:config.properties"/>  
+	
+	<!-- MySQL 
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>-->
+	<!-- C3P0 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${dataSource.driverClassName}"></property>
+		<property name="jdbcUrl" value="${dataSource.url}"></property>
+		<property name="user" value="${dataSource.username}"></property>
+		<property name="password" value="${dataSource.password}"></property>
+        <property name="maxPoolSize" value="40"></property>
+        <property name="minPoolSize" value="1"></property>
+        <property name="initialPoolSize" value="1"></property>
+        <property name="testConnectionOnCheckin" value="true"></property>
+        <property name="automaticTestTable" value="C3P0TestTable"></property>
+        <property name="idleConnectionTestPeriod" value="18000"></property>
+        <property name="maxIdleTime" value="25000"></property>
+        <property name="testConnectionOnCheckout" value="true"></property>
+	</bean>
+		
+	<!-- Spring的IOC 管理Hibernate -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="packagesToScan">
+			<list>
+				<value>**.model</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
+                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">none</prop> 
+                <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+            </props>
+		</property>
+	</bean>
+	<!-- AOP -->
+	<tx:annotation-driven order="50" />
+	
+	<bean id="dao" class="com.hk.base.dao.HibernateBaseDao" primary="true">
+		<property name="SF">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<!--2、配置事务管理模板-->
+	<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	<!-- service包下的任何已Service结尾的任何方法 -->
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* *..service.*Service.*(..))" order="100" />
+	</aop:config>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="*" rollback-for="Throwable" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<!--context:component-scan扫描: @Component @Repository @Service @Controller-->
+    <context:component-scan base-package="com.hk"/>
+</beans>
