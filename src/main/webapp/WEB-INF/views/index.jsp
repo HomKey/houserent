@@ -13,6 +13,7 @@
 <div>
 <p>保存楼房</p>
 <button type="button" id="saveBuilding">保存</button>
+<a href="${basePath}/logout.do">退出</a>
 </div>
 
 </body>
@@ -33,9 +34,11 @@ $(function(){
 	    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
 	    return fmt;
 	}
+	/*
 	$.post("${basePath}/user/test",{name:"中文",age:"11",birthday:new Date().Format("yyyy-MM-dd hh:mm:ss")},function(result){
 		console.log(result);
 	});
+	*/
 	var data = {};
 	data.parentId = "acf25d12-4f82-4864-8f43-ae8d579d18da";
 	data.BuildingModel = {

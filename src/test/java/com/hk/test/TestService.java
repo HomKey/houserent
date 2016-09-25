@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import com.hk.project.dto.RoomDto;
 import com.hk.project.model.BuildingModel;
 import com.hk.project.model.RentDetailModel;
 import com.hk.project.model.RoomModel;
-import com.hk.project.model.User;
 import com.hk.project.service.RentDetailService;
 import com.hk.test.support.BaseTest;
 public class TestService extends BaseTest{
@@ -30,32 +28,9 @@ public class TestService extends BaseTest{
 	private RentDetailService rentDetailService;
 	@Test
 	@Rollback(value=false)//测试完不回滚
-	public void testBaseDaoSave(){
-//		RentDetailModel r = new RentDetailModel();
-//		r.setId("1");
-//		r.setRent(1);
-//		dao.save(r);
-		User user = new User();
-		user.setName("name0912");
-		this.dao.save(user);
-	}
-	@Test
-	@Rollback(value=false)//测试完不回滚
 	public void testBaseDaoSearch(){
 		RentDetailModel r = dao.get(RentDetailModel.class, "1");
 		System.out.println(r.getTotal());
-	}
-	@Test
-	@Rollback(value=false)//测试完不回滚
-	public void testBaseDaoRemove(){
-		dao.removeById(User.class, "26284918-fa60-4b00-9dd2-367c300cf88c");
-	}
-	@Test
-	@Rollback(value=true)//测试完不回滚
-	public void search(){
-		Pages pages = new Pages(2,1);
-		List<User> list = dao.criteria(User.class, Restrictions.eq("name", "中文"), null, Order.desc("age"), pages);
-		System.out.println("list2222222222222222:"+list.toString());
 	}
 	@Test
 	@Rollback(value=false)//测试完不回滚

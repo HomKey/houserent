@@ -4,6 +4,7 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:sec="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/context
 						http://www.springframework.org/schema/context/spring-context.xsd
 						http://www.springframework.org/schema/tx
@@ -11,13 +12,14 @@
 						http://www.springframework.org/schema/aop
     					http://www.springframework.org/schema/aop/spring-aop.xsd
 						http://www.springframework.org/schema/beans
-						http://www.springframework.org/schema/beans/spring-beans.xsd">
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security
+						http://www.springframework.org/schema/security/spring-security.xsd">
      <!-- 启动Spring AOP的动态代理-->
     <aop:aspectj-autoproxy/>
     
     <!-- 加载数据库属性配置文件 -->
 	<context:property-placeholder location="classpath:config.properties"/>  
-	
 	<!-- MySQL 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
@@ -92,4 +94,35 @@
 	
 	<!--context:component-scan扫描: @Component @Repository @Service @Controller-->
     <context:component-scan base-package="com.hk"/>
+    <!-- spring security -->
+    <sec:http pattern="/resources/**" security="none"/>
+    <sec:http pattern="/access/**" security="none"/>
+    <sec:http auto-config="true">
+    	<!-- 关闭CSRF -->
+        <sec:csrf disabled="true"/>
+        
+    	<sec:form-login login-page="/login" login-processing-url="/login.do" />
+        <sec:logout logout-url="/logout.do" logout-success-url="/login" />
+	   <sec:intercept-url pattern="/system/**" access="hasRole('ROLE_ADMIN')"/>
+	   <!-- 
+	   <sec:intercept-url pattern="/public/**" access="hasRole('ROLE_USER')"/>
+	   <sec:intercept-url pattern="/*" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/> -->
+	   <sec:intercept-url pattern="/**" access="isAuthenticated()"/>
+	   <sec:access-denied-handler error-page="/access/accessDenied"/>
+    </sec:http>
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:org/springframework/security/message_zh_CN" />    
+    </bean>
+    
+    <sec:authentication-manager>
+    	<sec:authentication-provider>
+    		<sec:password-encoder hash="md5" />
+    		<!-- 
+    		<sec:user-service>
+    			<sec:user name="admin" password="21232f297a57a5a743894a0e4a801fc3" authorities="ROLE_USER"/>
+    		</sec:user-service> -->
+    		<sec:jdbc-user-service data-source-ref="dataSource"/>
+    	</sec:authentication-provider>
+    </sec:authentication-manager>
+    
 </beans>

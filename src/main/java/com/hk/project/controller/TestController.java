@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hk.base.support.ResultsData;
 import com.hk.project.model.RoomModel;
-import com.hk.project.model.User;
 import com.hk.project.service.BuildingService;
 import com.hk.project.service.RentDetailService;
 import com.hk.project.service.RoomService;
-import com.hk.project.service.UserBaseService;
 
 @Controller
 @RequestMapping("/test")
@@ -28,17 +26,6 @@ public class TestController {
 	private RentDetailService rentDetailService;
 	@Autowired
 	private RoomService roomService;
-	@Autowired
-	private UserBaseService userBaseService;
-	@RequestMapping(value="/saveUser")
-	@ResponseBody
-	public ResultsData saveBuilding(User model){
-		ResultsData result = new ResultsData();
-		userBaseService.save(model);
-		result.setData(model);
-		result.setStatusSuccess();
-		return result;
-	}
 	@RequestMapping(value="/saveRoom")
 	@ResponseBody
 	public ResultsData saveRoom(RoomModel room){

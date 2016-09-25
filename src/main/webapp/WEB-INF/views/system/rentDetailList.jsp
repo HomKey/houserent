@@ -5,8 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@include file="../common/head.jsp" %>
 <%@include file="../common/bootstrap.jsp" %>
-<script type="text/javascript" src="${basePath}/resources/js/utils.js"></script>
-<title>数据表</title>
+<title>租金表</title>
 <style type="text/css">
 </style>
 </head>
@@ -77,9 +76,8 @@ $(function(){
        	     	editable:{
        	     		emptytext:0,
        	     		validate: function(value){
-       	     			var res = editValidate("rent",value);
-       	     			console.log(res);
-       	     			return false;
+       	     			var id = $(this).attr("data-pk");
+       	     			return editValidate("rent",value,id,"number");
        	     		}
        	     	}
        	    }, {
@@ -88,7 +86,10 @@ $(function(){
 	       	    sortable:true,
        	     	editable:{
        	     		emptytext:0,
-       	     		validate: editValidate
+       	     		validate: function(value){
+       	     			var id = $(this).attr("data-pk");
+       	     			return editValidate("water",value,id,"number");
+       	     		}
        	     	}
        	    }, {
        	        field: 'electricity',
@@ -97,7 +98,10 @@ $(function(){
        	     	defaultValue:0,
        	     	editable:{
        	     		emptytext:0,
-       	     		validate: editValidate
+       	     		validate: function(value){
+       	     			var id = $(this).attr("data-pk");
+       	     			return editValidate("electricity",value,id,"number");
+       	     		}
        	     	}
        	    }, {
        	        field: 'incidental',
@@ -105,7 +109,10 @@ $(function(){
        	     	sortable:true,
        	     	editable:{
        	     		emptytext:0,
-       	     		validate: editValidate
+       	     		validate: function(value){
+       	     			var id = $(this).attr("data-pk");
+       	     			return editValidate("incidental",value,id,"number");
+       	     		}
        	     	}
        	    }, {
        	        field: 'columnTotal',
@@ -119,7 +126,11 @@ $(function(){
        	        title: '入住时间',
        	     	sortable:true,
        	     	editable:{
-	       	     	emptytext:"空"
+	       	     	emptytext:"空",
+	       	     	validate : function(value){
+       	     			var id = $(this).attr("data-pk");
+       	     			return editValidate("checkIn",value,id,"string");
+	       	     	}
        	     	}
        	    }, {
        	        field: 'remove',
@@ -130,38 +141,13 @@ $(function(){
                	formatter: function (value, row, index) {
                		return "<button class='btn btn-danger btn-xs' onclick='removeRentById(\""+row.id+"\")'>删除</button>";
                	}
-       	    }]/*,
-       	 	onEditableSave:function(field, row, oldValue, $el){
-       	 		var data = JsonUtil.format(row);
-       	 		$.ajax({
-       	 			url:"${basePath}/rent/save",
-       	 			type:"post",
-       	 			data:data,
-       	 			success:function(result){
-           	 			if(result.status != "success"){
-           	 				alert("修改失败");
-           	 			 	location.reload();
-           	 			}
-           	 		},
-       	 			error:function(e){
-           	 			alert("修改失败");
-           	 		 	location.reload();
-           	 			console.log(e);
-           	 		}
-       	 		});
-       	 		return false;
-	       	}*/
+       	    }]
 	});
-	function saveRent(data){
-		
-	}	
-		
-		
-	function editValidate(key,value){
-		var id = $(this).attr("data-pk");
+	function editValidate(key,value,id,type){
 		var data = $('#myTable').bootstrapTable('getRowByUniqueId', id);
 		data[key] = value;
 		data = JsonUtil.format(data);
+		var result = false;
 		if(!isNaN(value)){
 			$.ajax({
 	 			url:"${basePath}/rent/save",
@@ -169,18 +155,30 @@ $(function(){
 	 			data:data,
 	 			success:function(result){
 	 				if(result.status=="success"){
-	 					return false;
+	 					//return false;
 	 				}else{
-	 					return "修改失败";	
+	 					result = "修改失败";	
 	 				}
 	  	 		},
 	 			error:function(e){
-	  	 			alert("修改失败");
+	  	 			//alert("修改失败");
+	  	 			result = "修改失败";
 	  	 		}
 		 	});
 		}else{
-			return "请输入正确的金额";
+			switch(type){
+			case 'number':
+				result = "请输入正确的金额";
+				break;
+			case 'string':
+				result = "请输入指定格式的数据";
+				break;
+			default:
+				result = "输入的数据格式错误";
+				break;
+			}
 		}
+		return result;
 	}
 });
 function removeRentById(id){
