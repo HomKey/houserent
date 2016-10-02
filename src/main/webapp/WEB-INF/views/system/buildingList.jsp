@@ -3,8 +3,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@include file="../common/head.jsp" %>
-<%@include file="../common/bootstrap.jsp" %>
+<%@include file="/WEB-INF/common/head.jsp" %>
+<%@include file="/WEB-INF/common/bootstrap.jsp" %>
 <title>楼房表</title>
 <style type="text/css">
 </style>

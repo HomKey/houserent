@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/common/head.jsp" %>
+<%@ include file="/WEB-INF/common/bootstrap.jsp" %>
+<%@ include file="/WEB-INF/common/taglib.jsp"%>
 <!DOCTYPE>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link type="text/css" rel="stylesheet" href="${basePath}/resources/css/test.css" />
-<script type="text/javascript" src="${basePath}/resources/js/jquery-1.11.3.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -23,6 +24,7 @@
 	<button type="submit" value="提交">提交</button>
 </form>
 <button type="button" id="getTotal">测试total</button>
+<tags:webuploader id="uploader" url="upload" action="${basePath}/excel/getExcelData.do?buildingId=1" fileNumLimit="1"/>
 
 </div>
 

@@ -58,10 +58,11 @@ public class ExcelController extends BaseController{
 		ResultsData result = new ResultsData();
 		try {
 			result = rentDetailService.exportExcel(filePath, buildingId);
+			return result;
 		} catch (ParseException e) {
 			result.setStatusFail("请该excel内容格式!");
+			return result;
 		}
-		return result;
 	}
 	
 	/**
