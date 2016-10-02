@@ -86,12 +86,18 @@ $(function(){
 			       	    	field:'year',
 			       	    	title:'年份',
 			       	    	//sortable:true,
-			       	    	editable:false
+			       	    	editable:false,//垂直
+			               	formatter: function (value, row, index) {
+			               		return DateUtil.format("yyyy",new Date(row.rentDate));
+			               	}
 			       	    },{
 			       	    	field:'month',
 			       	    	title:'月份',
 			       	    	//sortable:true,
-			       	    	editable:false
+			       	    	editable:false,//垂直
+			               	formatter: function (value, row, index) {
+			               		return DateUtil.format("MM",new Date(row.rentDate));
+			               	}
 			       	    },{
 			       	        field: 'rent',
 			       	        title: '租金',

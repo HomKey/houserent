@@ -4,10 +4,14 @@ package com.hk.project.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +32,13 @@ public class SysController extends BaseController{
 	public String index() {
 		logger.info("index");
 		System.out.println("index");
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Collection<? extends GrantedAuthority> anth = userDetails.getAuthorities();
+		for(GrantedAuthority model : anth){
+			if(model.toString().equals("ROLE_ADMIN")){
+				return "system/index";
+			}
+		}
 		return "index";
 	}
 	/**

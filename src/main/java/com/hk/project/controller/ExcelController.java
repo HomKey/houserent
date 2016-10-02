@@ -5,15 +5,19 @@ package com.hk.project.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -30,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hk.base.dao.IBaseDao;
 import com.hk.base.support.DateUtil;
+import com.hk.base.support.IgnoreFieldProcessorImpl;
 import com.hk.base.support.PoiUtil;
 import com.hk.base.support.ResultsData;
 import com.hk.base.support.StringUtil;
@@ -91,11 +96,13 @@ public class ExcelController extends BaseController{
 	private ResultsData checkImport(String filePath,String buildingId) throws IOException, ParseException{
 		ResultsData result = new ResultsData();
 		//检查楼是否存在
-		BuildingModel build = this.dao.get(BuildingModel.class, buildingId);
-		if(build == null){
+		BuildingModel buildTemp = this.dao.get(BuildingModel.class, buildingId);
+		if(buildTemp == null){
 			logger.info("该楼层不存在!");
 			return result.setStatusFail("该楼层不存在!");
 		}
+		BuildingModel build = new BuildingModel();
+		build.setId(buildingId);
 		//读取excel
 		Workbook workbook=null;
 		String fileType=filePath.substring(filePath.lastIndexOf("."),filePath.length());  
@@ -109,6 +116,7 @@ public class ExcelController extends BaseController{
         }
         List<RoomModel> roomList = new ArrayList<RoomModel>();
         List<RentDetailModel> rentDetailList = new ArrayList<RentDetailModel>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 		for(int numSheet = 0;numSheet<workbook.getNumberOfSheets();numSheet++){
 			Sheet sheet = workbook.getSheetAt(numSheet);
 			String floorName = sheet.getSheetName();//楼层名称
@@ -151,8 +159,7 @@ public class ExcelController extends BaseController{
 						Calendar calendar = DateUtil.toCalendar(ym, "yyyy-MM月");
 						int year = calendar.get(Calendar.YEAR);
 						int month = calendar.get(Calendar.MONTH)+1;
-						rent.setYear(year);
-						rent.setMonth(month);
+						rent.setRentDate(sdf.parse(year+"-"+month));
 						rent.setId(room.getId()+","+year+","+month);
 						rent.setRent(StringUtil.toFloat(PoiUtil.getCellValue(rentCell)));
 						rent.setWater(StringUtil.toFloat(PoiUtil.getCellValue(waterCell)));

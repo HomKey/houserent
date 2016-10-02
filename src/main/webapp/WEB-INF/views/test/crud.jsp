@@ -22,7 +22,7 @@
 	<input name="building.id" value="1"/>
 	<button type="submit" value="提交">提交</button>
 </form>
-
+<button type="button" id="getTotal">测试total</button>
 
 </div>
 
@@ -62,7 +62,6 @@ $(function(){
 			console.log(result);
 		});
 	});
-	
 });
 </script>
 </html>

@@ -4,16 +4,21 @@
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
+import org.hibernate.transform.Transformers;
+import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -110,5 +115,21 @@ public class HibernateBaseDao<T extends Object> extends HibernateDaoSupport impl
 		List<T> list = criteria.list();
 		return list;
 	}
-
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Map<String, Object>> queryBySQL(final String sql) {
+		Session session = getHT().getSessionFactory().getCurrentSession();
+		return session.createSQLQuery(sql).list();
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends Object> List<T> queryBySQL(final String sql,Class<T> clazz) {
+		Session session = getHT().getSessionFactory().getCurrentSession();
+		return session.createSQLQuery(sql).addEntity(clazz).list();
+	}
+	@Override
+	public List<?> queryByHQL(final String hql) {
+		Session session = getHT().getSessionFactory().getCurrentSession();
+		return session.createQuery(hql).list();
+	}
 }

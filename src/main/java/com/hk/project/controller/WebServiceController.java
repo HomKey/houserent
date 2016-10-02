@@ -21,6 +21,7 @@ import com.hk.base.support.ResultsData;
 import com.hk.base.support.StringUtil;
 import com.hk.project.dto.BuildingDto;
 import com.hk.project.model.BuildingModel;
+import com.hk.project.model.RentDetailModel;
 import com.hk.project.service.BuildingService;
 import com.hk.project.service.RentDetailService;
 
@@ -31,6 +32,8 @@ public class WebServiceController {
 	private BuildingService buildingService;
 	@Autowired
 	private RentDetailService rentDetailService;
+	@Autowired
+	private BaseService baseService;
 	@RequestMapping(value="/saveBuilding")
 	@ResponseBody
 	public ResultsData saveBuilding(BuildingDto model){
@@ -51,7 +54,23 @@ public class WebServiceController {
 		result.setData(buildings);
 		return result;
 	}
-	
+
+	@RequestMapping(value="/getData")
+	@ResponseBody
+	public ResultsData getData(String modelClass){
+		ResultsData result = new ResultsData();
+		try {
+			Class<?> model = Class.forName("com.hk.project.model."+modelClass);
+			List<?> rentDetail = baseService.criteria(model, null, null, null);
+			result.setStatusSuccess();
+			result.setData(rentDetail);
+			return result;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			result.setStatusFail();
+			return result;
+		}
+	}
 	
 	
 //	@RequestMapping(value="/getDetailByBuildingId")

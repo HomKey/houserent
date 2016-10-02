@@ -2,31 +2,24 @@ package com.hk.project.service;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.NumberToTextConverter;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +59,7 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 			e.printStackTrace();
 			return result.setStatusFail("文件有误,请检查后重新导入");
 		} 
-        
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 		for(int numSheet = 0;numSheet<workbook.getNumberOfSheets();numSheet++){
 			Sheet sheet = workbook.getSheetAt(numSheet);
 			String floorName = sheet.getSheetName();//楼层名称
@@ -107,8 +100,7 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 					Calendar calendar = DateUtil.toCalendar(ym, "yyyy-MM月");
 					int year = calendar.get(Calendar.YEAR);
 					int month = calendar.get(Calendar.MONTH)+1;
-					rent.setYear(year);
-					rent.setMonth(month);
+					rent.setRentDate(sdf.parse(year+"-"+month));
 					rent.setId(room.getId()+","+year+","+month);
 					rent.setRent(StringUtil.toFloat(PoiUtil.getCellValue(rentCell)));
 					rent.setWater(StringUtil.toFloat(PoiUtil.getCellValue(waterCell)));
@@ -158,6 +150,31 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 		//result.setData();
 		return cri.list();
 	}
-	
+	public ResultsData getBuildTotal(String start,String end){
+		ResultsData result = new ResultsData();
+		List<Map<String, Object>> results = this.dao.queryBySQL("SELECT t4.id,t4.parent_id,t3.total_rent,t3.total_electricity,t3.total_water,t3.total_incidental FROM building t4 "
+				+ "LEFT JOIN ( SELECT sum(r.rent) as total_rent, sum(r.electricity) as total_electricity, sum(r.water) as total_water, "
+				+ "sum(r.incidental) as total_incidental, r.building_id FROM rent_detail r "
+				+ "WHERE unix_timestamp( r.rent_date ) BETWEEN unix_timestamp('"+start+"') "
+				+ "AND unix_timestamp('"+end+"') GROUP BY r.building_id ) t3 "
+				+ "ON t3.building_id = t4.id WHERE t4.parent_id is not null");
+		result.setData(results);
+		result.setStatusSuccess();
+		return result;
+	}
+	public ResultsData getTotal(String start,String end){
+		ResultsData result = new ResultsData();
+		List<Map<String, Object>> results = this.dao.queryBySQL("SELECT t1.id,t1.name, sum(t2.total_rent) as rent, sum(t2.total_electricity) as electricity, "
+				+ "sum(t2.total_water) as water, sum(t2.total_incidental) as incidental FROM building t1 LEFT JOIN "
+				+ "( SELECT t4.id,t4.name,t4.parent_id,t3.total_rent,t3.total_electricity,t3.total_water,t3.total_incidental FROM building t4 "
+				+ "LEFT JOIN ( SELECT sum(r.rent) as total_rent, sum(r.electricity) as total_electricity, "
+				+ "sum(r.water) as total_water, sum(r.incidental) as total_incidental,"
+				+ "r.building_id FROM rent_detail r WHERE "
+				+ "unix_timestamp( r.rent_date ) BETWEEN unix_timestamp('"+start+"') AND unix_timestamp('"+end+"') GROUP BY r.building_id "
+				+ ") t3 ON t3.building_id = t4.id WHERE t4.parent_id is not null ) t2 on t1.id = t2.parent_id WHERE t1.parent_id is null GROUP BY t1.id");
+		result.setData(results);
+		result.setStatusSuccess();
+		return result;
+	}
 	
 }

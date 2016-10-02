@@ -1,6 +1,8 @@
 package com.hk.project.model;
 
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -33,10 +35,8 @@ public class RentDetailModel {
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer","roomNumber","floorNumber","building","remark"})//
 	private RoomModel room;
-	@Column(name = "year")
-	private int year;
-	@Column(name = "month")
-	private int month;
+	@Column(name = "rent_date")
+	private Date rentDate;
 	@Column(name = "rent",nullable=false,columnDefinition="float default 0")
 	private float rent;
 	@Column(name = "water",nullable=false,columnDefinition="float default 0")
@@ -49,7 +49,12 @@ public class RentDetailModel {
 	private String checkIn;
 	@Column(name = "remark")
 	private String remark;
-	
+	public Date getRentDate() {
+		return rentDate;
+	}
+	public void setRentDate(Date rentDate) {
+		this.rentDate = rentDate;
+	}
 	public String getId() {
 		return id;
 	}
@@ -79,18 +84,6 @@ public class RentDetailModel {
 	}
 	public void setRoom(RoomModel room) {
 		this.room = room;
-	}
-	public int getYear() {
-		return year;
-	}
-	public void setYear(int year) {
-		this.year = year;
-	}
-	public int getMonth() {
-		return month;
-	}
-	public void setMonth(int month) {
-		this.month = month;
 	}
 	public float getRent() {
 		return rent;

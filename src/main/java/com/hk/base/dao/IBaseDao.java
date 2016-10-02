@@ -4,6 +4,7 @@ package com.hk.base.dao;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
@@ -25,4 +26,7 @@ public interface IBaseDao{
 	<L extends Collection<? extends Object>> void removeAll(L models);
 	<T extends Object> void removeById(Class<T> clazz,Serializable id);
 	<T extends Object> List<T> criteria(Class<T> clazz,Criterion criterion,Projection projection,Order order,Pages pages);
+	List<?> queryByHQL(final String hql);
+	List<Map<String, Object>> queryBySQL(final String sql);
+	<T extends Object> List<T> queryBySQL(final String sql,Class<T> clazz);
 }

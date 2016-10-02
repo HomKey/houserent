@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@include file="../common/head.jsp" %>
 <%@include file="../common/bootstrap.jsp" %>
-<title>租金表</title>
+<title>楼房表</title>
 <style type="text/css">
 </style>
 </head>
@@ -25,9 +25,10 @@ $(function(){
         return height;
     }
 	var resultData = {};
+	
 		$('#myTable').bootstrapTable({
        		//toolbar: '#toolbar',
-       		url:"${basePath}/rent/getData",
+       		url:"${basePath}/building/getData",
        		sortable:true,
        		search: true,
        		height:tableHeight(),
@@ -61,19 +62,13 @@ $(function(){
        	    },{
        	    	field:'year',
        	    	title:'年份',
-       	    	sortable:true,
-       	    	editable:false,//垂直
-               	formatter: function (value, row, index) {
-               		return DateUtil.format("yyyy",new Date(row.rentDate));
-               	}
+       	    	//sortable:true,
+       	    	editable:false
        	    },{
        	    	field:'month',
        	    	title:'月份',
-       	    	sortable:true,
-       	    	editable:false,//垂直
-               	formatter: function (value, row, index) {
-               		return DateUtil.format("MM",new Date(row.rentDate));
-               	}
+       	    	//sortable:true,
+       	    	editable:false
        	    },{
        	        field: 'rent',
        	        title: '租金',

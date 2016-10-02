@@ -4,6 +4,7 @@ package com.hk.project.controller;
 
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,17 @@ public class RentDetailController {
 		rentDetailService.removeById(RentDetailModel.class, id);
 		result.setStatusSuccess();
 		return result;
+	}
+	//获取单栋楼房的统计
+	@RequestMapping(value="/getBuildTotal")
+	@ResponseBody
+	public ResultsData getBuildTotal(String start,String end){
+		return rentDetailService.getBuildTotal(start,end);
+	}
+	//获取整区楼房的统计
+	@RequestMapping(value="/getTotal")
+	@ResponseBody
+	public ResultsData getTotal(String start,String end){
+		return rentDetailService.getTotal(start,end);
 	}
 }

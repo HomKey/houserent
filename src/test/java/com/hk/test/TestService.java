@@ -36,7 +36,6 @@ public class TestService extends BaseTest{
 	@Rollback(value=false)//测试完不回滚
 	public void saveSetId(){
 		RentDetailModel model = new RentDetailModel();
-		model.setYear(2016);
 		dao.save(model);
 	}
 	@Test
