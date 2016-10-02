@@ -82,6 +82,12 @@ public class TestService extends BaseTest{
 		for(RentDetailModel model : list){
 			System.out.println("model:"+model.getRoomName());
 		}
-		
+	}
+	@Test
+	@Rollback(value=false)//测试完不回滚
+	public void testTotal(){
+		List<?> result1 = rentDetailService.getBuildTotal("2016-01-01", "2016-10-01");
+		List<?> result2 = rentDetailService.getTotal("2016-01-01", "2016-10-01");
+		//ResultsData result = rentDetailService.getBuildTotal("2016-01-01", "2016-10-01");
 	}
 }

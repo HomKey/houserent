@@ -69,12 +69,20 @@ public class RentDetailController {
 	@RequestMapping(value="/getBuildTotal")
 	@ResponseBody
 	public ResultsData getBuildTotal(String start,String end){
-		return rentDetailService.getBuildTotal(start,end);
+		ResultsData result = new ResultsData();
+		List<?> list = rentDetailService.getBuildTotal(start,end);
+		result.setStatusSuccess();
+		result.setData(list);
+		return result;
 	}
 	//获取整区楼房的统计
 	@RequestMapping(value="/getTotal")
 	@ResponseBody
 	public ResultsData getTotal(String start,String end){
-		return rentDetailService.getTotal(start,end);
+		ResultsData result = new ResultsData();
+		List<?> list = rentDetailService.getTotal(start,end);
+		result.setStatusSuccess();
+		result.setData(list);
+		return result;
 	}
 }

@@ -19,6 +19,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
@@ -150,31 +151,28 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 		//result.setData();
 		return cri.list();
 	}
+	/*
 	public ResultsData getBuildTotal(String start,String end){
 		ResultsData result = new ResultsData();
-		List<Map<String, Object>> results = this.dao.queryBySQL("SELECT t4.id,t4.parent_id,t3.total_rent,t3.total_electricity,t3.total_water,t3.total_incidental FROM building t4 "
-				+ "LEFT JOIN ( SELECT sum(r.rent) as total_rent, sum(r.electricity) as total_electricity, sum(r.water) as total_water, "
-				+ "sum(r.incidental) as total_incidental, r.building_id FROM rent_detail r "
-				+ "WHERE unix_timestamp( r.rent_date ) BETWEEN unix_timestamp('"+start+"') "
-				+ "AND unix_timestamp('"+end+"') GROUP BY r.building_id ) t3 "
-				+ "ON t3.building_id = t4.id WHERE t4.parent_id is not null");
+		List<Map<String, Object>> results = this.dao.queryBySQL("SELECT b.id as id,b.name as name,sum(r.rent) as rent,sum(r.electricity) as electricity,"
+				+ "sum(r.water) as water,sum(r.incidental) as incidental FROM rent_detail r "
+				+ "LEFT JOIN building b ON r.building_id = b.id WHERE "
+				+ "unix_timestamp( r.rent_date ) BETWEEN unix_timestamp('"+start+"') AND unix_timestamp('"+end+"') "
+				+ "GROUP BY building_id");
 		result.setData(results);
 		result.setStatusSuccess();
 		return result;
 	}
-	public ResultsData getTotal(String start,String end){
-		ResultsData result = new ResultsData();
-		List<Map<String, Object>> results = this.dao.queryBySQL("SELECT t1.id,t1.name, sum(t2.total_rent) as rent, sum(t2.total_electricity) as electricity, "
-				+ "sum(t2.total_water) as water, sum(t2.total_incidental) as incidental FROM building t1 LEFT JOIN "
-				+ "( SELECT t4.id,t4.name,t4.parent_id,t3.total_rent,t3.total_electricity,t3.total_water,t3.total_incidental FROM building t4 "
-				+ "LEFT JOIN ( SELECT sum(r.rent) as total_rent, sum(r.electricity) as total_electricity, "
-				+ "sum(r.water) as total_water, sum(r.incidental) as total_incidental,"
-				+ "r.building_id FROM rent_detail r WHERE "
-				+ "unix_timestamp( r.rent_date ) BETWEEN unix_timestamp('"+start+"') AND unix_timestamp('"+end+"') GROUP BY r.building_id "
-				+ ") t3 ON t3.building_id = t4.id WHERE t4.parent_id is not null ) t2 on t1.id = t2.parent_id WHERE t1.parent_id is null GROUP BY t1.id");
-		result.setData(results);
-		result.setStatusSuccess();
-		return result;
+	*/
+	public List<?> getBuildTotal(String start,String end){
+		String hql = "SELECT new map(b.id as id,b.name as name, sum(r.rent) as rent,sum(r.electricity) as electricity,sum(r.water) as water,sum(r.incidental) as incidental)"
+				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE r.rentDate BETWEEN '"+start+"' AND  '"+end+"' GROUP BY b.id";
+		return this.dao.queryByHQL(hql);
+	}
+	public List<?> getTotal(String start,String end){
+		String hql = "SELECT new map(b.id as id,b.name as name, sum(r.rent) as rent,sum(r.electricity) as electricity,sum(r.water) as water,sum(r.incidental) as incidental)"
+				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE r.rentDate BETWEEN '"+start+"' AND  '"+end+"' GROUP BY b.parent.id";
+		return this.dao.queryByHQL(hql);
 	}
 	
 }
