@@ -88,7 +88,7 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 				room.setId(build.getId()+","+floorName+","+roomName);
 				room.setBuilding(build);
 				room.setRoomNumber(roomName);
-				room.setFloorNumber(String.valueOf(numSheet+1));
+				room.setFloorNumber(floorName);//String.valueOf(numSheet+1)
 				this.dao.save(room);
 				for(int i = 1 ;i < 73 ;i+=6){
 					Cell rentCell = row.getCell(i);
@@ -102,7 +102,7 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 					int year = calendar.get(Calendar.YEAR);
 					int month = calendar.get(Calendar.MONTH)+1;
 					rent.setRentDate(sdf.parse(year+"-"+month));
-					rent.setId(room.getId()+","+year+","+month);
+					rent.setId(room.getId()+","+year+","+(month<10?"0"+month:month));
 					rent.setRent(StringUtil.toFloat(PoiUtil.getCellValue(rentCell)));
 					rent.setWater(StringUtil.toFloat(PoiUtil.getCellValue(waterCell)));
 					rent.setElectricity(StringUtil.toFloat(PoiUtil.getCellValue(electricityCell)));

@@ -28,7 +28,7 @@ public class RentDetailModel {
 	@ManyToOne
 	@JoinColumn(name = "building_id")
 	@NotFound(action=NotFoundAction.IGNORE)
-	@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer","name","parent","longCode"})//
+	@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer","name","parent","longCode","remark"})//
 	private BuildingModel building;
 	@ManyToOne
 	@JoinColumn(name = "room_id")

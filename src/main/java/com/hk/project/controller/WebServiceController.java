@@ -34,11 +34,6 @@ public class WebServiceController {
 	private RentDetailService rentDetailService;
 	@Autowired
 	private BaseService baseService;
-	@RequestMapping(value="/saveBuilding")
-	@ResponseBody
-	public ResultsData saveBuilding(BuildingDto model){
-		return buildingService.save(model.getParentId(), model.getBuildingModel());
-	}
 	@RequestMapping(value="/getBuildingByLongCode")
 	@ResponseBody
 	public ResultsData getBuildingByLongCode(String id){

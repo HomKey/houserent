@@ -29,4 +29,5 @@ public interface IBaseDao{
 	List<?> queryByHQL(final String hql);
 	List<Map<String, Object>> queryBySQL(final String sql);
 	<T extends Object> List<T> queryBySQL(final String sql,Class<T> clazz);
+	int executeByHQL(final String hql);
 }

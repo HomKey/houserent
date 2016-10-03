@@ -1,6 +1,5 @@
 package com.hk.project.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -36,14 +35,16 @@ public class BuildingModel {
 	private String id;
 	@Column(name = "name")
 	private String name;
+	@Column(name = "remark")
+	private String remark;
 	@ManyToOne
 	@JoinColumn(name = "parent_id")
 	@NotFound(action=NotFoundAction.IGNORE)
-	@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer","name","parent","longCode"})//
+	@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer","parent","longCode","remark"})//
 	private BuildingModel parent;
 	@Column(name = "long_code")
 	private String longCode;
-	@OneToMany(mappedBy="parent",cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="parent",cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	private List<BuildingModel> children;
 	public List<BuildingModel> getChildren() {
 		return children;
@@ -63,8 +64,20 @@ public class BuildingModel {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 	public BuildingModel getParent() {
 		return parent;
+	}
+	public String getParentName(){
+		if(parent == null){
+			return null;
+		}
+		return parent.getName();
 	}
 	public void setParent(BuildingModel parent) {
 		this.parent = parent;

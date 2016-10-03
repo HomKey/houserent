@@ -60,15 +60,18 @@ public class IgnoreFieldProcessorImpl implements PropertyFilter {
 	public boolean apply(Object source, String name, Object value) {
 		Field declaredField = null;
 		//忽略值为null的属性
+		/*
 		if(value == null)
 			return true;
+			*/
 		//剔除自定义属性，获取属性声明类型
 		if(!"data".equals(name) && "data"!=name && !"totalSize".equals(name) && "totalSize"!=name ){
 			try {
 				declaredField = source.getClass().getDeclaredField(name);
 			} catch (NoSuchFieldException e) {
 				log.equals("没有找到属性" + name);
-				e.printStackTrace();
+				return false;
+				//e.printStackTrace();
 			}
 	    }
 		// 忽略集合

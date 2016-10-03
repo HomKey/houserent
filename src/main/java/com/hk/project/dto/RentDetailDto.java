@@ -6,8 +6,7 @@ public class RentDetailDto {
 	private String id;
 	private String buildingId;
 	private String roomId;
-	private int year;
-	private int month;
+	private String rentDate;
 	private float rent;
 	private float water;
 	private float electricity;
@@ -32,17 +31,11 @@ public class RentDetailDto {
 	public void setRoomId(String roomId) {
 		this.roomId = roomId;
 	}
-	public int getYear() {
-		return year;
+	public String getRentDate() {
+		return rentDate;
 	}
-	public void setYear(int year) {
-		this.year = year;
-	}
-	public int getMonth() {
-		return month;
-	}
-	public void setMonth(int month) {
-		this.month = month;
+	public void setRentDate(String rentDate) {
+		this.rentDate = rentDate;
 	}
 	public float getRent() {
 		return rent;

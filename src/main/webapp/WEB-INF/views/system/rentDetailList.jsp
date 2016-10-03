@@ -28,6 +28,9 @@ $(function(){
 		$('#myTable').bootstrapTable({
        		//toolbar: '#toolbar',
        		url:"${basePath}/rent/getData",
+       		queryParams:function(params){
+       			return params;
+       		},
        		sortable:true,
        		search: true,
        		height:tableHeight(),
@@ -59,12 +62,24 @@ $(function(){
        	     	//sortable:true,
        	     	editable:false
        	    },{
+       	    	field: 'floor',
+       	        title: '楼层号',
+       	     	editable:false,
+       	     	formatter:function(value,row,index){
+       	     		var ids = row.id.split(",");
+       	     		if(ids.length>2){
+       	     			return ids[1];
+       	     		}else{
+       	     			return "-";
+       	     		}
+       	     	}
+       	    },{
        	    	field:'year',
        	    	title:'年份',
        	    	sortable:true,
        	    	editable:false,//垂直
                	formatter: function (value, row, index) {
-               		return DateUtil.format("yyyy",new Date(row.rentDate));
+               		return DateUtil.format("yyyy",new Date(row.rentDate.time));
                	}
        	    },{
        	    	field:'month',
@@ -72,7 +87,7 @@ $(function(){
        	    	sortable:true,
        	    	editable:false,//垂直
                	formatter: function (value, row, index) {
-               		return DateUtil.format("MM",new Date(row.rentDate));
+               		return DateUtil.format("MM",new Date(row.rentDate.time));
                	}
        	    },{
        	        field: 'rent',
@@ -152,6 +167,10 @@ $(function(){
 		var data = $('#myTable').bootstrapTable('getRowByUniqueId', id);
 		data[key] = value;
 		data = JsonUtil.format(data);
+		var ids = data.id.split(",");
+		data.buildingId = ids[0];
+		data.roomId = ids[0]+","+ids[1]+","+ids[2];
+		data.rentDate = ids[3]+"-"+ids[4]+"-01";
 		var result = false;
 		if(!isNaN(value)){
 			$.ajax({

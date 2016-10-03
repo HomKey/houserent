@@ -132,4 +132,9 @@ public class HibernateBaseDao<T extends Object> extends HibernateDaoSupport impl
 		Session session = getHT().getSessionFactory().getCurrentSession();
 		return session.createQuery(hql).list();
 	}
+	@Override
+	public int executeByHQL(final String hql) {
+		Query query = getHT().getSessionFactory().getCurrentSession().createQuery(hql);
+		return query.executeUpdate();
+	}
 }

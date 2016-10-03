@@ -37,7 +37,7 @@ public class RoomModel implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "building_id")
 	@NotFound(action=NotFoundAction.IGNORE)
-	@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer","name","parent","longCode"})
+	@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer","name","parent","longCode","remark"})
 	private BuildingModel building;
 	public String getId() {
 		return id;

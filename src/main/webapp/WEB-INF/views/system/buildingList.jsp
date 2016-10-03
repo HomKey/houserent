@@ -21,11 +21,11 @@
 $(function(){
 	$.fn.editable.defaults.mode = 'popup';
 	function tableHeight() {
-		var height = $(window).height() - 60;
+		var height = $(window).height() - 30;
         return height;
     }
 	var resultData = {};
-	
+	//$.post("${basePath}/building/getParent",function(selectData){
 		$('#myTable').bootstrapTable({
        		//toolbar: '#toolbar',
        		url:"${basePath}/building/getData",
@@ -55,81 +55,62 @@ $(function(){
        	        title: 'Item ID',
        	     	visible:false
        	    },{
-       	        field: 'roomName',
-       	        title: '房号',
+       	        field: 'name',
+       	        title: '名称',
        	     	//sortable:true,
-       	     	editable:false
+       	     	editable:false,
+       	     	editable:{
+       	     		emptytext:0,
+       	     		validate: function(value) {
+	       	     		if (!$.trim(value)) {
+	                        return '不能为空';
+	                    }
+       	     			var id = $(this).attr("data-pk");
+       	     			return editBuilding(id,"name",value);
+	       	     	}
+       	     	}
        	    },{
-       	    	field:'year',
-       	    	title:'年份',
+       	    	field:'level',
+       	    	title:'所属',
+       	    	sortable:true,
+   	     		/*
+       	     	editable:{
+	       	     	type: "select",              //编辑框的类型。支持text|textarea|select|date|checklist等
+	                source: selectData,
+	                emptytext:'-',
+	                title: "选择所属",           //编辑框的标题
+	                disabled: false,           //是否禁用编辑
+	                validate: function (value) { //字段验证
+	                	if (!$.trim(value)) {
+	                        return '不能为空';
+	                    }
+	                	$.post("${basePath}/building/setParent",{
+	                		id:,
+	                		parentId,
+	                	},function(){
+	                		
+	                	});
+	                	console.log(value);
+	                    
+	                }
+       	     	},
+       	    */
+       	     	formatter: function (value, row, index) {
+               		return row.parentName;
+               	}
+       	    },{
+       	    	field:'remark',
+       	    	title:'备注',
        	    	//sortable:true,
-       	    	editable:false
-       	    },{
-       	    	field:'month',
-       	    	title:'月份',
-       	    	//sortable:true,
-       	    	editable:false
-       	    },{
-       	        field: 'rent',
-       	        title: '租金',
-       	     	sortable:true,
+       	     	editable:false,
        	     	editable:{
        	     		emptytext:0,
-       	     		validate: function(value){
+       	     		validate: function(value) {
+	       	     		if (!$.trim(value)) {
+	                        return '不能为空';
+	                    }
        	     			var id = $(this).attr("data-pk");
-       	     			return editValidate("rent",value,id,"number");
-       	     		}
-       	     	}
-       	    }, {
-       	        field: 'water',
-       	        title: '水费',
-	       	    sortable:true,
-       	     	editable:{
-       	     		emptytext:0,
-       	     		validate: function(value){
-       	     			var id = $(this).attr("data-pk");
-       	     			return editValidate("water",value,id,"number");
-       	     		}
-       	     	}
-       	    }, {
-       	        field: 'electricity',
-       	        title: '电费',
-       	     	sortable:true,
-       	     	defaultValue:0,
-       	     	editable:{
-       	     		emptytext:0,
-       	     		validate: function(value){
-       	     			var id = $(this).attr("data-pk");
-       	     			return editValidate("electricity",value,id,"number");
-       	     		}
-       	     	}
-       	    }, {
-       	        field: 'incidental',
-       	        title: '杂费',
-       	     	sortable:true,
-       	     	editable:{
-       	     		emptytext:0,
-       	     		validate: function(value){
-       	     			var id = $(this).attr("data-pk");
-       	     			return editValidate("incidental",value,id,"number");
-       	     		}
-       	     	}
-       	    }, {
-       	        field: 'columnTotal',
-       	        title: '小计',
-	       	    sortable:true,
-	       	 	formatter:function(value,row,index){
-	       	 		return (row.rent || 0 ) + (row.water || 0 ) + (row.electricity || 0) + (row.incidental || 0);
-	       	 	}
-       	    }, {
-       	        field: 'checkIn',
-       	        title: '入住时间',
-       	     	sortable:true,
-       	     	editable:{
-	       	     	emptytext:"空",
-	       	     	validate : function(value){
-       	     			var id = $(this).attr("data-pk");
-       	     			return editValidate("checkIn",value,id,"string");
+       	     			return editBuilding(id,"remark",value);
 	       	     	}
        	     	}
        	    }, {
@@ -139,51 +120,31 @@ $(function(){
                 align: "center",//水平
                 valign: "middle",//垂直
                	formatter: function (value, row, index) {
-               		return "<button class='btn btn-danger btn-xs' onclick='removeRentById(\""+row.id+"\")'>删除</button>";
+               		var b = false;
+               		if(row.longcode == ""){
+               			b = true;
+               		}
+               		return "<button class='btn btn-danger btn-xs' onclick='removeBuildById(\""+row.id+"\",\""+b+"\")'>删除</button>";
                	}
        	    }]
-	});
-	function editValidate(key,value,id,type){
-		var data = $('#myTable').bootstrapTable('getRowByUniqueId', id);
-		data[key] = value;
-		data = JsonUtil.format(data);
-		var result = false;
-		if(!isNaN(value)){
-			$.ajax({
-	 			url:"${basePath}/rent/save",
-	 			type:"post",
-	 			data:data,
-	 			success:function(result){
-	 				if(result.status=="success"){
-	 					//return false;
-	 				}else{
-	 					result = "修改失败";	
-	 				}
-	  	 		},
-	 			error:function(e){
-	  	 			//alert("修改失败");
-	  	 			result = "修改失败";
-	  	 		}
-		 	});
-		}else{
-			switch(type){
-			case 'number':
-				result = "请输入正确的金额";
-				break;
-			case 'string':
-				result = "请输入指定格式的数据";
-				break;
-			default:
-				result = "输入的数据格式错误";
-				break;
+		});
+	//});
+	function editBuilding(id,key,value){
+		$.post("${basePath}/building/edit",{id:id,key:key,value:value},function(result){
+			if(result.status == "success" && result.data == "1"){
+				
+			}else{
+				alert("修改失败!");
 			}
-		}
-		return result;
+		})
 	}
 });
-function removeRentById(id){
+function removeBuildById(id,b){
+	if(b){
+		alert("请先删除下属楼房!");
+	}
 	$.ajax({
-		url:"${basePath}/rent/remove",
+		url:"${basePath}/building/remove",
 		type:"post",
 		data:{id:id},
 		success:function(result){

@@ -12,7 +12,7 @@
 	<form id="uploadForm" style="height:45px;">
 		<input type="button" id="tijiao" class="btn btn-success" value="提交"/>
 		<input type="button" id="exportBtn" class="btn btn-success" value="导入数据" style="display:none;"/>
-		<input type="text" name="buildingId" value="1" style="display:none;"/>
+		<input type="text" name="buildingId" value="${param.buildingId}" style="display:none;"/>
 		<input type="file" name="file"/>
 	</form>
 	<div id="tableDiv" class="col-md-12">
@@ -45,6 +45,7 @@ $(function(){
 	        	location.reload();
 	        },
 			success: function(result){
+				console.log(result);
 				if(result.status == "success"){
 					$("#exportBtn").show();
 					resultData.filePath = result.filePath;
@@ -82,6 +83,18 @@ $(function(){
 			       	        title: '房号',
 			       	     	//sortable:true,
 			       	     	editable:false
+			       	    },{
+			       	        field: 'room.id',
+			       	        title: '楼层号',
+			       	     	editable:false,
+			       	     	formatter:function(value,row,index){
+			       	     		var ids = value.split(",");
+			       	     		if(ids.length>2){
+			       	     			return ids[1];
+			       	     		}else{
+			       	     			return "-";
+			       	     		}
+			       	     	}
 			       	    },{
 			       	    	field:'year',
 			       	    	title:'年份',
@@ -169,6 +182,8 @@ $(function(){
 				       	}
 			       		*/
 			       	});
+				}else{
+					alert(result.message);
 				}
 	      	}
 		});
