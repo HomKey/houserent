@@ -100,14 +100,16 @@
     <sec:http auto-config="true">
     	<!-- 关闭CSRF -->
         <sec:csrf disabled="true"/>
-        
+         <sec:headers>
+	        <sec:frame-options policy="SAMEORIGIN"/>
+	    </sec:headers>
     	<sec:form-login login-page="/login" login-processing-url="/login.do" />
         <sec:logout logout-url="/logout.do" logout-success-url="/login" />
 	   <sec:intercept-url pattern="/system/**" access="hasRole('ROLE_ADMIN')"/>
 	   <!-- 
 	   <sec:intercept-url pattern="/public/**" access="hasRole('ROLE_USER')"/>
 	   <sec:intercept-url pattern="/*" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/> -->
-	   <sec:intercept-url pattern="/**" access="isAuthenticated()"/>
+	   <sec:intercept-url pattern="/*" access="isAuthenticated()"/>
 	   <sec:access-denied-handler error-page="/access/accessDenied"/>
     </sec:http>
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
