@@ -74,6 +74,14 @@ $(function(){
        	     		}
        	     	}
        	    },{
+       	    	field:'rentDate',
+       	    	title:'日期',
+       	    	sortable:true,
+       	    	editable:false,//垂直
+               	formatter: function (value, row, index) {
+               		return DateUtil.format("yyyy-MM",new Date(row.rentDate.time));
+               	}
+       	    },/*{
        	    	field:'year',
        	    	title:'年份',
        	    	sortable:true,
@@ -89,7 +97,7 @@ $(function(){
                	formatter: function (value, row, index) {
                		return DateUtil.format("MM",new Date(row.rentDate.time));
                	}
-       	    },{
+       	    },*/{
        	        field: 'rent',
        	        title: '租金',
        	     	sortable:true,
@@ -134,14 +142,91 @@ $(function(){
        	     			return editValidate("incidental",value,id,"number");
        	     		}
        	     	}
-       	    }, {
+       	    },{
+       	        field: 'deposit',
+       	        title: '押金',
+       	     	sortable:true,
+       	     	editable:{
+       	     		emptytext:0,
+       	     		validate: function(value) {
+       	     			var id = $(this).attr("data-pk");
+       	     			return editExcel(result.filePath,id,"deposit",value,"number");
+	       	     	}
+       	     	}
+       	    },{
+       	        field: 'gate',
+       	        title: '门押',
+       	     	sortable:true,
+       	     	editable:{
+       	     		emptytext:0,
+       	     		validate: function(value) {
+       	     			var id = $(this).attr("data-pk");
+       	     			return editExcel(result.filePath,id,"gate",value,"number");
+	       	     	}
+       	     	}
+       	    },{
+       	        field: 'electricityPay',
+       	        title: '缴电费',
+       	     	sortable:true,
+       	     	editable:{
+       	     		emptytext:0,
+       	     		validate: function(value) {
+       	     			var id = $(this).attr("data-pk");
+       	     			return editExcel(result.filePath,id,"electricityPay",value,"number");
+	       	     	}
+       	     	}
+       	    },{
+       	        field: 'waterPay',
+       	        title: '缴水费',
+       	     	sortable:true,
+       	     	editable:{
+       	     		emptytext:0,
+       	     		validate: function(value) {
+       	     			var id = $(this).attr("data-pk");
+       	     			return editExcel(result.filePath,id,"waterPay",value,"number");
+	       	     	}
+       	     	}
+       	    },{
+       	        field: 'incidentalPay',
+       	        title: '其它支出',
+       	     	sortable:true,
+       	     	editable:{
+       	     		emptytext:0,
+       	     		validate: function(value) {
+       	     			var id = $(this).attr("data-pk");
+       	     			return editExcel(result.filePath,id,"incidentalPay",value,"number");
+	       	     	}
+       	     	}
+       	    },{
+       	        field: 'depositPay',
+       	        title: '退押金',
+       	     	sortable:true,
+       	     	editable:{
+       	     		emptytext:0,
+       	     		validate: function(value) {
+       	     			var id = $(this).attr("data-pk");
+       	     			return editExcel(result.filePath,id,"depositPay",value,"number");
+	       	     	}
+       	     	}
+       	    },{
+       	        field: 'gatePay',
+       	        title: '退门押',
+       	     	sortable:true,
+       	     	editable:{
+       	     		emptytext:0,
+       	     		validate: function(value) {
+       	     			var id = $(this).attr("data-pk");
+       	     			return editExcel(result.filePath,id,"gatePay",value,"number");
+	       	     	}
+       	     	}
+       	    }, /*{
        	        field: 'columnTotal',
        	        title: '小计',
 	       	    sortable:true,
 	       	 	formatter:function(value,row,index){
 	       	 		return (row.rent || 0 ) + (row.water || 0 ) + (row.electricity || 0) + (row.incidental || 0);
 	       	 	}
-       	    }, {
+       	    }, */{
        	        field: 'checkIn',
        	        title: '入住时间',
        	     	sortable:true,
@@ -172,35 +257,48 @@ $(function(){
 		data.roomId = ids[0]+","+ids[1]+","+ids[2];
 		data.rentDate = ids[3]+"-"+ids[4]+"-01";
 		var result = false;
-		if(!isNaN(value)){
-			$.ajax({
-	 			url:"${basePath}/rent/save",
-	 			type:"post",
-	 			data:data,
-	 			success:function(result){
-	 				if(result.status=="success"){
-	 					//return false;
-	 				}else{
-	 					result = "修改失败";	
-	 				}
-	  	 		},
-	 			error:function(e){
-	  	 			//alert("修改失败");
-	  	 			result = "修改失败";
-	  	 		}
-		 	});
-		}else{
-			switch(type){
+		switch(type){
 			case 'number':
-				result = "请输入正确的金额";
+				if(!isNaN(value)){
+					$.ajax({
+			 			url:"${basePath}/rent/save",
+			 			type:"post",
+			 			data:data,
+			 			success:function(result){
+			 				if(result.status=="success"){
+			 					//return false;
+			 				}else{
+			 					result = "修改失败";	
+			 				}
+			  	 		},
+			 			error:function(e){
+			  	 			result = "修改失败";
+			  	 		}
+				 	});
+				}else{
+					return "请输入正确的金额";
+				}
 				break;
 			case 'string':
-				result = "请输入指定格式的数据";
+				$.ajax({
+		 			url:"${basePath}/rent/save",
+		 			type:"post",
+		 			data:data,
+		 			success:function(result){
+		 				if(result.status=="success"){
+		 					//return false;
+		 				}else{
+		 					result = "修改失败";	
+		 				}
+		  	 		},
+		 			error:function(e){
+		  	 			result = "修改失败";
+		  	 		}
+			 	});
 				break;
 			default:
 				result = "输入的数据格式错误";
 				break;
-			}
 		}
 		return result;
 	}

@@ -12,6 +12,7 @@ import java.util.List;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +43,19 @@ public class RentDetailController {
 		System.out.println("limit:"+limit+",offset:"+offset+",order:"+order);
 		ResultsData result = new ResultsData();
 		List<RentDetailModel> rentDetail = rentDetailService.criteria(RentDetailModel.class, null, null, null);
+		JsonConfig config = new JsonConfig();
+		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","room"}));
+		JSONArray fromArray = JSONArray.fromObject(rentDetail, config);
+		result.setStatusSuccess();
+		result.setData(fromArray);
+		return result;
+	}
+	//不分页
+	@RequestMapping(value="/getDataByBuilding")
+	@ResponseBody
+	public ResultsData getData(String id){
+		ResultsData result = new ResultsData();
+		List<RentDetailModel> rentDetail = rentDetailService.criteria(RentDetailModel.class, Restrictions.eq("building.id", id), null, null);
 		JsonConfig config = new JsonConfig();
 		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","room"}));
 		JSONArray fromArray = JSONArray.fromObject(rentDetail, config);

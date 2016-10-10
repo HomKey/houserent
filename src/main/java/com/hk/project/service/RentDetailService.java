@@ -73,8 +73,21 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 			short lastCell = firstRow.getLastCellNum();
 			System.out.println("第一行结束");
 			System.out.println("===================================");
-
 			System.out.println("列数:"+lastCell);
+			String ym = PoiUtil.getCellValue(firstRow.getCell(1));
+			//Calendar c = Calendar.getInstance();
+			int year;//c.get(Calendar.YEAR);
+			int month;//c.get(Calendar.MONTH) + 1;
+			Date date = new Date();
+			try {
+				Calendar calendar = DateUtil.toCalendar(ym, "yyyy-MM月");
+				year = calendar.get(Calendar.YEAR);
+				month = calendar.get(Calendar.MONTH)+1;
+				date = sdf.parse(year+"-"+month);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return result.setStatusFail("请检查该excel的内容格式!");
+			}
 			for(int rowNum = 2;rowNum<lastRowNum;rowNum++){
 				Row row = sheet.getRow(rowNum);
 				Cell cell1 = row.getCell(0);
@@ -90,32 +103,36 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 				room.setRoomNumber(roomName);
 				room.setFloorNumber(floorName);//String.valueOf(numSheet+1)
 				this.dao.save(room);
-				for(int i = 1 ;i < 73 ;i+=6){
-					Cell rentCell = row.getCell(i);
-					Cell waterCell = row.getCell(i+1);
-					Cell electricityCell = row.getCell(i+2);
-					Cell incidentalCell = row.getCell(i+3);
-					Cell checkInCell = row.getCell(i+5);
-					RentDetailModel rent = new RentDetailModel();
-					String ym = PoiUtil.getCellValue(firstRow.getCell(i));
-					Calendar calendar = DateUtil.toCalendar(ym, "yyyy-MM月");
-					int year = calendar.get(Calendar.YEAR);
-					int month = calendar.get(Calendar.MONTH)+1;
-					rent.setRentDate(sdf.parse(year+"-"+month));
-					rent.setId(room.getId()+","+year+","+(month<10?"0"+month:month));
-					rent.setRent(StringUtil.toFloat(PoiUtil.getCellValue(rentCell)));
-					rent.setWater(StringUtil.toFloat(PoiUtil.getCellValue(waterCell)));
-					rent.setElectricity(StringUtil.toFloat(PoiUtil.getCellValue(electricityCell)));
-					rent.setIncidental(StringUtil.toFloat(PoiUtil.getCellValue(incidentalCell)));
-					rent.setCheckIn(PoiUtil.getCellValue(checkInCell));
-					rent.setRoom(room);
-					rent.setBuilding(build);
-					this.dao.save(rent);
-					if(i+6==73){
-						Cell roomRemarkCell = row.getCell(i+6);
-						room.setRemark(PoiUtil.getCellValue(roomRemarkCell));
-					}
-				}
+				Cell rentCell = row.getCell(1);
+				Cell waterCell = row.getCell(2);
+				Cell electricityCell = row.getCell(3);
+				Cell incidentalCell = row.getCell(4);
+				Cell depositCell = row.getCell(5);
+				Cell gateCell = row.getCell(6);
+				Cell electricityPayCell = row.getCell(7);
+				Cell waterPayCell = row.getCell(8);
+				Cell incidentalPayCell = row.getCell(9);
+				Cell depositPayCell = row.getCell(10);
+				Cell gatePayCell = row.getCell(11);
+				Cell checkInCell = row.getCell(12);
+				RentDetailModel rent = new RentDetailModel();
+				rent.setRentDate(sdf.parse(year+"-"+month));
+				rent.setId(room.getId()+","+year+","+(month<10?"0"+month:month));
+				rent.setRent(StringUtil.toFloat(PoiUtil.getCellValue(rentCell)));
+				rent.setWater(StringUtil.toFloat(PoiUtil.getCellValue(waterCell)));
+				rent.setElectricity(StringUtil.toFloat(PoiUtil.getCellValue(electricityCell)));
+				rent.setIncidental(StringUtil.toFloat(PoiUtil.getCellValue(incidentalCell)));
+				rent.setDeposit(StringUtil.toFloat(PoiUtil.getCellValue(depositCell)));
+				rent.setGate(StringUtil.toFloat(PoiUtil.getCellValue(gateCell)));
+				rent.setElectricityPay(StringUtil.toFloat(PoiUtil.getCellValue(electricityPayCell)));
+				rent.setWaterPay(StringUtil.toFloat(PoiUtil.getCellValue(waterPayCell)));
+				rent.setIncidentalPay(StringUtil.toFloat(PoiUtil.getCellValue(incidentalPayCell)));
+				rent.setDepositPay(StringUtil.toFloat(PoiUtil.getCellValue(depositPayCell)));
+				rent.setGatePay(StringUtil.toFloat(PoiUtil.getCellValue(gatePayCell)));
+				rent.setCheckIn(PoiUtil.getCellValue(checkInCell));
+				rent.setRoom(room);
+				rent.setBuilding(build);
+				this.dao.save(rent);
 			}
 		}
 		result.setStatusSuccess();

@@ -45,7 +45,6 @@ $(function(){
 	        	location.reload();
 	        },
 			success: function(result){
-				console.log(result);
 				if(result.status == "success"){
 					$("#exportBtn").show();
 					resultData.filePath = result.filePath;
@@ -65,7 +64,7 @@ $(function(){
 			       		onEditableSave: function (field, row, oldValue, $el) {
 			       			
 			       		},
-			       	    columns: [{
+			       	    columns: [/*{
 			       	    	title: "序号",
 	                        field: "index",
 	                        width: 20,//宽度
@@ -74,7 +73,7 @@ $(function(){
                         	formatter: function (value, row, index) {
                         		return index+1;
                         	}
-			       	    },{
+			       	    },*/{
 			       	        field: 'id',
 			       	        title: 'Item ID',
 			       	     	visible:false
@@ -96,6 +95,14 @@ $(function(){
 			       	     		}
 			       	     	}
 			       	    },{
+			       	    	field:'rentDate',
+			       	    	title:'日期',
+			       	    	//sortable:true,
+			       	    	editable:false,//垂直
+			               	formatter: function (value, row, index) {
+			               		return DateUtil.format("yyyy-MM",new Date(row.rentDate));
+			               	}
+			       	    },/*{
 			       	    	field:'year',
 			       	    	title:'年份',
 			       	    	//sortable:true,
@@ -111,7 +118,7 @@ $(function(){
 			               	formatter: function (value, row, index) {
 			               		return DateUtil.format("MM",new Date(row.rentDate));
 			               	}
-			       	    },{
+			       	    },*/{
 			       	        field: 'rent',
 			       	        title: '租金',
 			       	     	sortable:true,
@@ -119,7 +126,7 @@ $(function(){
 			       	     		emptytext:0,
 			       	     		validate: function(value) {
 			       	     			var id = $(this).attr("data-pk");
-			       	     			return editExcel(result.filePath,id,"rent",value);
+			       	     			return editExcel(result.filePath,id,"rent",value,"number");
 				       	     	}
 			       	     	}
 			       	    }, {
@@ -130,7 +137,7 @@ $(function(){
 			       	     		emptytext:0,
 			       	     		validate: function(value) {
 			       	     			var id = $(this).attr("data-pk");
-			       	     			return editExcel(result.filePath,id,"water",value);
+			       	     			return editExcel(result.filePath,id,"water",value,"number");
 				       	     	}
 			       	     	}
 			       	    }, {
@@ -142,7 +149,7 @@ $(function(){
 			       	     		emptytext:0,
 			       	     		validate: function(value) {
 			       	     			var id = $(this).attr("data-pk");
-			       	     			return editExcel(result.filePath,id,"electricity",value);
+			       	     			return editExcel(result.filePath,id,"electricity",value,"number");
 				       	     	}
 			       	     	}
 			       	    }, {
@@ -153,17 +160,94 @@ $(function(){
 			       	     		emptytext:0,
 			       	     		validate: function(value) {
 			       	     			var id = $(this).attr("data-pk");
-			       	     			return editExcel(result.filePath,id,"incidental",value);
+			       	     			return editExcel(result.filePath,id,"incidental",value,"number");
 				       	     	}
 			       	     	}
-			       	    }, {
+			       	    },{
+			       	        field: 'deposit',
+			       	        title: '押金',
+			       	     	sortable:true,
+			       	     	editable:{
+			       	     		emptytext:0,
+			       	     		validate: function(value) {
+			       	     			var id = $(this).attr("data-pk");
+			       	     			return editExcel(result.filePath,id,"deposit",value,"number");
+				       	     	}
+			       	     	}
+			       	    },{
+			       	        field: 'gate',
+			       	        title: '门押',
+			       	     	sortable:true,
+			       	     	editable:{
+			       	     		emptytext:0,
+			       	     		validate: function(value) {
+			       	     			var id = $(this).attr("data-pk");
+			       	     			return editExcel(result.filePath,id,"gate",value,"number");
+				       	     	}
+			       	     	}
+			       	    },{
+			       	        field: 'electricityPay',
+			       	        title: '缴电费',
+			       	     	sortable:true,
+			       	     	editable:{
+			       	     		emptytext:0,
+			       	     		validate: function(value) {
+			       	     			var id = $(this).attr("data-pk");
+			       	     			return editExcel(result.filePath,id,"electricityPay",value,"number");
+				       	     	}
+			       	     	}
+			       	    },{
+			       	        field: 'waterPay',
+			       	        title: '缴水费',
+			       	     	sortable:true,
+			       	     	editable:{
+			       	     		emptytext:0,
+			       	     		validate: function(value) {
+			       	     			var id = $(this).attr("data-pk");
+			       	     			return editExcel(result.filePath,id,"waterPay",value,"number");
+				       	     	}
+			       	     	}
+			       	    },{
+			       	        field: 'incidentalPay',
+			       	        title: '其它支出',
+			       	     	sortable:true,
+			       	     	editable:{
+			       	     		emptytext:0,
+			       	     		validate: function(value) {
+			       	     			var id = $(this).attr("data-pk");
+			       	     			return editExcel(result.filePath,id,"incidentalPay",value,"number");
+				       	     	}
+			       	     	}
+			       	    },{
+			       	        field: 'depositPay',
+			       	        title: '退押金',
+			       	     	sortable:true,
+			       	     	editable:{
+			       	     		emptytext:0,
+			       	     		validate: function(value) {
+			       	     			var id = $(this).attr("data-pk");
+			       	     			return editExcel(result.filePath,id,"depositPay",value,"number");
+				       	     	}
+			       	     	}
+			       	    },{
+			       	        field: 'gatePay',
+			       	        title: '退门押',
+			       	     	sortable:true,
+			       	     	editable:{
+			       	     		emptytext:0,
+			       	     		validate: function(value) {
+			       	     			var id = $(this).attr("data-pk");
+			       	     			return editExcel(result.filePath,id,"gatePay",value,"number");
+				       	     	}
+			       	     	}
+			       	    },/* {
 			       	        field: 'columnTotal',
 			       	        title: '小计',
 				       	    sortable:true,
 				       	 	formatter:function(value,row,index){
 				       	 		return row.rent+row.water+row.electricity+row.incidental;
 				       	 	}
-			       	    }, {
+			       	    }, */{
 			       	        field: 'checkIn',
 			       	        title: '入住时间',
 			       	     	sortable:true,
@@ -171,7 +255,7 @@ $(function(){
 				       	     	emptytext:"空",
 			       	     		validate: function(value) {
 			       	     			var id = $(this).attr("data-pk");
-			       	     			return editExcel(result.filePath,id,"checkIn",value);
+			       	     			return editExcel(result.filePath,id,"checkIn",value,"string");
 				       	     	}
 			       	     	}
 			       	    }],
@@ -188,14 +272,34 @@ $(function(){
 	      	}
 		});
 	});
-	function editExcel(filePath,id,key,value){
-		$.post("${basePath}/excel/editExcel",{filePath:filePath,id:id,key:key,value:value},function(result){
-			if(result.status == "success"){
-				return false;
-			}else{
-				return "更改失败";
-			}
-		});
+	function editExcel(filePath,id,key,value,type){
+		switch(type){
+			case 'number':
+				if(!isNaN(value)){
+					$.post("${basePath}/excel/editExcel",{filePath:filePath,id:id,key:key,value:value},function(result){
+						if(result.status == "success"){
+							return false;
+						}else{
+							return "更改失败";
+						}
+					});
+				}else{
+					return "请输入正确的金额";
+				}
+				break;
+			case 'string':
+				$.post("${basePath}/excel/editExcel",{filePath:filePath,id:id,key:key,value:value},function(result){
+					if(result.status == "success"){
+						return false;
+					}else{
+						return "更改失败";
+					}
+				});
+				break;
+			default:
+				return "输入的数据格式错误";
+				break;
+		}
 	}
 	$("#exportBtn").on("click",function(){
 		$.post("${basePath}/excel/export",{filePath:resultData.filePath,buildingId:"1"},function(result){

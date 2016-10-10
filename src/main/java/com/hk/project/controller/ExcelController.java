@@ -5,12 +5,14 @@ package com.hk.project.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,7 +96,7 @@ public class ExcelController extends BaseController{
 		return result;
 	}
 	@SuppressWarnings("resource")
-	private ResultsData checkImport(String filePath,String buildingId) throws IOException, ParseException{
+	private ResultsData checkImport(String filePath,String buildingId) throws IOException{
 		ResultsData result = new ResultsData();
 		//检查楼是否存在
 		BuildingModel buildTemp = this.dao.get(BuildingModel.class, buildingId);
@@ -130,8 +132,21 @@ public class ExcelController extends BaseController{
 			short lastCell = firstRow.getLastCellNum();
 			System.out.println("第一行结束");
 			System.out.println("===================================");
-
 			System.out.println("列数:"+lastCell);
+			String ym = PoiUtil.getCellValue(firstRow.getCell(1));
+			//Calendar c = Calendar.getInstance();
+			int year;//c.get(Calendar.YEAR);
+			int month;//c.get(Calendar.MONTH) + 1;
+			Date date = new Date();
+			try {
+				Calendar calendar = DateUtil.toCalendar(ym, "yyyy-MM月");
+				year = calendar.get(Calendar.YEAR);
+				month = calendar.get(Calendar.MONTH)+1;
+				date = sdf.parse(year+"-"+month);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return result.setStatusFail("请检查该excel的内容格式!");
+			}
 			for(int rowNum = 2;rowNum<lastRowNum;rowNum++){
 				Row row = sheet.getRow(rowNum);
 				Cell cell1 = row.getCell(0);
@@ -147,33 +162,38 @@ public class ExcelController extends BaseController{
 				room.setRoomNumber(roomName);
 				room.setFloorNumber(floorName);//String.valueOf(numSheet+1)
 				roomList.add(room);
-				for(int i = 1 ;i < 73 ;i+=6){
-					Cell rentCell = row.getCell(i);
-					Cell waterCell = row.getCell(i+1);
-					Cell electricityCell = row.getCell(i+2);
-					Cell incidentalCell = row.getCell(i+3);
-					Cell checkInCell = row.getCell(i+5);
-					RentDetailModel rent = new RentDetailModel();
-					String ym = PoiUtil.getCellValue(firstRow.getCell(i));
-					System.out.println(roomName + ":" + ym);
-					try {
-						Calendar calendar = DateUtil.toCalendar(ym, "yyyy-MM月");
-						int year = calendar.get(Calendar.YEAR);
-						int month = calendar.get(Calendar.MONTH)+1;
-						rent.setRentDate(sdf.parse(year+"-"+month));
-						rent.setId(room.getId()+","+year+","+(month<10?"0"+month:month));
-						rent.setRent(StringUtil.toFloat(PoiUtil.getCellValue(rentCell)));
-						rent.setWater(StringUtil.toFloat(PoiUtil.getCellValue(waterCell)));
-						rent.setElectricity(StringUtil.toFloat(PoiUtil.getCellValue(electricityCell)));
-						rent.setIncidental(StringUtil.toFloat(PoiUtil.getCellValue(incidentalCell)));
-						rent.setCheckIn(PoiUtil.getCellValue(checkInCell));
-						rent.setRoom(room);
-						rent.setBuilding(build);
-						rentDetailList.add(rent);
-					} catch (Exception e) {
-						return result.setStatusFail("请检查该excel的内容格式!");
-					}
-				}
+				
+				Cell rentCell = row.getCell(1);
+				Cell waterCell = row.getCell(2);
+				Cell electricityCell = row.getCell(3);
+				Cell incidentalCell = row.getCell(4);
+				Cell depositCell = row.getCell(5);
+				Cell gateCell = row.getCell(6);
+				Cell electricityPayCell = row.getCell(7);
+				Cell waterPayCell = row.getCell(8);
+				Cell incidentalPayCell = row.getCell(9);
+				Cell depositPayCell = row.getCell(10);
+				Cell gatePayCell = row.getCell(11);
+				Cell checkInCell = row.getCell(12);
+				
+				RentDetailModel rent = new RentDetailModel();
+				rent.setRentDate(date);
+				rent.setId(room.getId()+","+year+","+(month<10?"0"+month:month));
+				rent.setRent(StringUtil.toFloat(PoiUtil.getCellValue(rentCell)));
+				rent.setWater(StringUtil.toFloat(PoiUtil.getCellValue(waterCell)));
+				rent.setElectricity(StringUtil.toFloat(PoiUtil.getCellValue(electricityCell)));
+				rent.setIncidental(StringUtil.toFloat(PoiUtil.getCellValue(incidentalCell)));
+				rent.setDeposit(StringUtil.toFloat(PoiUtil.getCellValue(depositCell)));
+				rent.setGate(StringUtil.toFloat(PoiUtil.getCellValue(gateCell)));
+				rent.setElectricityPay(StringUtil.toFloat(PoiUtil.getCellValue(electricityPayCell)));
+				rent.setWaterPay(StringUtil.toFloat(PoiUtil.getCellValue(waterPayCell)));
+				rent.setIncidentalPay(StringUtil.toFloat(PoiUtil.getCellValue(incidentalPayCell)));
+				rent.setDepositPay(StringUtil.toFloat(PoiUtil.getCellValue(depositPayCell)));
+				rent.setGatePay(StringUtil.toFloat(PoiUtil.getCellValue(gatePayCell)));
+				rent.setCheckIn(PoiUtil.getCellValue(checkInCell));
+				rent.setRoom(room);
+				rent.setBuilding(build);
+				rentDetailList.add(rent);
 			}
 		}
 		result.put("rooms", roomList);
@@ -201,12 +221,10 @@ public class ExcelController extends BaseController{
 	        	return result.setStatusFail("请导入excel工作簿!");
 	        }
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			return result.setStatusFail("文件不存在,请重新导入!");
 		}
         
-        int coloum = 1; // 比如你要获取第1列
         if(id==null||"".equals(id)){
         	return result.setStatusFail();
         }
@@ -242,8 +260,29 @@ public class ExcelController extends BaseController{
     					case "incidental":
     						targetRow += 4;
 							break;
-    					case "checkIn":
+    					case "deposit":
+    						targetRow += 5;
+							break;
+    					case "gate":
     						targetRow += 6;
+							break;
+    					case "electricityPay":
+    						targetRow += 7;
+							break;
+    					case "waterPay":
+    						targetRow += 8;
+							break;
+    					case "incidentalPay":
+    						targetRow += 9;
+							break;
+    					case "depositPay":
+    						targetRow += 10;
+							break;
+    					case "gatePay":
+    						targetRow += 11;
+							break;
+    					case "checkIn":
+    						targetRow += 12;
 							break;
 						default:
 							f = false;

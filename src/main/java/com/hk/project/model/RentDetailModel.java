@@ -37,6 +37,7 @@ public class RentDetailModel {
 	private RoomModel room;
 	@Column(name = "rent_date")
 	private Date rentDate;
+	//收入
 	@Column(name = "rent",nullable=false,columnDefinition="float default 0")
 	private float rent;
 	@Column(name = "water",nullable=false,columnDefinition="float default 0")
@@ -45,6 +46,22 @@ public class RentDetailModel {
 	private float electricity;
 	@Column(name = "incidental",nullable=false,columnDefinition="float default 0")
 	private float incidental;
+	@Column(name = "deposit",nullable=false,columnDefinition="float default 0")
+	private float deposit;
+	@Column(name = "gate",nullable=false,columnDefinition="float default 0")
+	private float gate;
+	//支出
+	@Column(name = "electricity_pay",nullable=false,columnDefinition="float default 0")
+	private float electricityPay;
+	@Column(name = "water_pay",nullable=false,columnDefinition="float default 0")
+	private float waterPay;
+	@Column(name = "incidental_pay",nullable=false,columnDefinition="float default 0")
+	private float incidentalPay;
+	@Column(name = "deposit_pay",nullable=false,columnDefinition="float default 0")
+	private float depositPay;
+	@Column(name = "gate_pay",nullable=false,columnDefinition="float default 0")
+	private float gatePay;
+
 	@Column(name = "check_in")
 	private String checkIn;
 	@Column(name = "remark")
@@ -110,7 +127,10 @@ public class RentDetailModel {
 		this.incidental = incidental;
 	}
 	public float getTotal(){
-		return this.rent + this.water + this.electricity + this.incidental;
+		return this.rent + this.water + this.electricity + this.incidental + this.deposit + this.gate;
+	}
+	public float getPay(){
+		return this.depositPay + this.gatePay + this.electricityPay + this.waterPay + this.incidentalPay;
 	}
 	public String getCheckIn() {
 		return checkIn;
@@ -124,6 +144,46 @@ public class RentDetailModel {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
-	
+	public float getDeposit() {
+		return deposit;
+	}
+	public void setDeposit(float deposit) {
+		this.deposit = deposit;
+	}
+	public float getGate() {
+		return gate;
+	}
+	public void setGate(float gate) {
+		this.gate = gate;
+	}
+	public float getElectricityPay() {
+		return electricityPay;
+	}
+	public void setElectricityPay(float electricityPay) {
+		this.electricityPay = electricityPay;
+	}
+	public float getWaterPay() {
+		return waterPay;
+	}
+	public void setWaterPay(float waterPay) {
+		this.waterPay = waterPay;
+	}
+	public float getIncidentalPay() {
+		return incidentalPay;
+	}
+	public void setIncidentalPay(float incidentalPay) {
+		this.incidentalPay = incidentalPay;
+	}
+	public float getDepositPay() {
+		return depositPay;
+	}
+	public void setDepositPay(float depositPay) {
+		this.depositPay = depositPay;
+	}
+	public float getGatePay() {
+		return gatePay;
+	}
+	public void setGatePay(float gatePay) {
+		this.gatePay = gatePay;
+	}
 }
