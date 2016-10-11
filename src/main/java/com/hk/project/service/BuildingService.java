@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.stereotype.Service;
 
 import com.hk.base.service.BaseService;
@@ -40,8 +41,9 @@ public class BuildingService extends BaseService<BuildingModel>{
 		return this.dao.queryByHQL("select new map(b.id as value,b.name as text) from BuildingModel b where b.longCode is not null and b.longCode != ''");
 	}
 	public int edit(String id,String key,String value){
-		String hql = "update BuildingModel b set b."+key+"='"+value+"' where b.id = "+id;
-		return this.dao.executeByHQL(hql);
+		String hql = StringEscapeUtils.escapeSql("update BuildingModel b set b."+key+" = ? where b.id = ?");
+		System.out.println(hql);
+		return this.dao.executeByHQL(hql,value,id);
 	}
 	public ResultsData removeById(String id){
 		ResultsData result = new ResultsData();

@@ -128,13 +128,34 @@ public class HibernateBaseDao<T extends Object> extends HibernateDaoSupport impl
 		return session.createSQLQuery(sql).addEntity(clazz).list();
 	}
 	@Override
-	public List<?> queryByHQL(final String hql) {
-		Session session = getHT().getSessionFactory().getCurrentSession();
-		return session.createQuery(hql).list();
+	public List<?> queryByHQL(final String hql, final Object... params) {
+		Query query = getHT().getSessionFactory().getCurrentSession().createQuery(hql);
+		setParameters(query, params, hql.indexOf("?0") > -1);
+		return query.list();
 	}
 	@Override
-	public int executeByHQL(final String hql) {
+	public int executeByHQL(final String hql, final Object... params) {
 		Query query = getHT().getSessionFactory().getCurrentSession().createQuery(hql);
+		setParameters(query, params, hql.indexOf("?0") > -1);
 		return query.executeUpdate();
+	}
+	@SuppressWarnings("rawtypes")
+	private void setParameters(Query query, Object[] params, boolean isPositioned) {
+		if (params != null) {
+			for (int i = 0, l = params.length; i < l; i++) {
+				if (isPositioned) {
+					String key = Integer.toString(i);
+					if (params[i] instanceof Collection) {
+						query.setParameterList(key, (Collection) params[i]);
+					} else if (params[i] != null && params[i].getClass().isArray()) {
+						query.setParameterList(key, (Object[]) params[i]);
+					} else {
+						query.setParameter(key, params[i]);
+					}
+				} else {
+					query.setParameter(i, params[i]);
+				}
+			}
+		}
 	}
 }

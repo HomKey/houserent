@@ -11,6 +11,13 @@ public class RentDetailDto {
 	private float water;
 	private float electricity;
 	private float incidental;
+	private float deposit;
+	private float gate;
+	private float electricityPay;
+	private float waterPay;
+	private float incidentalPay;
+	private float depositPay;
+	private float gatePay;
 	private String checkIn;
 	private String remark;
 	public String getId() {
@@ -75,6 +82,48 @@ public class RentDetailDto {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public float getDeposit() {
+		return deposit;
+	}
+	public void setDeposit(float deposit) {
+		this.deposit = deposit;
+	}
+	public float getGate() {
+		return gate;
+	}
+	public void setGate(float gate) {
+		this.gate = gate;
+	}
+	public float getElectricityPay() {
+		return electricityPay;
+	}
+	public void setElectricityPay(float electricityPay) {
+		this.electricityPay = electricityPay;
+	}
+	public float getWaterPay() {
+		return waterPay;
+	}
+	public void setWaterPay(float waterPay) {
+		this.waterPay = waterPay;
+	}
+	public float getIncidentalPay() {
+		return incidentalPay;
+	}
+	public void setIncidentalPay(float incidentalPay) {
+		this.incidentalPay = incidentalPay;
+	}
+	public float getDepositPay() {
+		return depositPay;
+	}
+	public void setDepositPay(float depositPay) {
+		this.depositPay = depositPay;
+	}
+	public float getGatePay() {
+		return gatePay;
+	}
+	public void setGatePay(float gatePay) {
+		this.gatePay = gatePay;
 	}
 	
 	

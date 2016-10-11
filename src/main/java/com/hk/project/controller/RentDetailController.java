@@ -99,7 +99,7 @@ public class RentDetailController {
 	//获取单栋楼房的统计
 	@RequestMapping(value="/getBuildTotal")
 	@ResponseBody
-	public ResultsData getBuildTotal(String start,String end){
+	public ResultsData getBuildTotal(Date start,Date end){
 		ResultsData result = new ResultsData();
 		List<?> list = rentDetailService.getBuildTotal(start,end);
 		result.setStatusSuccess();

@@ -57,6 +57,34 @@
 					<td><input type="number" name="incidental"/></td>
 				</tr>
 				<tr>
+					<td>押金:</td>
+					<td><input type="number" name="deposit"/></td>
+				</tr>
+				<tr>
+					<td>门押:</td>
+					<td><input type="number" name="gate"/></td>
+				</tr>
+				<tr>
+					<td>缴电费:</td>
+					<td><input type="number" name="electricityPay"/></td>
+				</tr>
+				<tr>
+					<td>缴水费:</td>
+					<td><input type="number" name="waterPay"/></td>
+				</tr>
+				<tr>
+					<td>其它支出:</td>
+					<td><input type="number" name="incidentalPay"/></td>
+				</tr>
+				<tr>
+					<td>退押金:</td>
+					<td><input type="number" name="depositPay"/></td>
+				</tr>
+				<tr>
+					<td>退门押:</td>
+					<td><input type="number" name="gatePay"/></td>
+				</tr>
+				<tr>
 					<td>入住时间:</td>
 					<td><input type="text" name="checkIn"/></td>
 				</tr>

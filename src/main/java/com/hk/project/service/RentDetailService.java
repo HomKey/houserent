@@ -181,15 +181,15 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 		return result;
 	}
 	*/
-	public List<?> getBuildTotal(String start,String end){
+	public List<?> getBuildTotal(Date start,Date end){
 		String hql = "SELECT new map(b.id as id,b.name as name, sum(r.rent) as rent,sum(r.electricity) as electricity,sum(r.water) as water,sum(r.incidental) as incidental)"
-				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE r.rentDate BETWEEN '"+start+"' AND  '"+end+"' GROUP BY b.id";
-		return this.dao.queryByHQL(hql);
+				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE r.rentDate BETWEEN ? AND ? GROUP BY b.id";
+		return this.dao.queryByHQL(hql,start,end);
 	}
 	public List<?> getTotal(String start,String end){
 		String hql = "SELECT new map(b.id as id,b.name as name, sum(r.rent) as rent,sum(r.electricity) as electricity,sum(r.water) as water,sum(r.incidental) as incidental)"
-				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE r.rentDate BETWEEN '"+start+"' AND  '"+end+"' GROUP BY b.parent.id";
-		return this.dao.queryByHQL(hql);
+				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE r.rentDate BETWEEN ? AND ? GROUP BY b.parent.id";
+		return this.dao.queryByHQL(hql,start,end);
 	}
 	
 }

@@ -3,6 +3,8 @@ package com.hk.test;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.criterion.Restrictions;
@@ -19,6 +21,7 @@ import com.hk.project.dto.RoomDto;
 import com.hk.project.model.BuildingModel;
 import com.hk.project.model.RentDetailModel;
 import com.hk.project.model.RoomModel;
+import com.hk.project.service.BuildingService;
 import com.hk.project.service.RentDetailService;
 import com.hk.test.support.BaseTest;
 public class TestService extends BaseTest{
@@ -26,6 +29,8 @@ public class TestService extends BaseTest{
 	private IBaseDao dao;
 	@Autowired
 	private RentDetailService rentDetailService;
+	@Autowired
+	private BuildingService buildingService;
 	@Test
 	@Rollback(value=false)//测试完不回滚
 	public void testBaseDaoSearch(){
@@ -85,9 +90,18 @@ public class TestService extends BaseTest{
 	}
 	@Test
 	@Rollback(value=false)//测试完不回滚
-	public void testTotal(){
-		List<?> result1 = rentDetailService.getBuildTotal("2016-01-01", "2016-10-01");
-		List<?> result2 = rentDetailService.getTotal("2016-01-01", "2016-10-01");
+	public void testTotal() throws ParseException{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date start = sdf.parse("2016-01-01");
+		Date end = sdf.parse("2016-10-01");
+		List<?> result1 = rentDetailService.getBuildTotal(start,end);
+		//List<?> result2 = rentDetailService.getTotal("2016-01-01", "2016-10-01");
+		System.out.println(result1.size());
 		//ResultsData result = rentDetailService.getBuildTotal("2016-01-01", "2016-10-01");
+	}
+	@Test
+	@Rollback(value=false)//测试完不回滚
+	public void editBuilding(){
+		buildingService.edit("2", "name", "name3");
 	}
 }

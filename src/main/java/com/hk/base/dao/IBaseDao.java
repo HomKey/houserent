@@ -26,8 +26,8 @@ public interface IBaseDao{
 	<L extends Collection<? extends Object>> void removeAll(L models);
 	<T extends Object> void removeById(Class<T> clazz,Serializable id);
 	<T extends Object> List<T> criteria(Class<T> clazz,Criterion criterion,Projection projection,Order order,Pages pages);
-	List<?> queryByHQL(final String hql);
+	List<?> queryByHQL(final String hql, final Object... params);
+	int executeByHQL(final String hql, final Object... params);
 	List<Map<String, Object>> queryBySQL(final String sql);
 	<T extends Object> List<T> queryBySQL(final String sql,Class<T> clazz);
-	int executeByHQL(final String hql);
 }
