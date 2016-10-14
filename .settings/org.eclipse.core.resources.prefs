@@ -1,3 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/hk/base/dao/HibernateBaseDao.java=UTF-8
+encoding//src/main/webapp/WEB-INF/views/templates=UTF-8
+encoding//src/main/webapp/WEB-INF/views/templates/index2.jsp=UTF-8
 encoding//src/test/java/com/hk/test/support/BaseTest.java=UTF-8
+encoding/<project>=UTF-8
+separateDerivedEncodings=true
