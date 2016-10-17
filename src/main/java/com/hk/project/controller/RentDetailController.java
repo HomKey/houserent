@@ -6,6 +6,7 @@ package com.hk.project.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hk.base.support.Dto2Entity;
 import com.hk.base.support.IgnoreFieldProcessorImpl;
 import com.hk.base.support.ResultsData;
+import com.hk.base.support.StringUtil;
 import com.hk.project.dto.RentDetailDto;
 import com.hk.project.model.BuildingModel;
 import com.hk.project.model.RentDetailModel;
@@ -51,11 +53,30 @@ public class RentDetailController {
 		return result;
 	}
 	//不分页
-	@RequestMapping(value="/getDataByBuilding")
+	@RequestMapping(value="/getBuildingInfo")
 	@ResponseBody
-	public ResultsData getData(String id){
+	public ResultsData getData(String buildingId,String startTime,String endTime){
 		ResultsData result = new ResultsData();
-		List<RentDetailModel> rentDetail = rentDetailService.criteria(RentDetailModel.class, Restrictions.eq("building.id", id), null, null);
+		Date start = null;
+		Date end = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		if(StringUtil.isEmpty(startTime) && StringUtil.isEmpty(endTime)){
+			Calendar c = Calendar.getInstance();
+			end = c.getTime();
+			c.add(Calendar.MONTH, -1);
+			start = c.getTime();
+		}else{
+			try {
+				start = sdf.parse(startTime);
+				end = sdf.parse(endTime);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return result.setStatusFail("请输入正确的日期格式!");
+			}
+		}
+		List<RentDetailModel> rentDetail = rentDetailService.criteria(RentDetailModel.class, 
+				Restrictions.and(Restrictions.eq("building.id", buildingId),Restrictions.ge("rentDate", start),Restrictions.le("rentDate", end)),
+				null, null);
 		JsonConfig config = new JsonConfig();
 		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","room"}));
 		JSONArray fromArray = JSONArray.fromObject(rentDetail, config);
@@ -96,7 +117,7 @@ public class RentDetailController {
 		result.setStatusSuccess();
 		return result;
 	}
-	//获取单栋楼房的统计
+	//获取单栋楼房的统计(小)
 	@RequestMapping(value="/getBuildTotal")
 	@ResponseBody
 	public ResultsData getBuildTotal(Date start,Date end){
@@ -106,7 +127,7 @@ public class RentDetailController {
 		result.setData(list);
 		return result;
 	}
-	//获取整区楼房的统计
+	//获取整区楼房的统计(大)
 	@RequestMapping(value="/getTotal")
 	@ResponseBody
 	public ResultsData getTotal(String start,String end){

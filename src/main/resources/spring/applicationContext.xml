@@ -106,10 +106,12 @@
     	<sec:form-login login-page="/login" login-processing-url="/login.do" />
         <sec:logout logout-url="/logout.do" logout-success-url="/login" />
 	   <sec:intercept-url pattern="/system/**" access="hasRole('ROLE_ADMIN')"/>
+	   <sec:intercept-url pattern="/templates/**" access="hasRole('ROLE_USER')"/>
 	   <!-- 
-	   <sec:intercept-url pattern="/public/**" access="hasRole('ROLE_USER')"/>
-	   <sec:intercept-url pattern="/*" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/> -->
-	   <sec:intercept-url pattern="/*" access="isAuthenticated()"/>
+	   <sec:intercept-url pattern="/*" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/> 
+	   <sec:intercept-url pattern="/**" access="permitAll"/>//任何用户
+	   -->
+	   <sec:intercept-url pattern="/**" access="isAuthenticated()"/>
 	   <sec:access-denied-handler error-page="/access/accessDenied"/>
     </sec:http>
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
