@@ -260,6 +260,25 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 		}
 		return data;
 	}
+	public List<?> getTotalByBuild(Date start,Date end,String buildingId){
+		String hql = "SELECT new map(b.parent.id as id,"
+				+ "sum(r.rent) as rent,"
+				+ "sum(r.electricity) as electricity,"
+				+ "sum(r.water) as water,"
+				+ "sum(r.incidental) as incidental,"
+				+ "sum(r.deposit) as deposit,"
+				+ "sum(r.gate) as gate,"
+				+ "sum(r.rent + r.electricity + r.water + r.incidental + r.deposit + r.gate) as totalIn,"
+				+ "sum(r.electricityPay) as electricityPay,"
+				+ "sum(r.waterPay) as waterPay,"
+				+ "sum(r.incidentalPay) as incidentalPay,"
+				+ "sum(r.depositPay) as depositPay,"
+				+ "sum(r.gatePay) as gatePay,"
+				+ "sum(r.electricityPay + r.waterPay + r.incidentalPay + r.depositPay + r.gatePay) as totalOut )"
+				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE (r.rentDate BETWEEN ? AND ?) AND (b.id = ? or b.parent.id = ?)";
+		List<Map<String,Object>> results = (List<Map<String, Object>>) this.dao.queryByHQL(hql,start,end,buildingId,buildingId);
+		return results;
+	}
 	public ResultsData getTotalRate(Date start,Date end){
 		ResultsData results = new ResultsData();
 		Date startMonth = new Date(start.getYear(),start.getMonth()-1,start.getDate());

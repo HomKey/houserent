@@ -32,10 +32,13 @@
 <a href="${basePath}/rent/getTotalRate?start=2016-01-01&end=2016-01-31" target= _blank>同比环比</a>
 <br/>
 <br/>
-<a href="${basePath}/rent/getTotal?start=2016-01-01&end=2016-01-31" target= _blank>小区统计</a>
+<a href="${basePath}/rent/getTotal?start=2016-01-01&end=2016-01-31" target= _blank>所有小区统计</a>
 <br/>
 <br/>
-<a href="${basePath}/rent/getBuildTotal?start=2016-01-01&end=2016-01-31" target= _blank>单独楼统计</a>
+<a href="${basePath}/rent/getBuildTotal?start=2016-01-01&end=2016-01-31" target= _blank>所有楼统计</a>
+<br/>
+<br/>
+<a href="${basePath}/rent/getTotalByBuild?start=2016-01-01&end=2016-01-31&buildingId=2" target= _blank>指定楼统计</a>
 <div>
 </div>
 

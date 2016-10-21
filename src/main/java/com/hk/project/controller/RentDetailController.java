@@ -174,4 +174,24 @@ public class RentDetailController {
 		}
 		return rentDetailService.getTotalRate(startTime, endTime);
 	}
+	//获取单栋楼的统计
+	@RequestMapping(value="/getTotalByBuild")
+	@ResponseBody
+	public ResultsData getTotalByBuild(String start,String end,String buildingId){
+		ResultsData result = new ResultsData();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date startTime = null;
+		Date endTime = null;
+		try {
+			startTime = sdf.parse(start);
+			endTime = sdf.parse(end);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return result.setStatusFail();
+		}
+		result.setData(rentDetailService.getTotalByBuild(startTime, endTime,buildingId));
+		result.setStatusSuccess();
+		return result;
+	}
 }
