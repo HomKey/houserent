@@ -14,10 +14,16 @@
 <h1>数据管理页面</h1>
 <a href="${basePath}/system/buildingList" target= _blank>楼房列表</a>
 <a href="${basePath}/system/buildingAdd" target= _blank>楼房增加</a>
+<br/>
+<br/>
 <a href="${basePath}/system/roomList" target= _blank>房间列表</a>
 <a href="${basePath}/system/roomAdd" target= _blank>房间增加</a>
+<br/>
+<br/>
 <a href="${basePath}/system/rentDetailList" target= _blank>租金表</a>
 <a href="${basePath}/system/rentDetailAdd" target= _blank>租金数据增加</a>
+<br/>
+<br/>
 <a href="${basePath}/system/import?buildingId=1" target= _blank>导入租金数据(传buildingId)</a>
 <h1>数据接口</h1>
 <a href="${basePath}/rent/getBuildingInfo?buildingId=1&startTime=2016-01-01&endTime=2017-01-01" target= _blank>查询某栋楼层的租金信息(buildingId,startTime,endTime)</a>

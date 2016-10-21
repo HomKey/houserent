@@ -11,6 +11,7 @@
 </head>
 <body>
 <div class="my-content" >
+	<div class="text-center table-title">楼房信息表</div>
 	<div id="tableDiv" class="col-md-12">
 		<table id="myTable">
 		</table>
@@ -21,7 +22,7 @@
 $(function(){
 	$.fn.editable.defaults.mode = 'popup';
 	function tableHeight() {
-		var height = $(window).height() - 30;
+		var height = $(window).height() - 60;
         return height;
     }
 	var resultData = {};

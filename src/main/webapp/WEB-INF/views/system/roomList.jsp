@@ -11,6 +11,7 @@
 </head>
 <body>
 <div class="my-content" >
+	<div class="text-center table-title">房间信息表</div>
 	<div id="tableDiv" class="col-md-12">
 		<table id="myTable">
 		</table>
