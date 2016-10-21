@@ -46,6 +46,25 @@ public class BuildingModel {
 	private String longCode;
 	@OneToMany(mappedBy="parent",cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	private List<BuildingModel> children;
+	/*
+	@OneToMany(mappedBy="building",cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+	private List<RoomModel> rooms;
+	@OneToMany(mappedBy="building",cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+	private List<RentDetailModel> rents;
+	
+	public List<RoomModel> getRooms() {
+		return rooms;
+	}
+	public void setRooms(List<RoomModel> rooms) {
+		this.rooms = rooms;
+	}
+	public List<RentDetailModel> getRents() {
+		return rents;
+	}
+	public void setRents(List<RentDetailModel> rents) {
+		this.rents = rents;
+	}
+	*/
 	public List<BuildingModel> getChildren() {
 		return children;
 	}

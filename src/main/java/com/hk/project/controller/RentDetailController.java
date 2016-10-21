@@ -120,9 +120,20 @@ public class RentDetailController {
 	//获取单栋楼房的统计(小)
 	@RequestMapping(value="/getBuildTotal")
 	@ResponseBody
-	public ResultsData getBuildTotal(Date start,Date end){
+	public ResultsData getBuildTotal(String start,String end){
 		ResultsData result = new ResultsData();
-		List<?> list = rentDetailService.getBuildTotal(start,end);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date startTime = null;
+		Date endTime = null;
+		try {
+			startTime = sdf.parse(start);
+			endTime = sdf.parse(end);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return result.setStatusFail();
+		}
+		List<?> list = rentDetailService.getBuildTotal(startTime,endTime);
 		result.setStatusSuccess();
 		result.setData(list);
 		return result;
@@ -132,7 +143,18 @@ public class RentDetailController {
 	@ResponseBody
 	public ResultsData getTotal(String start,String end){
 		ResultsData result = new ResultsData();
-		List<?> list = rentDetailService.getTotal(start,end);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date startTime = null;
+		Date endTime = null;
+		try {
+			startTime = sdf.parse(start);
+			endTime = sdf.parse(end);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return result.setStatusFail();
+		}
+		List<?> list = rentDetailService.getTotal(startTime,endTime);
 		result.setStatusSuccess();
 		result.setData(list);
 		return result;
