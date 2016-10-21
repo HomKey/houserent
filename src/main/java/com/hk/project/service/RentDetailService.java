@@ -188,10 +188,10 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 	}
 	*/
 	@SuppressWarnings("unchecked")
-	public List<?> getBuildTotal(Date start,Date end){
+	public ResultsData getBuildTotal(Date start,Date end){
+		ResultsData resultData = new ResultsData();
 		String buildingHql = "SELECT new map(b.id as id,b.name as name) from BuildingModel b where b.parent is not null";
 		List<Map<String,Object>> buildings = (List<Map<String, Object>>) this.dao.queryByHQL(buildingHql);
-		
 		String hql = "SELECT new map(b.id as id,"
 				+ "sum(r.rent) as rent,"
 				+ "sum(r.electricity) as electricity,"
@@ -199,25 +199,34 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 				+ "sum(r.incidental) as incidental,"
 				+ "sum(r.deposit) as deposit,"
 				+ "sum(r.gate) as gate,"
+				+ "sum(r.rent + r.electricity + r.water + r.incidental + r.deposit + r.gate) as totalIn,"
 				+ "sum(r.electricityPay) as electricityPay,"
 				+ "sum(r.waterPay) as waterPay,"
 				+ "sum(r.incidentalPay) as incidentalPay,"
 				+ "sum(r.depositPay) as depositPay,"
-				+ "sum(r.gatePay) as gatePay)"
+				+ "sum(r.gatePay) as gatePay,"
+				+ "sum(r.electricityPay + r.waterPay + r.incidentalPay + r.depositPay + r.gatePay) as totalOut )"
 				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE r.rentDate BETWEEN ? AND ? GROUP BY b.id";
 		List<Map<String,Object>> results = (List<Map<String, Object>>) this.dao.queryByHQL(hql,start,end);
 		List<Map<String,Object>> data = new ArrayList<Map<String,Object>>();
+		Map<String,Object> totalObject = new HashMap<String, Object>();
+		double total = 0d;
 		for(Map<String,Object> model :results){
 			for(Map<String,Object> b : buildings){
 				if(b.get("id").equals(model.get("id"))){
 					b.put("data",model);
+					total += ((double)model.get("totalIn") - (double)model.get("totalOut"));
 				}else{
 					b.put("data", null);
 				}
 				data.add(b);
 			}
 		}
-		return data;
+		totalObject.put("profits", total);
+		resultData.setData(data);
+		resultData.put("total", totalObject);
+		resultData.setStatusSuccess();
+		return resultData;
 	}
 	public List<?> getTotal(Date start,Date end){
 		String buildingHql = "SELECT new map(b.id as id,b.name as name) from BuildingModel b where b.parent is null";
@@ -229,11 +238,13 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 				+ "sum(r.incidental) as incidental,"
 				+ "sum(r.deposit) as deposit,"
 				+ "sum(r.gate) as gate,"
+				+ "sum(r.rent + r.electricity + r.water + r.incidental + r.deposit + r.gate) as totalIn,"
 				+ "sum(r.electricityPay) as electricityPay,"
 				+ "sum(r.waterPay) as waterPay,"
 				+ "sum(r.incidentalPay) as incidentalPay,"
 				+ "sum(r.depositPay) as depositPay,"
-				+ "sum(r.gatePay) as gatePay)"
+				+ "sum(r.gatePay) as gatePay,"
+				+ "sum(r.electricityPay + r.waterPay + r.incidentalPay + r.depositPay + r.gatePay) as totalOut )"
 				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE r.rentDate BETWEEN ? AND ? GROUP BY b.parent.id";
 		List<Map<String,Object>> results = (List<Map<String, Object>>) this.dao.queryByHQL(hql,start,end);
 		List<Map<String,Object>> data = new ArrayList<Map<String,Object>>();
@@ -248,5 +259,30 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 			}
 		}
 		return data;
+	}
+	public ResultsData getTotalRate(Date start,Date end){
+		ResultsData results = new ResultsData();
+		Date startMonth = new Date(start.getYear(),start.getMonth()-1,start.getDate());
+		Date endMonth = new Date(end.getYear(),end.getMonth()-1,0);
+		Date startYear = new Date(start.getYear()-1,start.getMonth(),start.getDate());
+		Date endYear = new Date(end.getYear()-1,end.getMonth(),0);
+		System.out.println("==================");
+		System.out.println(startMonth);
+		System.out.println(endMonth);
+		System.out.println(startYear);
+		System.out.println(endYear);
+		System.out.println("==================");
+		String hql = "SELECT new map("
+				+ "sum(r.rent + r.electricity + r.water + r.incidental + r.deposit + r.gate) as totalIn,"
+				+ "sum(r.electricityPay + r.waterPay + r.incidentalPay + r.depositPay + r.gatePay) as totalOut )"
+				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE r.rentDate BETWEEN ? AND ? ";
+		List<Map<String,Object>> nowData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,start,end);
+		List<Map<String,Object>> monthData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,startMonth,endMonth);
+		List<Map<String,Object>> yearData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,startYear,endYear);
+		results.put("now", nowData);
+		results.put("month", monthData);
+		results.put("year", yearData);
+		results.setStatusSuccess();
+		return results;
 	}
 }

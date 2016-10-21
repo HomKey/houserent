@@ -131,12 +131,9 @@ public class RentDetailController {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return result.setStatusFail();
+			return result.setStatusFail("日期错误");
 		}
-		List<?> list = rentDetailService.getBuildTotal(startTime,endTime);
-		result.setStatusSuccess();
-		result.setData(list);
-		return result;
+		return rentDetailService.getBuildTotal(startTime,endTime);
 	}
 	//获取整区楼房的统计(大)
 	@RequestMapping(value="/getTotal")
@@ -158,5 +155,23 @@ public class RentDetailController {
 		result.setStatusSuccess();
 		result.setData(list);
 		return result;
+	}
+	//同比环比
+	@RequestMapping(value="/getTotalRate")
+	@ResponseBody
+	public ResultsData getTotalRate(String start,String end){
+		ResultsData result = new ResultsData();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date startTime = null;
+		Date endTime = null;
+		try {
+			startTime = sdf.parse(start);
+			endTime = sdf.parse(end);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return result.setStatusFail();
+		}
+		return rentDetailService.getTotalRate(startTime, endTime);
 	}
 }

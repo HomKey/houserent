@@ -27,6 +27,15 @@
 <a href="${basePath}/system/import?buildingId=1" target= _blank>导入租金数据(传buildingId)</a>
 <h1>数据接口</h1>
 <a href="${basePath}/rent/getBuildingInfo?buildingId=1&startTime=2016-01-01&endTime=2017-01-01" target= _blank>查询某栋楼层的租金信息(buildingId,startTime,endTime)</a>
+<br/>
+<br/>
+<a href="${basePath}/rent/getTotalRate?start=2016-01-01&end=2016-01-31" target= _blank>同比环比</a>
+<br/>
+<br/>
+<a href="${basePath}/rent/getTotal?start=2016-01-01&end=2016-01-31" target= _blank>小区统计</a>
+<br/>
+<br/>
+<a href="${basePath}/rent/getBuildTotal?start=2016-01-01&end=2016-01-31" target= _blank>单独楼统计</a>
 <div>
 </div>
 
