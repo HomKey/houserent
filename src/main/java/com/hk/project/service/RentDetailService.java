@@ -281,15 +281,16 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 	}
 	public ResultsData getTotalRate(Date start,Date end){
 		ResultsData results = new ResultsData();
-		Date startMonth = new Date(start.getYear(),start.getMonth()-1,start.getDate());
-		Date endMonth = new Date(end.getYear(),end.getMonth()-1,0);
-		Date startYear = new Date(start.getYear()-1,start.getMonth(),start.getDate());
-		Date endYear = new Date(end.getYear()-1,end.getMonth(),0);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date startMonth = new Date(start.getYear(),start.getMonth()-1,1);
+		Date endMonth = new Date(end.getYear(),end.getMonth(),0);
+		Date startYear = new Date(start.getYear()-1,start.getMonth(),1);
+		Date endYear = new Date(end.getYear()-1,end.getMonth()+1,0);
 		System.out.println("==================");
-		System.out.println(startMonth);
-		System.out.println(endMonth);
-		System.out.println(startYear);
-		System.out.println(endYear);
+		System.out.println(sdf.format(startMonth));
+		System.out.println(sdf.format(endMonth));
+		System.out.println(sdf.format(startYear));
+		System.out.println(sdf.format(endYear));
 		System.out.println("==================");
 		String hql = "SELECT new map("
 				+ "sum(r.rent + r.electricity + r.water + r.incidental + r.deposit + r.gate) as totalIn,"
@@ -302,6 +303,45 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 		results.put("month", monthData);
 		results.put("year", yearData);
 		results.setStatusSuccess();
+		return results;
+	}
+	//所有房间的押金情况
+	public List<?> getDepositByBuilding(String buildingId){
+		List<Map<String,Object>> results = new ArrayList<Map<String,Object>>();
+		String hql = "SELECT new map("
+				+ "sum(d.deposit - d.depositPay) as depositTotal,"
+				+ "sum(d.gate - d.gatePay) as gateTotal,"
+				+ "r.id as id,"
+				+ "r.roomNumber as roomNumber,"
+				+ "r.floorNumber as floorNumber,"
+				+ "r.building.name as buildingName ) "
+				+ "FROM RentDetailModel d RIGHT JOIN d.room r";
+		if(StringUtil.isEmpty(buildingId)){
+			hql += " GROUP BY d.room.id";
+			results = (List<Map<String, Object>>) this.dao.queryByHQL(hql);
+		}else{
+			hql += " where r.building.id = ? GROUP BY d.room.id";
+			results = (List<Map<String, Object>>) this.dao.queryByHQL(hql,buildingId);
+		}
+		System.out.println(results.size());
+		for(Map<String,Object> model : results){
+			System.out.println(model.get("depositTotal"));
+		}
+		return results;
+	}
+	//押金池
+	public List<?> getDeposit(String buildingId){
+		List<Map<String,Object>> results = new ArrayList<Map<String,Object>>();
+		String hql = "SELECT new map("
+				+ "sum(d.deposit - d.depositPay) as depostTotal,"
+				+ "sum(d.gate - d.gatePay) as gateTotal "
+				+ ") FROM RentDetailModel d";
+		if(StringUtil.isEmpty(buildingId)){
+			results = (List<Map<String, Object>>) this.dao.queryByHQL(hql);
+		}else{
+			hql += " where d.building.id = ? ";
+			results = (List<Map<String, Object>>) this.dao.queryByHQL(hql,buildingId);
+		}
 		return results;
 	}
 }

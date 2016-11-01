@@ -91,6 +91,6 @@ public class TestService extends BaseTest{
 	@Test
 	@Rollback(value=false)//测试完不回滚
 	public void editBuilding(){
-		buildingService.edit("2", "name", "name3");
+		rentDetailService.getDeposit(null);
 	}
 }

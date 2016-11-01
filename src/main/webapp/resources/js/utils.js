@@ -36,6 +36,16 @@
 				} 
 			} 
 			return format; 
-		} 
+		},
+		getFirstAndLastMonthDay : function ( year, month){    
+            var   firstdate = year + '-' + month + '-01';  
+            var  day = new Date(year,month,0);   
+            var lastdate = year + '-' + month + '-' + day.getDate();//获取当月最后一天日期    
+            var data = {
+            	firstdate : firstdate,
+            	lastdate : lastdate
+            }
+            return data;
+         }  
 	}
 })(jQuery);

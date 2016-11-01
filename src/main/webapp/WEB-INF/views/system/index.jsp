@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link type="text/css" rel="stylesheet" href="${basePath}/resources/css/test.css" />
 <script type="text/javascript" src="${basePath}/resources/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="${basePath}/resources/js/utils.js"></script>
 <title>系统管理</title>
 </head>
 <body>
@@ -26,7 +27,7 @@
 <br/>
 <a href="${basePath}/system/import?buildingId=1" target= _blank>导入租金数据(传buildingId)</a>
 <h1>数据接口</h1>
-<a href="${basePath}/rent/getBuildingInfo?buildingId=1&startTime=2016-01-01&endTime=2017-01-01" target= _blank>查询某栋楼层的租金信息(buildingId,startTime,endTime)</a>
+<a href="${basePath}/rent/getBuildingInfo?buildingId=1&start=2016-01-01&end=2017-01-01" target= _blank>查询某栋楼层的租金信息(buildingId,startTime,endTime)</a>
 <br/>
 <br/>
 <a href="${basePath}/rent/getTotalRate?start=2016-01-01&end=2016-01-31" target= _blank>同比环比</a>
@@ -38,13 +39,21 @@
 <a href="${basePath}/rent/getBuildTotal?start=2016-01-01&end=2016-01-31" target= _blank>所有楼统计</a>
 <br/>
 <br/>
-<a href="${basePath}/rent/getTotalByBuild?start=2016-01-01&end=2016-01-31&buildingId=2" target= _blank>指定楼统计</a>
+<a href="${basePath}/rent/getTotalByBuild?start=2016-01-01&end=2016-01-31&buildingId=1" target= _blank>指定楼统计</a>
+<br/>
+<br/>
+<a href="${basePath}/rent/getDepositByBuilding?buildingId=1" target= _blank>统计房间的押金情况</a>
+<br/>
+<br/>
+<a href="${basePath}/rent/getDeposit?buildingId=1" target= _blank>统计押金</a>
 <div>
 </div>
 
 </body>
 <script type="text/javascript">
 $(function(){
+	//时间参数格式
+	console.log(DateUtil.getFirstAndLastMonthDay(2016,2));
 });
 </script>
 </html>

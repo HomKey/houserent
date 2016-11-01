@@ -55,27 +55,36 @@ public class RentDetailController {
 	//不分页
 	@RequestMapping(value="/getBuildingInfo")
 	@ResponseBody
-	public ResultsData getData(String buildingId,String startTime,String endTime){
+	public ResultsData getData(String buildingId,String start,String end){
 		ResultsData result = new ResultsData();
-		Date start = null;
-		Date end = null;
+		Date startTime = null;
+		Date endTime = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		if(StringUtil.isEmpty(startTime) && StringUtil.isEmpty(endTime)){
+		if(StringUtil.isEmpty(start) && StringUtil.isEmpty(end)){
 			Calendar c = Calendar.getInstance();
-			end = c.getTime();
+			endTime = c.getTime();
 			c.add(Calendar.MONTH, -1);
-			start = c.getTime();
+			startTime = c.getTime();
+		}else if(StringUtil.isEmpty(end)){
+			try {
+				Date temp = sdf.parse(start);
+				startTime = new Date(temp.getYear(),temp.getMonth(),1);
+				endTime = new Date(temp.getYear(),temp.getMonth(),0);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return result.setStatusFail("请输入正确的日期格式!");
+			}
 		}else{
 			try {
-				start = sdf.parse(startTime);
-				end = sdf.parse(endTime);
-			} catch (ParseException e) {
+				startTime = sdf.parse(start);
+				endTime = sdf.parse(end);
+			} catch (Exception e) {
 				e.printStackTrace();
 				return result.setStatusFail("请输入正确的日期格式!");
 			}
 		}
 		List<RentDetailModel> rentDetail = rentDetailService.criteria(RentDetailModel.class, 
-				Restrictions.and(Restrictions.eq("building.id", buildingId),Restrictions.ge("rentDate", start),Restrictions.le("rentDate", end)),
+				Restrictions.and(Restrictions.eq("building.id", buildingId),Restrictions.ge("rentDate", startTime),Restrictions.le("rentDate", endTime)),
 				null, null);
 		JsonConfig config = new JsonConfig();
 		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","room"}));
@@ -103,6 +112,7 @@ public class RentDetailController {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return result.setStatusFail();
 		}
 		RentDetailModel newModel = rentDetailService.save(rent);
 		result.setStatusSuccess();
@@ -128,7 +138,7 @@ public class RentDetailController {
 		try {
 			startTime = sdf.parse(start);
 			endTime = sdf.parse(end);
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return result.setStatusFail("日期错误");
@@ -146,10 +156,10 @@ public class RentDetailController {
 		try {
 			startTime = sdf.parse(start);
 			endTime = sdf.parse(end);
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return result.setStatusFail();
+			return result.setStatusFail("日期错误");
 		}
 		List<?> list = rentDetailService.getTotal(startTime,endTime);
 		result.setStatusSuccess();
@@ -167,10 +177,10 @@ public class RentDetailController {
 		try {
 			startTime = sdf.parse(start);
 			endTime = sdf.parse(end);
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return result.setStatusFail();
+			return result.setStatusFail("日期错误");
 		}
 		return rentDetailService.getTotalRate(startTime, endTime);
 	}
@@ -185,12 +195,30 @@ public class RentDetailController {
 		try {
 			startTime = sdf.parse(start);
 			endTime = sdf.parse(end);
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return result.setStatusFail();
+			return result.setStatusFail("日期错误");
 		}
 		result.setData(rentDetailService.getTotalByBuild(startTime, endTime,buildingId));
+		result.setStatusSuccess();
+		return result;
+	}
+	//根据楼栋id获取房间的押金情况
+	@RequestMapping(value="/getDepositByBuilding")
+	@ResponseBody
+	public ResultsData getDepositByBuilding(String buildingId){
+		ResultsData result = new ResultsData();
+		result.setData(rentDetailService.getDepositByBuilding(buildingId));
+		result.setStatusSuccess();
+		return result;
+	}
+	//押金池
+	@RequestMapping(value="/getDeposit")
+	@ResponseBody
+	public ResultsData getDeposit(String buildingId){
+		ResultsData result = new ResultsData();
+		result.setData(rentDetailService.getDeposit(buildingId));
 		result.setStatusSuccess();
 		return result;
 	}
