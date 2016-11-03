@@ -10,7 +10,11 @@
 <body>
 <h1>首页</h1>
 <div>
-<p>保存楼房</p>
+<div id="spring_scurity1">
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	只有ROLE_ADMIN权限的用户才可见
+</sec:authorize>  
+</div>
 <div>username : <sec:authentication property="name"/></div>
 <a href="${basePath}/logout.do">退出</a>
 </div>
