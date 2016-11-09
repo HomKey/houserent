@@ -252,29 +252,83 @@
 <script src="${basePath}/resources/js/dist/js/demo.js"></script>
 
 <script type="text/javascript">
-setTableHeight()
-  $(".startDate").datetimepicker({
-        format: "yyyy-mm",
-        autoclose: true,
-        todayBtn: true,
-        pickerPosition: "bottom-left",
-        minView:3,
-        startView:3,
-        todayHighlight:true,
-    });
-  $(".endDate").datetimepicker({
-        format: "yyyy-mm",
-        autoclose: true,
-        todayBtn: true,
-        pickerPosition: "bottom-left",
-        minView:3,
-        startView:3,
-        todayHighlight:true,
-    });
-  function setTableHeight(){
-    var divNum = 100/$(".table_td2").eq(0).find("div").length;
-    $(".table_td2").find("div").css("width",divNum+"%");
-  }
+	setTableHeight()
+	var basePath = '${basePath}';
+	var time= new Date();
+	var nowTime = time.getFullYear()+1+"-"+(time.getMonth()+1);
+	var startDate = time.getFullYear()+"-"+(time.getMonth()-2);
+	$(function(){
+		var id=getQueryString("id");
+		getData(id,startDate,nowTime);
+	})
+	$(".endDate input").val(nowTime);
+	$(".startDate input").val(startDate);
+	$(".startDate").datetimepicker({
+	       format: "yyyy-mm",
+	       autoclose: true,
+	       todayBtn: true,
+	       pickerPosition: "bottom-left",
+	       minView:3,
+	       startView:3,
+	       todayHighlight:true,
+	});
+	$(".endDate").datetimepicker({
+	      format: "yyyy-mm",
+	      autoclose: true,
+	      todayBtn: true,
+	      pickerPosition: "bottom-left",
+	      minView:3,
+	      startView:3,
+	      todayHighlight:true,
+	});
+	function setTableHeight(){
+		var divNum = 100/$(".table_td2").eq(0).find("div").length;
+		$(".table_td2").find("div").css("width",divNum+"%");
+	}
+	function getData(id,start,end){
+		$.getJSON(basePath+"/rent/getBuildingInfo"
+			,{"buildingId":id,"start":start+"-1","end":end+"-31"}
+			,function(data){
+				$(".tableDiv .table_td2").html("");
+				var dataDetail = data.data;
+				if(data.status == "success"){
+					var dataNum = 0;
+					for(var i in dataDetail){
+						if(dataDetail[i].data != null){
+							for(var j in dataDetail[i].data){
+								$("."+j).append("<div>"+dataDetail[i].data[j]+"</div>");
+							}
+						}else{
+							$(".water").append("<div>0</div>");
+							$(".incidentalPay").append("<div>0</div>");
+							$(".electricityPay").append("<div>0</div>");
+							$(".gatePay").append("<div>0</div>");
+							$(".depositPay").append("<div>0</div>");
+							$(".incidental").append("<div>0</div>");
+							$(".deposit").append("<div>0</div>");
+							$(".rent").append("<div>0</div>");
+							$(".electricity").append("<div>0</div>");
+							$(".waterPay").append("<div>0</div>");
+							$(".gate").append("<div>0</div>");
+							$(".totalIn").append("<div>0</div>");
+							$(".totalOut").append("<div>0</div>");
+						}
+						$(".tableDiv .name").append("<div>"+dataDetail[i].name+"</div>")
+						dataNum = i;
+					}
+					$(".tableDiv .table_td2 div").css("width",100/(parseFloat(dataNum)+1)+"%");
+				}else{
+					alert("检索失败，请重新检索");
+				}
+			}
+		)
+	}
+	function getQueryString(name){ 
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+		var r = window.location.search.substr(1).match(reg); 
+		if (r != null) return unescape(r[2]); return null; 
+	} 
+
 
 
 </script>

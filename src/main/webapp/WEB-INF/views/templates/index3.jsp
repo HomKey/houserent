@@ -31,32 +31,34 @@
   <![endif]-->
 </head>
 <style>
-  body{padding: 0px;margin: 0px; border: 0px}
-  .ovcl{overflow: hidden;clear: both;}
-  .fl{float: left;}
-  .startDate,.endDate{width: 300px;float: right;margin-top: 20px;}
-  .startDate span,.endDate span{line-height: 30px;}
-  .startDate input,.endDate input{width:150px;height:30px;float: left;text-align: center;font-size: 16px;border: 1px solid #dddddd;border-radius: 3px;padding: 4px;}
-  .box-solid{margin: 20px auto;width: 98%;}
-  .box-body{padding:0px !important;background: #ffffff;border:1px solid #67a8ce;color: #333333}
-  .tableDiv{
-     border-collapse: collapse;/* 边框合并属性  */
-     width:200px;
-  }
-
-  .table_tr div{
-       border: 1px solid #dddddd;
-  }
-  .table_tr{clear: both;}
-  .table_tr div{float: left;text-align: center;line-height: 34px;border-bottom: : 0px;border-right: : 0px;}
-  .tableDiv{border:1px solid #dddddd;border-right: 0;border-bottom: 0;}
-  .table_td1{width: 15%;height:35px;text-align: center;line-height: 35px;}
-  .table_tr .table_td2 div,.table_tr .table_td1{border:1px solid #dddddd;border-left: 0px;border-top: 0px; }
-  .table_tr .table_td2{border: 0px;width: 85%;}
-  .tableDiv2{width:98%;clear: both;overflow: hidden;margin:30px auto;border:1px solid #dddddd;border-right: 0;border-bottom: 0;}
-  .tableDiv2 div{height:35px;line-height:35px;text-align:center;float: left;border:1px solid #dddddd;border-left: 0;border-top: 0;}
-  .tableDiv2 .div1{width: 10%}
-  .tableDiv2 .div2{width: 23.3%}
+body{padding: 0px;margin: 0px; border: 0px}
+.ovcl{overflow: hidden;clear: both;}
+.fl{float: left;}
+.fr{float: right;}
+.startDate,.endDate{width: 300px;float: right;margin-top: 20px;}
+.startDate span,.endDate span{height: 30px;line-height: 30px;}
+.startDate span .fa-calendar,.endDate span .fa-calendar{line-height: 30px;}
+.startDate input,.endDate input{width:150px;height:30px;float: left;text-align: center;font-size: 16px;border: 1px solid #dddddd;border-radius: 3px;padding: 4px;}
+.box-solid{margin: 20px auto;width: 98%;}
+.box-body{padding:0px !important;background: #ffffff;border:1px solid #67a8ce;color: #333333}
+.tableDiv{
+   border-collapse: collapse;/* 边框合并属性  */
+   width:200px;
+}
+.search{margin-top: 20px;line-height: 20px;height: 30px;width: 80px;background-color: #333333;color: #ffffff;padding: 5px 10px;text-align: center;border-radius: 3px;cursor: pointer;margin-right: 40px;}
+.table_tr div{
+     border: 1px solid #dddddd;
+}
+.table_tr{clear: both;}
+.table_tr div{float: left;text-align: center;line-height: 34px;border-bottom: : 0px;border-right: : 0px;}
+.tableDiv{border:1px solid #dddddd;border-right: 0;border-bottom: 0;}
+.table_td1{width: 15%;height:35px;text-align: center;line-height: 35px;}
+.table_tr .table_td2 div,.table_tr .table_td1{border:1px solid #dddddd;border-left: 0px;border-top: 0px; }
+.table_tr .table_td2{border: 0px;width: 85%;}
+.tableDiv2{width:98%;clear: both;overflow: hidden;margin:30px auto;border:1px solid #dddddd;border-right: 0;border-bottom: 0;}
+.tableDiv2 div{height:35px;line-height:35px;text-align:center;float: left;border:1px solid #dddddd;border-left: 0;border-top: 0;}
+.tableDiv2 .div1{width: 10%}
+.tableDiv2 .div2{width: 23.3%}
 </style>
 <body class="hold-transition sidebar-mini">
 
@@ -64,7 +66,7 @@
 
 
 
-<!-- <section class="content-header">
+<section class="content-header">
   <h1>
     Dashboard
     <small>Control panel</small>
@@ -73,23 +75,30 @@
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active">Dashboard</li>
   </ol>
-</section> -->
+</section> 
 
 
 
 <!-- dateTimePicker -->
 <div class="" style="    overflow: hidden;">
+	<div class="fr search">
+    	检索
+  </div>
+
   <div class="fl input-append date startDate">
-    <span class="fl">开始时间：</span>
+    <span class="fl">查询日期：</span>
     <input class="" size="16" type="text" value="" readonly>
     <span class="add-on fl"> <i class="fa fa-calendar"></i></span>
   </div>
+  
   <!-- <div class="fl input-append date endDate" >
     <span class="fl">结束时间：</span>
     <input size="16" type="text" value="" readonly>
     <span class="add-on fl"> <i class="fa fa-calendar"></i></span>
   </div> -->
+  
 </div> 
+
 
 
 <!-- Calendar -->
@@ -112,114 +121,114 @@
               <div class="tableDiv" style="width: 100% ;" >
                   <div class="table_tr">
                     <div class="table_td1">&nbsp</div>
-                    <div class="table_td2">
-                      <div>顺心园</div>
+                    <div class="table_td2 name">
+                      <!-- <div>顺心园</div>
                       <div>如意楼</div>
-                      <div>岭南大厦</div>
+                      <div>岭南大厦</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">月租</div>
-                    <div class="table_td2">
+                    <div class="table_td2 rent">
+                      <!-- <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">电收</div>
-                    <div class="table_td2">
+                    <div class="table_td2 electricity">
+                     <!--  <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">水收</div>
-                    <div class="table_td2">
+                    <div class="table_td2 water">
+                      <!-- <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">其他</div>
-                    <div class="table_td2">
+                    <div class="table_td2 incidental">
+                    <!--   <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">押金</div>
-                    <div class="table_td2">
+                    <div class="table_td2 deposit">
+                      <!-- <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">门押</div>
-                    <div class="table_td2">
+                    <div class="table_td2 gate">
+                      <!-- <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">总收入</div>
-                    <div class="table_td2">
+                    <div class="table_td2 totalIn">
+                      <!-- <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">应缴电</div>
-                    <div class="table_td2">
+                    <div class="table_td2 electricityPay">
+                     <!--  <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">应缴水</div>
-                    <div class="table_td2">
+                    <div class="table_td2 waterPay">
+                      <!-- <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">其他支出</div>
-                    <div class="table_td2">
+                    <div class="table_td2 incidentalPay">
+                     <!--  <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">退押</div>
-                    <div class="table_td2">
+                    <div class="table_td2 depositPay">
+                      <!-- <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">退门押</div>
-                    <div class="table_td2">
+                    <div class="table_td2 gatePay">
+                      <!-- <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">总支出</div>
-                    <div class="table_td2">
+                    <div class="table_td2 totalOut">
+                      <!-- <div>1</div>
                       <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
+                      <div>1</div> -->
                     </div>
                   </div>
               </div><!-- /.tableDiv -->
@@ -275,31 +284,78 @@
 <script src="${basePath}/resources/js/dist/js/demo.js"></script>
 
 <script type="text/javascript">
-setTableHeight()
-  $(".startDate").datetimepicker({
-        format: "yyyy-mm",
-        autoclose: true,
-        todayBtn: true,
-        pickerPosition: "bottom-left",
-        minView:3,
-        startView:3,
-        todayHighlight:true,
-    });
-  $(".endDate").datetimepicker({
-        format: "yyyy-mm",
-        autoclose: true,
-        todayBtn: true,
-        pickerPosition: "bottom-left",
-        minView:3,
-        startView:3,
-        todayHighlight:true,
-    });
-  function setTableHeight(){
-    var divNum = 100/$(".table_td2").eq(0).find("div").length;
-    $(".table_td2").find("div").css("width",divNum+"%");
-  }
-
-
+setTableHeight();
+var basePath = '${basePath}';
+var time= new Date();
+var nowTime = time.getFullYear()+"-"+(time.getMonth()+1);
+$(function(){
+	getData(nowTime,nowTime);
+})
+$(".startDate input").val(nowTime);
+$(".startDate").datetimepicker({
+    format: "yyyy-mm",
+    autoclose: true,
+    todayBtn: true,
+    pickerPosition: "bottom-left",
+    minView:3,
+    startView:3,
+    todayHighlight:true,
+});
+ $(".endDate").datetimepicker({
+    format: "yyyy-mm",
+    autoclose: true,
+    todayBtn: true,
+    pickerPosition: "bottom-left",
+    minView:3,
+    startView:3,
+    todayHighlight:true,
+});
+function setTableHeight(){
+  var divNum = 100/$(".table_td2").eq(0).find("div").length;
+  $(".table_td2").find("div").css("width",divNum+"%");
+}
+function getData(start,end){
+	$.getJSON(basePath+"/rent/getTotal"
+		,{"start":start+"-1","end":end+"-31"}
+		,function(data){
+			$(".tableDiv .table_td2").html("");
+			var dataDetail = data.data;
+			if(data.status == "success"){
+				var dataNum = 0;
+				for(var i in dataDetail){
+					if(dataDetail[i].data != null){
+						for(var j in dataDetail[i].data){
+							$("."+j).append("<div>"+dataDetail[i].data[j]+"</div>");
+						}
+					}else{
+						$(".water").append("<div>0</div>");
+						$(".incidentalPay").append("<div>0</div>");
+						$(".electricityPay").append("<div>0</div>");
+						$(".gatePay").append("<div>0</div>");
+						$(".depositPay").append("<div>0</div>");
+						$(".incidental").append("<div>0</div>");
+						$(".deposit").append("<div>0</div>");
+						$(".rent").append("<div>0</div>");
+						$(".electricity").append("<div>0</div>");
+						$(".waterPay").append("<div>0</div>");
+						$(".gate").append("<div>0</div>");
+						$(".totalIn").append("<div>0</div>");
+						$(".totalOut").append("<div>0</div>");
+					}
+					$(".tableDiv .name").append("<div>"+dataDetail[i].name+"</div>")
+					dataNum = i;
+				}
+				$(".tableDiv .table_td2 div").css("width",100/(parseFloat(dataNum)+1)+"%");
+			}else{
+				alert("检索失败，请重新检索");
+			}
+		}
+	)
+}
+$(".search").click(function(){
+	var time = $(".startDate input").val();
+	getData(time,time);
+})
 </script>
 
 

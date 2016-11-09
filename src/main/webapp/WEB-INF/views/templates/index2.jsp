@@ -29,7 +29,13 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition sidebar-mini">
+<style>
+	.treemenu{padding:0px}
+	.treemenu li{padding:12px 20px;color:#b8c7ce;}
+	.treemenu li:hover{background:#1a2226;color:#ffffff !important}
+	.treemenu li a:hover{color:#ffffff !important}
+</style>
+<body class="hold-transition sidebar-mini skin-blue ">
 <div class="wrapper">
 
   <header class="main-header">
@@ -90,7 +96,7 @@
       <!-- 侧栏 用户信息 -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" style="height:45px;">
         </div>
         <div class="pull-left info">
           <p>Alexander Pierce</p>
@@ -100,98 +106,10 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">楼层详情</li>
+        <li class="active"><a><i class="fa fa-dashboard"></i> <span>总览</span></a></li>
         <ul class="tree">
-		  <li><a href="">Home</a></li>
-		  <li><span>Category</span>
-		    <ul>
-		      <li><a href="#">jQuery</a>
-		        <ul>
-		          <li><a href="#">jQuery</a></li>
-		          <li><a href="#">jQuery UI</a></li>
-		          <li><a href="#">jQuery Mobile</a></li>
-		        </ul>
-		      </li>
-		      <li><a href="#">JavaScript</a>
-		        <ul>
-		          <li><a class="active" href="#">AngularJS</a></li>
-		          <li><a href="#">React</a></li>
-		          <li><a href="#">Backbone</a></li>
-		        </ul>
-		      </li>
-		      <li><a href="#suits">Golang</a></li>
-		    </ul>
-		  </li>
-		  <li><a href="#about">About</a>
-		    <ul>
-		      <li><a href="#">Contact</a></li>
-		      <li><a href="#">Blog</a></li>
-		      <li><a href="#">Jobs</a>
-		        <ul>
-		          <li><a href="#jobs1">Job 1</a></li>
-		          <li><a href="#jobs2">Job 2</a></li>
-		          <li><a href="#jobs3">Job 3</a></li>
-		        </ul>
-		      </li>
-		    </ul>
-		  </li>
 		</ul>
-        <!-- <li class="treeview">
-          <a href="#">
-            <i class="fa fa-share"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-            <li>
-              <a href="#"><i class="fa fa-circle-o"></i> Level One
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li>
-                  <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li>
-                      <a href="#"><i class="fa fa-circle-o"></i> Level Three
-                        <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                      </a>
-                      <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level four</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-          </ul>
-        </li> -->
-        <li><a href="documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+        <li><a><i class="fa fa-book"></i> <span>Documentation</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -296,7 +214,7 @@
 	}
 	function showBuildingList(buildingList){
 		for(var i in buildingList){
-			content += "<li><a data-id='"+buildingList[i]+"' href=>"+buildingList[i].name+"</a>"
+			content += "<li><a data-id='"+buildingList[i].id+"'>"+buildingList[i].name+"</a>"
 			if(buildingList.children != ""){
 				content +="<ul>";
 				showBuildingList(buildingList[i].children);
@@ -311,6 +229,14 @@
 $(function(){
         
     });
+    $(".sidebar-menu li").click(function(){
+    	$(".sidebar-menu li").removeClass("active");
+    	$(this).addClass("active");
+    })
+    $(document).on("click",".treemenu a",function(e){
+    	var buildingID = $(this).attr("data-id");
+    	$("#iframeId1").attr("src","${basePath}/templates/index4?id="+buildingID);
+    })
 </script>
 </body>
 </html>
