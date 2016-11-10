@@ -54,6 +54,7 @@
 $(function(){
 	//时间参数格式
 	console.log(DateUtil.getFirstAndLastMonthDay(2016,2));
+	console.log(DateUtil.format("yyyy-mm-dd",new Date(1476028800000)));
 });
 </script>
 </html>

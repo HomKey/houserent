@@ -151,7 +151,7 @@ $(function(){
        	     		emptytext:0,
        	     		validate: function(value) {
        	     			var id = $(this).attr("data-pk");
-       	     			return editExcel(result.filePath,id,"deposit",value,"number");
+       	     			return editValidate("deposit",value,id,"number");
 	       	     	}
        	     	}
        	    },{
@@ -162,7 +162,7 @@ $(function(){
        	     		emptytext:0,
        	     		validate: function(value) {
        	     			var id = $(this).attr("data-pk");
-       	     			return editExcel(result.filePath,id,"gate",value,"number");
+       	     			return editValidate("gate",value,id,"number");
 	       	     	}
        	     	}
        	    },{
@@ -173,7 +173,7 @@ $(function(){
        	     		emptytext:0,
        	     		validate: function(value) {
        	     			var id = $(this).attr("data-pk");
-       	     			return editExcel(result.filePath,id,"electricityPay",value,"number");
+       	     			return editValidate("electricityPay",value,id,"number");
 	       	     	}
        	     	}
        	    },{
@@ -184,7 +184,7 @@ $(function(){
        	     		emptytext:0,
        	     		validate: function(value) {
        	     			var id = $(this).attr("data-pk");
-       	     			return editExcel(result.filePath,id,"waterPay",value,"number");
+       	     			return editValidate("waterPay",value,id,"number");
 	       	     	}
        	     	}
        	    },{
@@ -195,7 +195,7 @@ $(function(){
        	     		emptytext:0,
        	     		validate: function(value) {
        	     			var id = $(this).attr("data-pk");
-       	     			return editExcel(result.filePath,id,"incidentalPay",value,"number");
+       	     			return editValidate("incidentalPay",value,id,"number");
 	       	     	}
        	     	}
        	    },{
@@ -206,7 +206,7 @@ $(function(){
        	     		emptytext:0,
        	     		validate: function(value) {
        	     			var id = $(this).attr("data-pk");
-       	     			return editExcel(result.filePath,id,"depositPay",value,"number");
+       	     			return editValidate("depositPay",value,id,"number");
 	       	     	}
        	     	}
        	    },{
@@ -217,7 +217,7 @@ $(function(){
        	     		emptytext:0,
        	     		validate: function(value) {
        	     			var id = $(this).attr("data-pk");
-       	     			return editExcel(result.filePath,id,"gatePay",value,"number");
+       	     			return editValidate("gatePay",value,id,"number");
 	       	     	}
        	     	}
        	    }, /*{
