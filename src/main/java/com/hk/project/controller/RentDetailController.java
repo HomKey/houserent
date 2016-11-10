@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hk.base.support.Dto2Entity;
@@ -187,7 +188,7 @@ public class RentDetailController {
 	//获取单栋楼的统计
 	@RequestMapping(value="/getTotalByBuild")
 	@ResponseBody
-	public ResultsData getTotalByBuild(String start,String end,String buildingId){
+	public ResultsData getTotalByBuild(String start,String end,String buildingId,@RequestParam(value="flag", defaultValue="false") String flag){
 		ResultsData result = new ResultsData();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date startTime = null;
@@ -200,7 +201,7 @@ public class RentDetailController {
 			e.printStackTrace();
 			return result.setStatusFail("日期错误");
 		}
-		result.setData(rentDetailService.getTotalByBuild(startTime, endTime,buildingId));
+		result.setData(rentDetailService.getTotalByBuild(startTime, endTime,buildingId,flag));
 		result.setStatusSuccess();
 		return result;
 	}
