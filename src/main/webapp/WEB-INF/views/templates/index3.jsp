@@ -14,8 +14,8 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="${basePath}/resources/js/cdnjs/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
- <link rel="stylesheet" href="${basePath}/resources/js/cdnjs/ionicons/css/ionicons.min.css">
-   <!-- jvectormap -->
+  <link rel="stylesheet" href="${basePath}/resources/js/cdnjs/ionicons/css/ionicons.min.css">
+  <!-- jvectormap -->
   <link rel="stylesheet" href="${basePath}/resources/js/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="${basePath}/resources/js/dist/css/AdminLTE.min.css">
