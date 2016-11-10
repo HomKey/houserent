@@ -310,7 +310,7 @@
 	}
 	function getData(id,start,end){
 		$.getJSON(basePath+"/rent/getTotalByBuild"
-			,{"buildingId":id,"start":start+"-1","end":end+"-31"}
+			,{"buildingId":id,"start":start+"-1","end":end+"-31","flag":true}
 			,function(data){
 				//$(".tableDiv .table_td2").html("");
 				var dataDetail = data.data;
