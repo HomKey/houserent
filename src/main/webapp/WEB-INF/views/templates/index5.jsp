@@ -1,27 +1,26 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
   <title>AdminLTE 2 | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="../../js/bootstrap/css/bootstrap.min.css">
-    <!-- datetimepicker -->
-  <link rel="stylesheet" href="../../js/datetimepicker/css/bootstrap-datetimepicker.min.css"">
-  
+  <link rel="stylesheet" href="${basePath}/resources/js/bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="${basePath}/resources/js/cdnjs/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+ <link rel="stylesheet" href="${basePath}/resources/js/cdnjs/ionicons/css/ionicons.min.css">
   <!-- jvectormap -->
-  <link rel="stylesheet" href="../../js/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+  <link rel="stylesheet" href="${basePath}/resources/js/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../js/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="${basePath}/resources/js/dist/css/AdminLTE.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="${basePath}/resources/js/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="${basePath}/resources/js/JSTree/jquery.treemenu.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,268 +30,213 @@
   <![endif]-->
 </head>
 <style>
-  body{padding: 0px;margin: 0px; border: 0px}
-  .ovcl{overflow: hidden;clear: both;}
-  .fl{float: left;}
-  .startDate,.endDate{width: 300px;float: right;margin-top: 20px;}
-  .startDate span,.endDate span{line-height: 30px;}
-  .startDate input,.endDate input{width:150px;height:30px;float: left;text-align: center;font-size: 16px;border: 1px solid #dddddd;border-radius: 3px;padding: 4px;}
-  .box-solid{margin: 20px auto;width: 98%;}
-  .box-body{padding:0px !important;background: #ffffff;border:1px solid #67a8ce;color: #333333}
-  .tableDiv{
-     border-collapse: collapse;/* 边框合并属性  */
-     width:200px;
-  }
-
-  .table_tr div{
-       border: 1px solid #dddddd;
-  }
-  .table_tr{clear: both;}
-  .table_tr div{float: left;text-align: center;line-height: 34px;border-bottom: : 0px;border-right: : 0px;}
-  .tableDiv{border:1px solid #dddddd;border-right: 0;border-bottom: 0;}
-  .table_td1{width: 15%;height:35px;text-align: center;line-height: 35px;}
-  .table_tr .table_td2 div,.table_tr .table_td1{border:1px solid #dddddd;border-left: 0px;border-top: 0px; }
-  .table_tr .table_td2{border: 0px;width: 85%;}
-  .tableDiv2{width:98%;clear: both;overflow: hidden;margin:30px auto;border:1px solid #dddddd;border-right: 0;border-bottom: 0;}
-  .tableDiv2 div{height:35px;line-height:35px;text-align:center;float: left;border:1px solid #dddddd;border-left: 0;border-top: 0;}
-  .tableDiv2 .div1{width: 10%}
-  .tableDiv2 .div2{width: 23.3%}
+	.treemenu{padding:0px}
+	.treemenu li{padding:12px 20px;color:#b8c7ce;}
+	.treemenu li:hover{background:#1a2226;color:#ffffff !important}
+	.treemenu li a:hover{color:#ffffff !important}
 </style>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini skin-blue ">
+<div class="wrapper">
 
-<!-- dateTimePicker -->
-<div class="" style="    overflow: hidden;">
-  <a class="fl" style="float: right;cursor: pointer;height:    width: 300px;line-height: 30px;margin-top: 20px;margin-right: 30px; ">检索</a>
-  <div class="fl input-append date endDate" >
-    <span class="fl">结束时间：</span>
-    <input size="16" type="text" value="" readonly>
-    <span class="add-on fl"> <i class="fa fa-calendar"></i></span>
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="index2.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>A</b>LT</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>Admin</b>LTE</span>
+    </a>
+
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <span class="hidden-xs">Alexander Pierce</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                <p>
+                  Alexander Pierce - Web Developer
+                  <small>Member since Nov. 2012</small>
+                </p>
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+    </nav>
+  </header>
+  <!-- 左侧导航，包括LOGO和侧栏 -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- 侧栏 用户信息 -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" style="height:45px;">
+        </div>
+        <div class="pull-left info">
+          <p>Alexander Pierce</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu">
+        <li class="header">楼层详情</li>
+        <li class="active"><a><i class="fa fa-dashboard"></i> <span>总览</span></a></li>
+        <ul class="tree">
+		</ul>
+        <li><a><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- <section class="content-header">
+      <h1>
+        Dashboard
+        <small>Version 2.0</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+      </ol>
+    </section> -->
+
+    <!-- Main content -->
+    <section class="content-iframe">
+      <iframe id="iframeId1" src="${basePath}/templates/index6" style="width: 100%;height: 100%;padding: 0px;border: 0px">
+      
+      </iframe>
+    </section>
+    
+    <!-- /.content -->
   </div>
-  <div class="fl input-append date startDate">
-    <span class="fl">开始时间：</span>
-    <input size="16" type="text" value="" readonly>
-    <span class="add-on fl"> <i class="fa fa-calendar"></i></span>
-  </div>
+  <!-- /.content-wrapper -->
 
+  <!-- <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 2.3.6
+    </div>
+    <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+    reserved.
+  </footer> -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
 
-</div> 
-
-<!-- Calendar -->
-          <div class="box box-solid bg-light-blue-gradient">
-            <div class="box-header">
-             
-
-              <h3 class="box-title">顺心园A/B座</h3>
-              <!-- tools box -->
-              <div class="pull-right box-tools">
-                <button type="button" class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-              <!-- /. tools -->
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body no-padding">
-              <!--The calendar -->
-              <div id="calendar" style="width: 100%"></div>
-              <div class="tableDiv" style="width: 100% ;" >
-                  <div class="table_tr">
-                    <div class="table_td1">&nbsp</div>
-                    <div class="table_td2">
-                      <div>顺心园</div>
-                      <div>如意楼</div>
-                      <div>岭南大厦</div>
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1">月份租金</div>
-                    <div class="table_td2">
-                      <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1">月份电费收入</div>
-                    <div class="table_td2">
-                      <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1">月份应缴电费</div>
-                    <div class="table_td2">
-                      <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1">月份水费收入</div>
-                    <div class="table_td2">
-                      <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1">月份应缴水费</div>
-                    <div class="table_td2">
-                      <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1">月份押金</div>
-                    <div class="table_td2">
-                      <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1">月份退押金</div>
-                    <div class="table_td2">
-                      <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1">月份门押</div>
-                    <div class="table_td2">
-                      <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1">月份退门押</div>
-                    <div class="table_td2">
-                      <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1">其他收入</div>
-                    <div class="table_td2">
-                      <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1">其他支出</div>
-                    <div class="table_td2">
-                      <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1">总收入</div>
-                    <div class="table_td2">
-                      <div>1</div>
-                      <div>1</div>
-                      <div>1</div>
-                    </div>
-                  </div>
-              </div><!-- /.tableDiv -->
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-          <!-- <div class="tableDiv2">
-              <div class="div1">利润：</div>
-              <div class="div2">利润：</div>
-              <div class="div1">同比：</div>
-              <div class="div2">利润：</div>
-              <div class="div1">环比：</div>
-              <div class="div2">利润：</div>
-            </div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
+<!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
-<script src="../../js/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="${basePath}/resources/js/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="../../js/bootstrap/js/bootstrap.min.js"></script>
-<!-- datetimepick-->
-<script src="../../js/datetimepicker/js/bootstrap-datetimepicker.js"></script>
-
+<script src="${basePath}/resources/js/bootstrap/js/bootstrap.min.js"></script>
 <!-- FastClick -->
-<script src="../../js/plugins/fastclick/fastclick.js"></script>
+<script src="${basePath}/resources/js/plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
-<script src="../../js/dist/js/app.js"></script>
+<script src="${basePath}/resources/js/dist/js/app.js"></script>
 <!-- Sparkline -->
-<script src="../../js/plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="${basePath}/resources/js/plugins/sparkline/jquery.sparkline.min.js"></script>
 <!-- jvectormap -->
-<script src="../../js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="../../js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="${basePath}/resources/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="${basePath}/resources/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 <!-- SlimScroll 1.3.0 -->
-<script src="../../js/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="${basePath}/resources/js/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- ChartJS 1.0.1 -->
-<script src="../../js/plugins/chartjs/Chart.min.js"></script>
+<script src="${basePath}/resources/js/plugins/chartjs/Chart.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../../js/dist/js/pages/dashboard2.js"></script>
+<script src="${basePath}/resources/js/dist/js/pages/dashboard2.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../../js/dist/js/demo.js"></script>
-
+<script src="${basePath}/resources/js/dist/js/demo.js"></script>
+<script src="${basePath}/resources/js/JSTree/jquery.treemenu.js"></script>
 <script type="text/javascript">
-setTableHeight()
-  $(".startDate").datetimepicker({
-        format: "yyyy-mm",
-        autoclose: true,
-        todayBtn: true,
-        pickerPosition: "bottom-left",
-        minView:3,
-        startView:3,
-        todayHighlight:true,
-    });
-  $(".endDate").datetimepicker({
-        format: "yyyy-mm",
-        autoclose: true,
-        todayBtn: true,
-        pickerPosition: "bottom-left",
-        minView:3,
-        startView:3,
-        todayHighlight:true,
-    });
-  function setTableHeight(){
-    var divNum = 100/$(".table_td2").eq(0).find("div").length;
-    $(".table_td2").find("div").css("width",divNum+"%");
-  }
+  var screenHeight = document.documentElement.clientHeight;
+  var contentheight;
+  var headerHeight = 50;
+  var footerHeight = 51;
+  $(function(){
+    $(".content-wrapper").css("min-height",screenHeight-headerHeight);
+    //$(".content-iframe").css("height",screenHeight-headerHeight );
+  })
+  $("#iframeId1").load(function (){ 
+    var iframe=document.getElementById("iframeId1");      
+    var height=iframe.contentWindow.document.documentElement.scrollHeight;  
+    $("#iframeId1").css("height",height);
+  });
+  
 
 
 </script>
-
-
+<script>
+	var basePath='${basePath}';
+	$(function(){
+		$.getJSON(basePath+"/building/getTree",function(data){
+			if(data.status == "success"){
+				var content="";
+				addBuildingList(data.data);
+			}else{
+				alert("获取楼层导航失败，请刷新页面");
+			}
+		})
+	})
+	var content="";
+	function addBuildingList(data){
+		showBuildingList(data);
+		$(".tree").html(content);
+		$(".tree").treemenu({delay:300}).openActive();
+	}
+	function showBuildingList(buildingList){
+		for(var i in buildingList){
+			content += "<li><a data-id='"+buildingList[i].id+"'>"+buildingList[i].name+"</a>"
+			if(buildingList.children != ""){
+				content +="<ul>";
+				showBuildingList(buildingList[i].children);
+				content +="</ul>";
+			}
+			content +="</li>";
+		}
+	}
+	
+</script>
+<script>
+$(function(){
+        
+    });
+    $(".sidebar-menu li").click(function(){
+    	$(".sidebar-menu li").removeClass("active");
+    	$(this).addClass("active");
+    })
+    $(document).on("click",".treemenu a",function(e){
+    	var buildingID = $(this).attr("data-id");
+    	$("#iframeId1").attr("src","${basePath}/templates/index4?id="+buildingID);
+    })
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
