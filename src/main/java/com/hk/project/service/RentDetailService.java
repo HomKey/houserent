@@ -283,7 +283,7 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 		List<Map<String,Object>> results = (List<Map<String, Object>>) this.dao.queryByHQL(hql,start,end,buildingId,buildingId);
 		return results;
 	}
-	public ResultsData getTotalRate(Date start,Date end){
+	public ResultsData getTotalRate(Date start,Date end,String buildingId){
 		ResultsData results = new ResultsData();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date startMonth = new Date(start.getYear(),start.getMonth()-1,1);
@@ -296,13 +296,25 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 		System.out.println(sdf.format(startYear));
 		System.out.println(sdf.format(endYear));
 		System.out.println("==================");
+		List<Map<String,Object>> nowData = new ArrayList<Map<String,Object>>();
+		List<Map<String,Object>> monthData = new ArrayList<Map<String,Object>>();
+		List<Map<String,Object>> yearData =  new ArrayList<Map<String,Object>>();
 		String hql = "SELECT new map("
 				+ "sum(r.rent + r.electricity + r.water + r.incidental + r.deposit + r.gate) as totalIn,"
-				+ "sum(r.electricityPay + r.waterPay + r.incidentalPay + r.depositPay + r.gatePay) as totalOut )"
-				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE r.rentDate BETWEEN ? AND ? ";
-		List<Map<String,Object>> nowData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,start,end);
-		List<Map<String,Object>> monthData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,startMonth,endMonth);
-		List<Map<String,Object>> yearData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,startYear,endYear);
+				+ "r.rent as rent,r.electricity as electricity,r.water as water,r.incidental as incidental,r.deposit as deposit,r.gate as gate,"
+				+ "sum(r.electricityPay + r.waterPay + r.incidentalPay + r.depositPay + r.gatePay) as totalOut,"
+				+ "r.electricityPay as electricityPay,r.waterPay as waterPay,r.incidentalPay as incidentalPay,r.depositPay as depositPay,r.gatePay as gatePay )"
+				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE (r.rentDate BETWEEN ? AND ?) ";
+		if(StringUtil.isEmpty(buildingId)){
+			nowData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,start,end);
+			monthData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,startMonth,endMonth);
+			yearData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,startYear,endYear);
+		}else{
+			hql += "AND (b.id = ? or b.parent.id = ?)";
+			nowData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,start,end,buildingId,buildingId);
+			monthData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,startMonth,endMonth,buildingId,buildingId);
+			yearData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,startYear,endYear,buildingId,buildingId);
+		}
 		results.put("now", nowData);
 		results.put("month", monthData);
 		results.put("year", yearData);

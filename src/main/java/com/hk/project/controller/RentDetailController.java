@@ -170,7 +170,7 @@ public class RentDetailController {
 	//同比环比
 	@RequestMapping(value="/getTotalRate")
 	@ResponseBody
-	public ResultsData getTotalRate(String start,String end){
+	public ResultsData getTotalRate(String start,String end,String buildingId){
 		ResultsData result = new ResultsData();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date startTime = null;
@@ -183,7 +183,7 @@ public class RentDetailController {
 			e.printStackTrace();
 			return result.setStatusFail("日期错误");
 		}
-		return rentDetailService.getTotalRate(startTime, endTime);
+		return rentDetailService.getTotalRate(startTime, endTime,buildingId);
 	}
 	//获取单栋楼的统计
 	@RequestMapping(value="/getTotalByBuild")
