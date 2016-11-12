@@ -248,15 +248,17 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE r.rentDate BETWEEN ? AND ? GROUP BY b.parent.id";
 		List<Map<String,Object>> results = (List<Map<String, Object>>) this.dao.queryByHQL(hql,start,end);
 		List<Map<String,Object>> data = new ArrayList<Map<String,Object>>();
-		for(Map<String,Object> model :results){
-			for(Map<String,Object> b : buildings){
+		for(Map<String,Object> b : buildings){
+			for(Map<String,Object> model :results){
 				if(b.get("id").equals(model.get("id"))){
 					b.put("data",model);
+					break;
 				}else{
 					b.put("data", null);
+					continue;
 				}
-				data.add(b);
 			}
+			data.add(b);
 		}
 		return data;
 	}
