@@ -32,6 +32,7 @@ public class SysController extends BaseController{
 	public String index() {
 		logger.info("index");
 		System.out.println("index");
+		/*
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Collection<? extends GrantedAuthority> anth = userDetails.getAuthorities();
 		for(GrantedAuthority model : anth){
@@ -39,7 +40,8 @@ public class SysController extends BaseController{
 				return "system/index";
 			}
 		}
-		return "index";
+		*/
+		return "templates/index2";
 	}
 	/**
 	 * 默认请求处理方法，调用请求路径对应的jsp
