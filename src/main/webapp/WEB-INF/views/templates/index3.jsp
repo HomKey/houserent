@@ -237,12 +237,12 @@ body{padding: 0px;margin: 0px; border: 0px}
           </div>
           <!-- /.box -->
           <div class="tableDiv2">
-              <div class="div1">利润：</div>
-              <div class="div2">利润：</div>
-              <div class="div1">同比：</div>
-              <div class="div2">利润：</div>
-              <div class="div1">环比：</div>
-              <div class="div2">利润：</div>
+              <div class="div1 ">利润：</div>
+              <div class="div2 lirun"></div>
+              <div class="div1 ">同比：</div>
+              <div class="div2 tongbi" ></div>
+              <div class="div1 ">环比：</div>
+              <div class="div2 huanbi"></div>
             </div>
 
 
@@ -290,6 +290,7 @@ var time= new Date();
 var nowTime = time.getFullYear()+"-"+(time.getMonth()+1);
 $(function(){
 	getData(nowTime,nowTime);
+	getCompair(nowTime,nowTime);
 })
 $(".startDate input").val(nowTime);
 $(".startDate").datetimepicker({
@@ -352,9 +353,24 @@ function getData(start,end){
 		}
 	)
 }
+function getCompair(start,end){
+	$.getJSON(basePath+"/rent/getTotalRate"
+	,{"start":start+"-1","end":end+"-31"}
+	,function(data){
+		if(data.status == "success"){
+			var now = (data.now[0].totalIn?data.now[0].totalIn:0)-(data.now[0].totalOut?data.now[0].totalOut:0);
+			var month = (data.month[0].totalIn?data.month[0].totalIn:0)-(data.month[0].totalOut?data.month[0].totalOut:0);
+			var year = (data.year[0].totalIn?data.year[0].totalIn:0)-(data.year[0].totalOut?data.year[0].totalOut:0);
+			$(".lirun").text(now);
+			$(".tongbi").text(now-year);
+			$(".huanbi").text(now-month);
+		}
+	})
+}
 $(".search").click(function(){
 	var time = $(".startDate input").val();
 	getData(time,time);
+	getCompair(time,time);
 })
 </script>
 

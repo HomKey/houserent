@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>出租屋数据管理系统</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -45,7 +45,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>LOGO</b></span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -61,25 +61,23 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs">Admin</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
-                <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                <p class=nowTime>
                 </p>
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <!-- <a href="#" class="btn btn-default btn-flat">Profile</a> -->
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="/houserent/logout.do" class="btn btn-default btn-flat">退出</a>
                 </div>
               </li>
             </ul>
@@ -99,17 +97,18 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" style="height:45px;">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>Admin</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
-        <li class="header">楼层详情</li>
-        <li class="active"><a><i class="fa fa-dashboard"></i> <span>总览</span></a></li>
+        <li class="header">导航栏</li>
+        <li class="active allData"><a><i class="fa fa-dashboard"></i> <span>总览</span></a></li>
         <ul class="tree">
 		</ul>
-        <li><a><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+        <li><a><i class="fa fa-book"></i> <span>押金池</span></a></li>
+        <li><a href="${basePath}/system/index" target="_blank"><i class="fa fa-laptop"></i> <span>数据管理</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -181,8 +180,33 @@
   var contentheight;
   var headerHeight = 50;
   var footerHeight = 51;
+//对Date的扩展，将 Date 转化为指定格式的String   
+//月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，   
+//年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)   
+//例子：   
+//(new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423   
+//(new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18   
+Date.prototype.Format = function(fmt)   
+{ //author: meizz   
+ var o = {   
+   "M+" : this.getMonth()+1,                 //月份   
+   "d+" : this.getDate(),                    //日   
+   "h+" : this.getHours(),                   //小时   
+   "m+" : this.getMinutes(),                 //分   
+   "s+" : this.getSeconds(),                 //秒   
+   "q+" : Math.floor((this.getMonth()+3)/3), //季度   
+   "S"  : this.getMilliseconds()             //毫秒   
+ };   
+ if(/(y+)/.test(fmt))   
+   fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+ for(var k in o)   
+   if(new RegExp("("+ k +")").test(fmt))   
+ fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+ return fmt;   
+}  
   $(function(){
     $(".content-wrapper").css("min-height",screenHeight-headerHeight);
+    $(".nowTime").text((new Date().Format("yyyy-MM-dd hh:mm:ss")));
     //$(".content-iframe").css("height",screenHeight-headerHeight );
   })
   $("#iframeId1").load(function (){ 
@@ -190,7 +214,7 @@
     var height=iframe.contentWindow.document.documentElement.scrollHeight;  
     $("#iframeId1").css("height",height);
   });
-  
+
 
 
 </script>
@@ -226,16 +250,17 @@
 	
 </script>
 <script>
-$(function(){
-        
-    });
     $(".sidebar-menu li").click(function(){
     	$(".sidebar-menu li").removeClass("active");
     	$(this).addClass("active");
     })
     $(document).on("click",".treemenu a",function(e){
     	var buildingID = $(this).attr("data-id");
-    	$("#iframeId1").attr("src","${basePath}/templates/index4?id="+buildingID);
+    	var buildingName = encodeURI($(this).text());
+    	$("#iframeId1").attr("src","${basePath}/templates/index4?id="+buildingID+"&buildingName="+buildingName);
+    })
+    $(".allData").click(function(){
+    	$("#iframeId1").attr("src","${basePath}/templates/index3");
     })
 </script>
 </body>

@@ -226,16 +226,14 @@
 	
 </script>
 <script>
-$(function(){
-        
-    });
     $(".sidebar-menu li").click(function(){
     	$(".sidebar-menu li").removeClass("active");
     	$(this).addClass("active");
     })
     $(document).on("click",".treemenu a",function(e){
     	var buildingID = $(this).attr("data-id");
-    	$("#iframeId1").attr("src","${basePath}/templates/index4?id="+buildingID);
+    	var buildingName = encodeURI($(this).text());
+    	$("#iframeId1").attr("src","${basePath}/templates/index4?id="+buildingID+"&buildingName="+buildingName);
     })
 </script>
 </body>

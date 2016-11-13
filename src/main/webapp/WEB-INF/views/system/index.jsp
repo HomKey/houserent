@@ -26,7 +26,7 @@
 <br/>
 <br/>
 <a href="${basePath}/system/import?buildingId=1" target= _blank>导入租金数据(传buildingId)</a>
-<h1>数据接口</h1>
+<%-- <h1>数据接口</h1>
 <a href="${basePath}/rent/getBuildingInfo?buildingId=1&start=2016-01-01&end=2017-01-01" target= _blank>查询某栋楼层的租金信息(buildingId,startTime,endTime)</a>
 <br/>
 <br/>
@@ -45,7 +45,7 @@
 <a href="${basePath}/rent/getDepositByBuilding?buildingId=1" target= _blank>统计房间的押金情况</a>
 <br/>
 <br/>
-<a href="${basePath}/rent/getDeposit?buildingId=1" target= _blank>统计押金</a>
+<a href="${basePath}/rent/getDeposit?buildingId=1" target= _blank>统计押金</a> --%>
 <div>
 </div>
 

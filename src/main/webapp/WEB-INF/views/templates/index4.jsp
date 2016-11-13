@@ -97,7 +97,7 @@
             <div class="box-header">
              
 
-              <h3 class="box-title">顺心园A/B座</h3>
+              <h3 class="box-title"></h3>
               <!-- tools box -->
               <div class="pull-right box-tools">
                 <button type="button" class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -126,7 +126,7 @@
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">月份租金</div>
-                    <div class="table_td2 rent">
+                    <div class="table_td2 rent" data-type="rent">
                       <!-- <div>1</div>
                       <div>1</div>
                       <div>1</div> -->
@@ -134,7 +134,7 @@
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">月份电费收入</div>
-                    <div class="table_td2 electricity">
+                    <div class="table_td2 electricity" data-type="electricity">
                      <!--  <div>1</div>
                       <div>1</div>
                       <div>1</div> -->
@@ -142,7 +142,7 @@
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">月份应缴电费</div>
-                    <div class="table_td2 electricityPay">
+                    <div class="table_td2 electricityPay" data-type="electricityPay">
                      <!--  <div>1</div>
                       <div>1</div>
                       <div>1</div> -->
@@ -150,7 +150,7 @@
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">月份水费收入</div>
-                    <div class="table_td2 water">
+                    <div class="table_td2 water" data-type="water">
                       <!-- <div>1</div>
                       <div>1</div>
                       <div>1</div> -->
@@ -158,7 +158,7 @@
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">月份应缴水费</div>
-                    <div class="table_td2 waterPay">
+                    <div class="table_td2 waterPay" data-type="waterPay">
                       <!-- <div>1</div>
                       <div>1</div>
                       <div>1</div> -->
@@ -166,7 +166,7 @@
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">月份押金</div>
-                    <div class="table_td2 deposit">
+                    <div class="table_td2 deposit" data-type="deposit">
                       <!-- <div>1</div>
                       <div>1</div>
                       <div>1</div> -->
@@ -174,7 +174,7 @@
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">月份退押金</div>
-                    <div class="table_td2 depositPay">
+                    <div class="table_td2 depositPay" data-type="depositPay">
                       <!-- <div>1</div>
                       <div>1</div>
                       <div>1</div> -->
@@ -182,7 +182,7 @@
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">月份门押</div>
-                    <div class="table_td2 gate">
+                    <div class="table_td2 gate" data-type="gate">
                       <!-- <div>1</div>
                       <div>1</div>
                       <div>1</div> -->
@@ -190,7 +190,7 @@
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">月份退门押</div>
-                    <div class="table_td2 gatePay">
+                    <div class="table_td2 gatePay" data-type="gatePay">
                       <!-- <div>1</div>
                       <div>1</div>
                       <div>1</div> -->
@@ -198,7 +198,7 @@
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">其他收入</div>
-                    <div class="table_td2 incidental">
+                    <div class="table_td2 incidental" data-type="incidental">
                     <!--   <div>1</div>
                       <div>1</div>
                       <div>1</div> -->
@@ -206,7 +206,7 @@
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">其他支出</div>
-                    <div class="table_td2 incidentalPay">
+                    <div class="table_td2 incidentalPay" data-type="incidentalPay">
                      <!--  <div>1</div>
                       <div>1</div>
                       <div>1</div> -->
@@ -214,7 +214,7 @@
                   </div>
                   <div class="table_tr">
                     <div class="table_td1">总收入</div>
-                    <div class="table_td2 totalIn">
+                    <div class="table_td2 totalIn" data-type="totalIn">
                       <!-- <div>1</div>
                       <div>1</div>
                       <div>1</div> -->
@@ -279,9 +279,11 @@
 	var dataNum = 0;
 	var nowTime = time.getFullYear()+"-"+(time.getMonth()+1);
 	//var startDate = time.getFullYear()+"-"+(time.getMonth()-2);
-	var id=getQueryString("id");
+	var id=getQueryStringByName("id");
+	var buildingName = decodeURI(getQueryStringByName("buildingName"));
 	var month = time.getFullYear()+"-"+(time.getMonth()+1);
 	$(function(){
+		$(".box-title").text(buildingName);
 		getData(id,nowTime,nowTime);
 	})
 	$(".endDate input").val(nowTime);
@@ -344,18 +346,23 @@
 			}
 		)
 	}
-	function getQueryString(name){ 
-		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
-		var r = window.location.search.substr(1).match(reg); 
-		if (r != null) return unescape(r[2]); return null; 
-	} 
+	function getQueryStringByName(name) {
+	    var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
+	    if (result == null || result.length < 1) {
+	        return "";
+	    }
+	    return result[1];
+	}
 	$(".search").click(function(){
 		var startTime = $(".startDate input").val();
 		month = startTime;
 		//var endTime = $(".endDate input").val();
 		getData(id,startTime,startTime);
 	})
-
+	$(".table_td1").click(function(){
+		var type = $(this).next().attr("data-type");
+		window.location.href=basePath+"/templates/index6?id="+id+"&type="+type;
+	});
 
 </script>
 
