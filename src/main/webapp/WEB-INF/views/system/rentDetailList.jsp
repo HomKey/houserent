@@ -58,6 +58,11 @@ $(function(){
        	        title: 'Item ID',
        	     	visible:false
        	    },{
+       	        field: 'buildingName',
+       	        title: '楼房',
+       	     	//sortable:true,
+       	     	editable:false
+       	    },{
        	        field: 'roomName',
        	        title: '房号',
        	     	//sortable:true,

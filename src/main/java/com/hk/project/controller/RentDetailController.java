@@ -54,6 +54,20 @@ public class RentDetailController {
 		return result;
 	}
 	//不分页
+	@RequestMapping(value="/getDataByBuilding")
+	@ResponseBody
+	public ResultsData getDataByBuilding(int limit,int offset,String order,String buildingId){
+		System.out.println("limit:"+limit+",offset:"+offset+",order:"+order);
+		ResultsData result = new ResultsData();
+		List<RentDetailModel> rentDetail = rentDetailService.criteria(RentDetailModel.class, Restrictions.eq("building.id", buildingId), null, null);
+		JsonConfig config = new JsonConfig();
+		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","room"}));
+		JSONArray fromArray = JSONArray.fromObject(rentDetail, config);
+		result.setStatusSuccess();
+		result.setData(fromArray);
+		return result;
+	}
+	//不分页
 	@RequestMapping(value="/getBuildingInfo")
 	@ResponseBody
 	public ResultsData getData(String buildingId,String start,String end){
