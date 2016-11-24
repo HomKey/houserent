@@ -30,10 +30,14 @@
   <![endif]-->
 </head>
 <style>
+	.dn{display:none}
 	.treemenu{padding:0px}
 	.treemenu li{padding:12px 20px;color:#b8c7ce;}
 	.treemenu li:hover{background:#1a2226;color:#ffffff !important}
 	.treemenu li a:hover{color:#ffffff !important}
+	.iframe-bar{clear:both;overflow:hidden;background:#ffffff;padding-top:20px;padding-left:15px;border-bottom:1px solid #dddddd}
+	.iframe-bar a{border-radius:3px 3px 0 0;cursor:pointer;display:block;float:left;background:#ffffff;color:#333333;width:103px;height:43px;line-height:45px;text-align:center;font-size:16px;border:1px solid #dddddd}
+	.iframe-bar .active{background:#3c8dbc;color:#ffffff}
 </style>
 <body class="hold-transition sidebar-mini skin-blue ">
 <div class="wrapper">
@@ -104,7 +108,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">导航栏</li>
-        <li class="active allData"><a><i class="fa fa-dashboard"></i> <span>总览</span></a></li>
+        <li class="active allData"><a><i class="fa fa-home"></i> <span>总览</span></a></li>
         <ul class="tree">
 		</ul>
         <li><a><i class="fa fa-book"></i> <span>押金池</span></a></li>
@@ -129,6 +133,9 @@
     </section> -->
 
     <!-- Main content -->
+    <section class="iframe-bar">
+    	<a class="active" iframenum="1">总览</a>
+    </section>
     <section class="content-iframe">
       <iframe id="iframeId1" src="${basePath}/templates/index3" style="width: 100%;height: 100%;padding: 0px;border: 0px">
       
@@ -209,11 +216,15 @@ Date.prototype.Format = function(fmt)
     $(".nowTime").text((new Date().Format("yyyy-MM-dd hh:mm:ss")));
     //$(".content-iframe").css("height",screenHeight-headerHeight );
   })
-  $("#iframeId1").load(function (){ 
-    var iframe=document.getElementById("iframeId1");      
-    var height=iframe.contentWindow.document.documentElement.scrollHeight;  
-    $("#iframeId1").css("height",height);
-  });
+  loadIframe("iframeId1");
+  function loadIframe(iframeName){
+	  $("#"+iframeName).load(function (){ 
+	    var iframe=document.getElementById(iframeName);      
+	    var height=iframe.contentWindow.document.documentElement.scrollHeight;  
+	    $("#"+iframeName).css("height",height);
+	  });
+  }
+  
 
 
 
@@ -250,6 +261,7 @@ Date.prototype.Format = function(fmt)
 	
 </script>
 <script>
+	var iframeNum=1;
     $(".sidebar-menu li").click(function(){
     	$(".sidebar-menu li").removeClass("active");
     	$(this).addClass("active");
@@ -257,7 +269,24 @@ Date.prototype.Format = function(fmt)
     $(document).on("click",".treemenu a",function(e){
     	var buildingID = $(this).attr("data-id");
     	var buildingName = encodeURI($(this).text());
-    	$("#iframeId1").attr("src","${basePath}/templates/index4?id="+buildingID+"&buildingName="+buildingName);
+    	$(".iframe-bar a").removeClass("active");
+    	$(".content-iframe iframe").addClass("dn");
+    	var content="";
+    	iframeNum+=1;
+    	content+='<iframe id="iframeId'+iframeNum+'" src="" style="width: 100%;height: 100%;padding: 0px;border: 0px"></iframe>'
+    	$(".content-iframe").append(content);
+    	$("#iframeId"+iframeNum).attr("src","${basePath}/templates/index4?id="+buildingID+"&buildingName="+buildingName);
+    	loadIframe("iframeId"+iframeNum);
+    	content="";
+    	content+='<a class="active" iframenum="'+iframeNum+'">'+$(this).text()+'</a>';
+    	$(".iframe-bar").append(content);
+    })
+    $(document).on("click",".iframe-bar a",function(e){
+    	var num = $(this).attr("iframenum");
+    	$(".iframe-bar a").removeClass("active");
+    	$(this).addClass("active");
+    	$(".content-iframe iframe").addClass("dn");
+    	$("#iframeId"+num).removeClass("dn");
     })
     $(".allData").click(function(){
     	$("#iframeId1").attr("src","${basePath}/templates/index3");

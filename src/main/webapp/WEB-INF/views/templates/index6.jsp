@@ -106,7 +106,7 @@ body{padding: 0px;margin: 0px; border: 0px}
             <div class="box-header">
              
 
-              <h3 class="box-title">总览</h3>
+              <h3 class="box-title"></h3>
               <!-- tools box -->
               <div class="pull-right box-tools">
                 <button type="button" class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -121,129 +121,50 @@ body{padding: 0px;margin: 0px; border: 0px}
               <div class="tableDiv" style="width: 100% ;" >
                   <div class="table_tr">
                     <div class="table_td1">&nbsp</div>
-                    <div class="table_td2 name">
-                      <!-- <div>顺心园</div>
-                      <div>如意楼</div>
-                      <div>岭南大厦</div> -->
+                    <div class="table_td2">
+                      <div style="width:8.33%">1</div>
+                      <div style="width:8.33%">2</div>
+                      <div style="width:8.33%">3</div>
+                      <div style="width:8.33%">4</div>
+                      <div style="width:8.33%">5</div>
+                      <div style="width:8.33%">6</div>
+                      <div style="width:8.33%">7</div>
+                      <div style="width:8.33%">8</div>
+                      <div style="width:8.33%">9</div>
+                      <div style="width:8.33%">10</div>
+                      <div style="width:8.33%">11</div>
+                      <div style="width:8.33%">12</div>
                     </div>
                   </div>
-                  <div class="table_tr">
-                    <div class="table_td1 "><span class="fa fa-plus" style="position: relative;left: -50px"></span>月租</div>
-                    <div class="table_td2 rent">
-                      <!-- <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -50px"></span>电收</div>
-                    <div class="table_td2 electricity">
-                     <!--  <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -50px"></span>水收</div>
-                    <div class="table_td2 water">
-                      <!-- <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -50px"></span>其他</div>
-                    <div class="table_td2 incidental">
-                    <!--   <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -50px"></span>押金</div>
-                    <div class="table_td2 deposit">
-                      <!-- <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -50px"></span>门押</div>
-                    <div class="table_td2 gate">
-                      <!-- <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -42px"></span>总收入</div>
-                    <div class="table_td2 totalIn">
-                      <!-- <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1"><span class="fa fa-minus" style="position: relative;left: -42px"></span>应缴电</div>
-                    <div class="table_td2 electricityPay">
-                     <!--  <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1"><span class="fa fa-minus" style="position: relative;left: -42px"></span>应缴水</div>
-                    <div class="table_td2 waterPay">
-                      <!-- <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1"><span class="fa fa-minus" style="position: relative;left: -34px"></span>其他支出</div>
-                    <div class="table_td2 incidentalPay">
-                     <!--  <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1"><span class="fa fa-minus" style="position: relative;left: -47px"></span>退押</div>
-                    <div class="table_td2 depositPay">
-                      <!-- <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1"><span class="fa fa-minus" style="position: relative;left: -39px"></span>退门押</div>
-                    <div class="table_td2 gatePay">
-                      <!-- <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
-                  <div class="table_tr">
-                    <div class="table_td1"><span class="fa fa-minus" style="position: relative;left: -39px"></span>总支出</div>
-                    <div class="table_td2 totalOut">
-                      <!-- <div>1</div>
-                      <div>1</div>
-                      <div>1</div> -->
-                    </div>
-                  </div>
+                  
               </div><!-- /.tableDiv -->
             </div>
             <!-- /.box-body -->
           </div>
+          <div class="box box-solid bg-light-blue-gradient">
+			<div class="box-header">
+			    <h3 class="box-title"></h3>
+			    <!-- tools box -->
+			  <div class="pull-right box-tools">
+			    <button type="button" class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+			    </button>
+			  </div>
+			  <!-- /. tools -->
+			</div>
+			<div  class="box-body no-padding">
+				<div id="echart" style="height:300px;width:100%;background:#ffffff !important">
+				</div>
+			</div>
+		  </div>
           <!-- /.box -->
-          <div class="tableDiv2">
+          <!-- <div class="tableDiv2">
               <div class="div1 ">利润：</div>
               <div class="div2 lirun"></div>
               <div class="div1 ">同比：</div>
               <div class="div2 tongbi" ></div>
               <div class="div1 ">环比：</div>
               <div class="div2 huanbi"></div>
-            </div>
+            </div> -->
 
 
 
@@ -282,71 +203,91 @@ body{padding: 0px;margin: 0px; border: 0px}
 <script src="${basePath}/resources/js/dist/js/pages/dashboard2.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="${basePath}/resources/js/dist/js/demo.js"></script>
+<!-- echarts -->
+<script src="${basePath}/resources/js/echarts/echarts.js"></script>
 
 <script type="text/javascript">
-setTableHeight();
+//setTableHeight();
 var basePath = '${basePath}';
 var time= new Date();
-var nowTime = time.getFullYear()+"-"+(time.getMonth()+1);
+var nowTime = time.getFullYear();
+var id= getQueryStringByName("id");
+var type=getQueryStringByName("type");
+var showTitle={"rent":"月份租金"
+		,"electricity":"月份电费收入"
+		,"electricityPay":"月份应缴电费"
+		,"water":"月份水费收入"
+		,"waterPay":"月份应缴水费"
+		,"deposit":"月份押金"
+		,"depositPay":"月份退押金"
+		,"gate":"月份门押"
+		,"gatePay":"月份退门押"
+		,"incidental":"其他收入"
+		,"incidentalPay":"其他支出"
+		,"totalIn":"总收入"};
+var value = [];
+	value["rent"]=[],
+	value["electricity"]=[],
+	value["electricityPay"]=[],
+	value["water"]=[],
+	value["waterPay"]=[],
+	value["deposit"]=[],
+	value["depositPay"]=[],
+	value["gate"]=[],
+	value["gatePay"]=[],
+	value["incidental"]=[],
+	value["incidentalPay"]=[],
+	value["totalIn"]=[];
 $(function(){
+	$(".box-title").text(showTitle[type]);
 	getData(nowTime,nowTime);
-	getCompair(nowTime,nowTime);
+	getCharts(nowTime,nowTime);
 })
 $(".startDate input").val(nowTime);
 $(".startDate").datetimepicker({
-    format: "yyyy-mm",
+    format: "yyyy",
     autoclose: true,
     todayBtn: true,
     pickerPosition: "bottom-left",
-    minView:3,
-    startView:3,
+    minView:4,
+    startView:4,
     todayHighlight:true,
 });
  $(".endDate").datetimepicker({
-    format: "yyyy-mm",
+    format: "yyyy",
     autoclose: true,
     todayBtn: true,
     pickerPosition: "bottom-left",
-    minView:3,
-    startView:3,
+    minView:4,
+    startView:4,
     todayHighlight:true,
 });
-function setTableHeight(){
+/* function setTableHeight(){
   var divNum = 100/$(".table_td2").eq(0).find("div").length;
   $(".table_td2").find("div").css("width",divNum+"%");
-}
+} */
 function getData(start,end){
-	$.getJSON(basePath+"/rent/getTotal"
-		,{"start":start+"-1","end":end+"-31"}
+	$.getJSON(basePath+"/rent/getTotalByBuild"
+		,{"start":start+"-1-1","end":end+"-12-31","buildingId":id}
 		,function(data){
-			$(".tableDiv .table_td2").html("");
+			//$(".tableDiv .table_td2").html("");
 			var dataDetail = data.data;
 			if(data.status == "success"){
-				var dataNum = 0;
-				for(var i in dataDetail){
-					if(dataDetail[i].data != null){
-						for(var j in dataDetail[i].data){
-							$("."+j).append("<div>"+dataDetail[i].data[j]+"</div>");
-						}
-					}else{
-						$(".water").append("<div>0</div>");
-						$(".incidentalPay").append("<div>0</div>");
-						$(".electricityPay").append("<div>0</div>");
-						$(".gatePay").append("<div>0</div>");
-						$(".depositPay").append("<div>0</div>");
-						$(".incidental").append("<div>0</div>");
-						$(".deposit").append("<div>0</div>");
-						$(".rent").append("<div>0</div>");
-						$(".electricity").append("<div>0</div>");
-						$(".waterPay").append("<div>0</div>");
-						$(".gate").append("<div>0</div>");
-						$(".totalIn").append("<div>0</div>");
-						$(".totalOut").append("<div>0</div>");
+				var content = '<div class="table_tr"><div class="table_td1">'+start+'</div><div class="table_td2">';
+				var j = 0;
+				for(var i=1;i<=12;i++){
+					if(data.data[j])
+						var time = new Date(data.data[j].rentDate).getMonth()+1;
+					if(time == i){
+						content+='<div style="width:8.33%">'+data.data[j][type]+'</div>';
+						j+=1;
 					}
-					$(".tableDiv .name").append("<div>"+dataDetail[i].name+"</div>")
-					dataNum = i;
+					else{
+						content+='<div style="width:8.33%">0</div>';
+					}
 				}
-				$(".tableDiv .table_td2 div").css("width",100/(parseFloat(dataNum)+1)+"%");
+				content+='</div></div>';
+				$(".tableDiv").append(content);
 			}else{
 				alert("检索失败，请重新检索");
 			}
@@ -367,11 +308,106 @@ function getCompair(start,end){
 		}
 	})
 }
+function getQueryStringByName(name) {
+    var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
+    if (result == null || result.length < 1) {
+        return "";
+    }
+    return result[1];
+}
 $(".search").click(function(){
 	var time = $(".startDate input").val();
 	getData(time,time);
-	getCompair(time,time);
+	//getCompair(time,time);
 })
+function getCharts(start,end){
+	$.getJSON(basePath+"/rent/getTotalByBuild"
+			,{"start":start+"-1-1","end":end+"-12-31","buildingId":id}
+			,function(data){
+				//$(".tableDiv .table_td2").html("");
+				var dataDetail = data.data;
+				if(data.status == "success"){
+					var j = 0;
+					for(var i=1;i<=12;i++){
+						if(data.data[j])
+							var time = new Date(data.data[j].rentDate).getMonth()+1;
+						if(time == i){
+							for(var key in showTitle){
+								value[key].push(data.data[j][key]/10000);
+							}
+							j+=1;
+						}
+						else{
+							for(var key in showTitle){
+								value[key].push(0);
+							}
+						}
+					}
+					var series=[];
+					var selected={};
+					for(var key in showTitle){
+						var mark = {
+				            name:showTitle[key],
+				            type:'line',
+				            data:value[key],
+				        };
+						series.push(mark);
+						if(key == type){
+							selected[showTitle[key]]=true;
+						}else{
+							selected[showTitle[key]]=false;
+						}
+					}
+					require.config({
+						paths: {
+						    echarts: basePath+"/resources/js/echarts"
+						  }
+						});
+
+						// 使用
+						require(
+						  [
+						    'echarts',
+						    'echarts/chart/line', // 使用柱状图就加载bar模块，按需加载
+						  ],function(){
+								var myChart=require('echarts').init(document.getElementById("echart"));
+								var option = {
+								    title : {
+								    },
+								    tooltip : {
+								        trigger: 'axis'
+								    },
+								    legend: {
+								    	selected:selected,
+								        data:["月份租金","月份电费收入","月份应缴电费","月份水费收入","月份应缴水费","月份押金","月份退押金","月份门押","月份退门押","其他收入","其他支出","总收入"]
+								    },
+								    calculable : true,
+								    xAxis : [
+								        {
+								            type : 'category',
+								            boundaryGap : false,
+								            data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+								        }
+								    ],
+								    yAxis : [
+								        {
+								            type : 'value',
+								            axisLabel : {
+								                formatter: '{value} 万元'
+								            }
+								        }
+								    ],
+								    series :series
+								};
+								myChart.setOption(option);
+						  });
+				}else{
+					alert("检索失败，请重新检索");
+				}
+			}
+		)
+	
+}
 </script>
 
 
