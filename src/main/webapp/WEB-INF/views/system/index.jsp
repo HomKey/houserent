@@ -17,6 +17,10 @@
 <a href="${basePath}/system/buildingAdd" target= _blank>楼房增加</a>
 <br/>
 <br/>
+<a href="${basePath}/system/floorList" target= _blank>楼层列表</a>
+<a href="${basePath}/system/floorAdd" target= _blank>楼层增加</a>
+<br/>
+<br/>
 <a href="${basePath}/system/roomList" target= _blank>房间列表</a>
 <a href="${basePath}/system/roomAdd" target= _blank>房间增加</a>
 <br/>

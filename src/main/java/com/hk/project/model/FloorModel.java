@@ -17,10 +17,10 @@ import org.hibernate.annotations.NotFoundAction;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "room")
+@Table(name = "floor")
 @DynamicInsert
 @DynamicUpdate
-public class RoomModel implements Serializable{
+public class FloorModel implements Serializable{
 	/**
 	 * 
 	 */
@@ -28,8 +28,10 @@ public class RoomModel implements Serializable{
 	@Id
 	@Column(name = "id")
 	private String id;
-	@Column(name = "room_number")
-	private String roomNumber;
+	@Column(name = "floor_name")
+	private String floorName;
+	@Column(name = "floor_number")
+	private int floorNumber;
 	@Column(name = "remark")
 	private String remark;
 	@ManyToOne
@@ -37,11 +39,6 @@ public class RoomModel implements Serializable{
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer","name","parent","longCode","remark"})
 	private BuildingModel building;
-	@ManyToOne
-	@JoinColumn(name = "floor_id")
-	@NotFound(action=NotFoundAction.IGNORE)
-	@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer","building","floorNumber","remark"})
-	private FloorModel floor;
 	public String getId() {
 		return id;
 	}
@@ -49,17 +46,17 @@ public class RoomModel implements Serializable{
 		this.id = id;
 	}
 	
-	public FloorModel getFloor() {
-		return floor;
+	public String getFloorName() {
+		return floorName;
 	}
-	public void setFloor(FloorModel floor) {
-		this.floor = floor;
+	public void setFloorName(String floorName) {
+		this.floorName = floorName;
 	}
-	public String getRoomNumber() {
-		return roomNumber;
+	public int getFloorNumber() {
+		return floorNumber;
 	}
-	public void setRoomNumber(String roomNumber) {
-		this.roomNumber = roomNumber;
+	public void setFloorNumber(int floorNumber) {
+		this.floorNumber = floorNumber;
 	}
 	public BuildingModel getBuilding() {
 		return building;

@@ -37,6 +37,7 @@ import com.hk.base.support.ResultsData;
 import com.hk.base.support.StringUtil;
 import com.hk.project.dto.QueryRentDetailDto;
 import com.hk.project.model.BuildingModel;
+import com.hk.project.model.FloorModel;
 import com.hk.project.model.RentDetailModel;
 import com.hk.project.model.RoomModel;
 @Service
@@ -71,6 +72,11 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 			Sheet sheet = workbook.getSheetAt(numSheet);
 			String floorName = sheet.getSheetName();//楼层名称
 			int lastRowNum = sheet.getLastRowNum();
+			FloorModel floor = new FloorModel();
+			floor.setId(buildingId + "," + floorName);
+			floor.setBuilding(build);
+			floor.setFloorName(floorName);
+			this.dao.save(floor);
 			System.out.println("============================");
 			System.out.println("LastRowNum:"+lastRowNum);
 			System.out.println("sheetName:"+floorName);
@@ -107,7 +113,7 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 				room.setId(build.getId()+","+floorName+","+roomName);
 				room.setBuilding(build);
 				room.setRoomNumber(roomName);
-				room.setFloorNumber(floorName);//String.valueOf(numSheet+1)
+				room.setFloor(floor);//String.valueOf(numSheet+1)
 				this.dao.save(room);
 				Cell rentCell = row.getCell(1);
 				Cell waterCell = row.getCell(2);
@@ -138,6 +144,7 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 				rent.setCheckIn(PoiUtil.getCellValue(checkInCell));
 				rent.setRoom(room);
 				rent.setBuilding(build);
+				rent.setFloor(floor);
 				this.dao.save(rent);
 			}
 		}

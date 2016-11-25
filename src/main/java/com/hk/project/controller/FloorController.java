@@ -1,12 +1,5 @@
 package com.hk.project.controller;
-
-
-
-
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.json.JSONArray;
@@ -16,33 +9,39 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hk.base.support.Dto2Entity;
 import com.hk.base.support.IgnoreFieldProcessorImpl;
 import com.hk.base.support.ResultsData;
+import com.hk.base.support.StringUtil;
+import com.hk.project.dto.BuildingDto;
+import com.hk.project.dto.FloorDto;
+import com.hk.project.dto.RentDetailDto;
 import com.hk.project.dto.RoomDto;
 import com.hk.project.model.BuildingModel;
 import com.hk.project.model.FloorModel;
 import com.hk.project.model.RentDetailModel;
 import com.hk.project.model.RoomModel;
 import com.hk.project.service.BuildingService;
+import com.hk.project.service.FloorService;
 import com.hk.project.service.RoomService;
 
 @Controller
-@RequestMapping("/room")
-public class RoomController {
+@RequestMapping("/floor")
+public class FloorController {
 	@Autowired
-	private RoomService roomService;
+	private FloorService floorService;
 
 	@RequestMapping(value="/getData")
 	@ResponseBody
 	public ResultsData getData(){
 		ResultsData result = new ResultsData();
-		List<RoomModel> rooms = roomService.criteria(RoomModel.class, null, null, null);
+		List<FloorModel> floors = floorService.criteria(FloorModel.class, null, null, null);
 		JsonConfig config = new JsonConfig();
 		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building"}));
-		JSONArray fromArray = JSONArray.fromObject(rooms, config);
+		JSONArray fromArray = JSONArray.fromObject(floors, config);
 		result.setData(fromArray);
 		result.setStatusSuccess();
 		return result;
@@ -51,7 +50,7 @@ public class RoomController {
 	@ResponseBody
 	public ResultsData getByBuilding(String id){
 		ResultsData result = new ResultsData();
-		List<RoomModel> rooms = roomService.criteria(RoomModel.class, Restrictions.eq("building.id", id), null, null);
+		List<FloorModel> rooms = floorService.criteria(FloorModel.class, Restrictions.eq("building.id", id), null, null);
 		JsonConfig config = new JsonConfig();
 		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building"}));
 		JSONArray fromArray = JSONArray.fromObject(rooms, config);
@@ -61,17 +60,14 @@ public class RoomController {
 	}
 	@RequestMapping(value="/save")
 	@ResponseBody
-	public ResultsData save(RoomDto model){
+	public ResultsData save(FloorDto model){
 		ResultsData result = new ResultsData();
-		RoomModel room = new RoomModel();
-		Dto2Entity.transalte(model, room);
-		BuildingModel building = new BuildingModel();
 		FloorModel floor = new FloorModel();
+		Dto2Entity.transalte(model, floor);
+		BuildingModel building = new BuildingModel();
 		building.setId(model.getBuildingId());
-		floor.setId(model.getFloorId());
-		room.setFloor(floor);
-		room.setBuilding(building);
-		RoomModel newModel = roomService.save(room);
+		floor.setBuilding(building);
+		FloorModel newModel = floorService.save(floor);
 		result.setStatusSuccess();
 		result.setData(newModel);
 		return result;
@@ -79,6 +75,6 @@ public class RoomController {
 	@RequestMapping(value="/remove")
 	@ResponseBody
 	public ResultsData remove(String id){
-		return roomService.removeById(id);
+		return floorService.removeById(id);
 	}
 }

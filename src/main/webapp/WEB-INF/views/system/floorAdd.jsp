@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@include file="/WEB-INF/common/head.jsp" %>
 <%@include file="/WEB-INF/common/bootstrap.jsp" %>
-<title>房间新增</title>
+<title>楼层新增</title>
 <style type="text/css">
 .form-edit{
     padding: 20px 50px 20px 50px;
@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="my-content" >
-	<form class="form-edit" id="roomForm">
+	<form class="form-edit" id="floorForm">
 		<table>
 			<tbody>
 				<tr>
@@ -29,14 +29,8 @@
 				</tr>
 				<tr>
 					<td>楼层号:</td>
-					<td>
-						<select id="floorId" name="floorId">
-						</select>
+					<td><input id="floorName" type="text" name="floorName"/>
 					</td>
-				</tr>
-				<tr>
-					<td>房间号:</td>
-					<td><input type="text" id="roomNumber" name="roomNumber"/></td>
 				</tr>
 				<tr>
 					<td>备注:</td>
@@ -45,7 +39,7 @@
 			</tbody>
 		</table>
 	</form>
-	<button id="saveRoom">保存</button>
+	<button id="saveFloor">保存</button>
 </div>
 </body>
 <script type="text/javascript">
@@ -61,39 +55,14 @@ $(function(){
 			bHtml += '<option value="'+item.value+'">'+item.text+'</option>';
 		});
 		$(bHtml).appendTo($buildingSelect);
-		if(buildingId != null || buildingId != ""){
-			$.post("${basePath}/floor/getByBuilding",{id:buildingId},function(floorResult){
-				if(floorResult.status == "success"){
-					var $floorSelect = $("#floorId").empty();
-					var fHtml = '';
-					$.each(floorResult.data,function(i,item){
-						fHtml += '<option value="'+item.id+'">'+item.floorName+'</option>';
-					});
-					$(fHtml).appendTo($floorSelect);
-				}
-			});
-		}
 	});
-
-	$("#buildingId").change(function(){
-		$.post("${basePath}/floor/getByBuilding",{id:$(this).val()},function(floorResult){
-			if(floorResult.status == "success"){
-				var $floorSelect = $("#floorId").empty();
-				var fHtml = '';
-				$.each(floorResult.data,function(i,item){
-					fHtml += '<option value="'+item.id+'">'+item.floorName+'</option>';
-				});
-				$(fHtml).appendTo($floorSelect);
-			}
-		});
-	});
-	$("#saveRoom").click(function(){
-		$("#id").val($("#floorId").val()+","+$("#roomNumber").val());
-		$.post("${basePath}/room/save?"+$("#roomForm").serialize(),function(result){
+	$("#saveFloor").click(function(){
+		$("#id").val($("#buildingId").val()+","+$("#floorName").val());
+		$.post("${basePath}/floor/save?"+$("#floorForm").serialize(),function(result){
 			if(result.status == "success"){
 				alert("保存成功");
 				setTimeout(function(){
-					location.href = "${basePath}/system/roomList";
+					location.href = "${basePath}/system/floorList";
 				},1000);
 			}
 		});

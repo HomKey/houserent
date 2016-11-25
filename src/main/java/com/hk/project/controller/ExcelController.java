@@ -27,6 +27,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +44,7 @@ import com.hk.base.support.ResultsData;
 import com.hk.base.support.StringUtil;
 import com.hk.base.web.BaseController;
 import com.hk.project.model.BuildingModel;
+import com.hk.project.model.FloorModel;
 import com.hk.project.model.RentDetailModel;
 import com.hk.project.model.RoomModel;
 import com.hk.project.service.RentDetailService;
@@ -99,13 +102,11 @@ public class ExcelController extends BaseController{
 	private ResultsData checkImport(String filePath,String buildingId) throws IOException{
 		ResultsData result = new ResultsData();
 		//检查楼是否存在
-		BuildingModel buildTemp = this.dao.get(BuildingModel.class, buildingId);
-		if(buildTemp == null){
+		BuildingModel build = this.dao.get(BuildingModel.class, buildingId);
+		if(build == null){
 			logger.info("该楼层不存在!");
 			return result.setStatusFail("该楼层不存在!");
 		}
-		BuildingModel build = new BuildingModel();
-		build.setId(buildingId);
 		//读取excel
 		Workbook workbook=null;
 		String fileType=filePath.substring(filePath.lastIndexOf("."),filePath.length());  
@@ -118,12 +119,20 @@ public class ExcelController extends BaseController{
         	return result.setStatusFail("请导入excel工作簿!");
         }
         List<RoomModel> roomList = new ArrayList<RoomModel>();
+        List<FloorModel> floorList = new ArrayList<FloorModel>();
         List<RentDetailModel> rentDetailList = new ArrayList<RentDetailModel>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		
+		
 		for(int numSheet = 0;numSheet<workbook.getNumberOfSheets();numSheet++){
 			Sheet sheet = workbook.getSheetAt(numSheet);
 			String floorName = sheet.getSheetName();//楼层名称
 			int lastRowNum = sheet.getLastRowNum();
+			FloorModel floor = new FloorModel();
+			floor.setId(buildingId + "," + floorName);
+			floor.setBuilding(build);
+			floor.setFloorName(floorName);
+			floorList.add(floor);
 			System.out.println("============================");
 			System.out.println("LastRowNum:"+lastRowNum);
 			System.out.println("sheetName:"+floorName);
@@ -160,7 +169,7 @@ public class ExcelController extends BaseController{
 				room.setId(build.getId()+","+floorName+","+roomName);
 				room.setBuilding(build);
 				room.setRoomNumber(roomName);
-				room.setFloorNumber(floorName);//String.valueOf(numSheet+1)
+				room.setFloor(floor);//String.valueOf(numSheet+1)
 				roomList.add(room);
 				
 				Cell rentCell = row.getCell(1);
@@ -192,6 +201,7 @@ public class ExcelController extends BaseController{
 				rent.setGatePay(StringUtil.toFloat(PoiUtil.getCellValue(gatePayCell)));
 				rent.setCheckIn(PoiUtil.getCellValue(checkInCell));
 				rent.setRoom(room);
+				rent.setFloor(floor);
 				rent.setBuilding(build);
 				rentDetailList.add(rent);
 			}

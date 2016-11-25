@@ -47,7 +47,7 @@ public class RentDetailController {
 		ResultsData result = new ResultsData();
 		List<RentDetailModel> rentDetail = rentDetailService.criteria(RentDetailModel.class, null, null, null);
 		JsonConfig config = new JsonConfig();
-		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","room"}));
+		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","floor","room"}));
 		JSONArray fromArray = JSONArray.fromObject(rentDetail, config);
 		result.setStatusSuccess();
 		result.setData(fromArray);

@@ -39,6 +39,11 @@ public class RentDetailModel {
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer","roomNumber","floorNumber","building","remark"})//
 	private RoomModel room;
+	@ManyToOne
+	@JoinColumn(name = "floor_id")
+	@NotFound(action=NotFoundAction.IGNORE)
+	@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer","building","floorNumber","remark"})
+	private FloorModel floor;
 	@Column(name = "rent_date")
 	private Date rentDate;
 	//收入
@@ -71,6 +76,12 @@ public class RentDetailModel {
 	@Column(name = "remark")
 	private String remark;
 
+	public FloorModel getFloor() {
+		return floor;
+	}
+	public void setFloor(FloorModel floor) {
+		this.floor = floor;
+	}
 	//@Temporal(TemporalType.TIMESTAMP)
 	//@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") 
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
