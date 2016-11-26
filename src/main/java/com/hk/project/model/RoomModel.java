@@ -79,4 +79,10 @@ public class RoomModel implements Serializable{
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	public String getFloorName(){
+		if(floor == null){
+			return null;
+		}
+		return floor.getFloorName();
+	}
 }

@@ -33,6 +33,8 @@ import com.hk.project.service.RoomService;
 public class FloorController {
 	@Autowired
 	private FloorService floorService;
+	@Autowired
+	private RoomService roomService;
 
 	@RequestMapping(value="/getData")
 	@ResponseBody
@@ -53,6 +55,23 @@ public class FloorController {
 		List<FloorModel> rooms = floorService.criteria(FloorModel.class, Restrictions.eq("building.id", id), null, null);
 		JsonConfig config = new JsonConfig();
 		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building"}));
+		JSONArray fromArray = JSONArray.fromObject(rooms, config);
+		result.setData(fromArray);
+		result.setStatusSuccess();
+		return result;
+	}
+	@RequestMapping(value="/getByFloor")
+	@ResponseBody
+	public ResultsData getByFloor(String buildingId,String floorId){
+		ResultsData result = new ResultsData();
+		List<RoomModel> rooms = new ArrayList<RoomModel>();
+		if(StringUtil.isEmpty(floorId)){
+			rooms = roomService.criteria(RoomModel.class, Restrictions.eq("building.id", buildingId), null, null);
+		}else{
+			rooms = roomService.criteria(RoomModel.class, Restrictions.eq("floor.id", floorId), null, null);
+		}
+		JsonConfig config = new JsonConfig();
+		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","floor"}));
 		JSONArray fromArray = JSONArray.fromObject(rooms, config);
 		result.setData(fromArray);
 		result.setStatusSuccess();

@@ -59,4 +59,14 @@ public class BuildingService extends BaseService<BuildingModel>{
 		result.setStatusSuccess();
 		return result;
 	}
+	public ResultsData getCount(){
+		ResultsData result = new ResultsData();
+		String bHql = "select new map(count(*) as count) from BuildingModel where parent != null ";
+		String rHql = "select new map(count(*) as count) from RoomModel";
+		List<?> buildingCount = this.dao.queryByHQL(bHql);
+		List<?> roomCount = this.dao.queryByHQL(rHql);
+		result.put("building", buildingCount);
+		result.put("room", roomCount);
+		return result.setStatusSuccess();
+	}
 }

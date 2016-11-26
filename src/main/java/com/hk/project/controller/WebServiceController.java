@@ -66,7 +66,12 @@ public class WebServiceController {
 			return result;
 		}
 	}
-	
+
+	@RequestMapping(value="/getCount")
+	@ResponseBody
+	public ResultsData getCount(){
+		return buildingService.getCount();
+	}
 	
 //	@RequestMapping(value="/getDetailByBuildingId")
 //	@ResponseBody

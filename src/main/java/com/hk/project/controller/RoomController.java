@@ -81,4 +81,20 @@ public class RoomController {
 	public ResultsData remove(String id){
 		return roomService.removeById(id);
 	}
+	@RequestMapping(value="/getById")
+	@ResponseBody
+	public ResultsData getById(String id){
+		ResultsData result = new ResultsData();
+		RoomModel room = roomService.get(id);
+		if(room == null){
+			result.setStatusFail("该房间不存在!");
+		}else{
+			JsonConfig config = new JsonConfig();
+			config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","floor"}));
+			JSONArray fromArray = JSONArray.fromObject(room, config);
+			result.setData(fromArray);
+			result.setStatusSuccess();
+		}
+		return result;
+	}
 }

@@ -86,11 +86,7 @@ $(function(){
                 align: "center",//水平
                 valign: "middle",//垂直
                	formatter: function (value, row, index) {
-               		var b = false;
-               		if(row.longcode == ""){
-               			b = true;
-               		}
-               		return "<button class='btn btn-danger btn-xs' onclick='removeFloorById(\""+row.id+"\",\""+b+"\")'>删除</button>";
+               		return "<button class='btn btn-danger btn-xs' onclick='removeFloorById(\""+row.id+"\")'>删除</button>";
                	}
        	    }]
 		});
@@ -105,12 +101,9 @@ $(function(){
 		})
 	}
 });
-function removeFloorById(id,b){
-	if(b){
-		alert("请先删除下属楼房!");
-	}
+function removeFloorById(id){
 	$.ajax({
-		url:"${basePath}/building/remove",
+		url:"${basePath}/floor/remove",
 		type:"post",
 		data:{id:id},
 		success:function(result){
