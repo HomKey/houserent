@@ -338,15 +338,15 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 				+ "sum(d.gate - d.gatePay) as gateTotal,"
 				+ "r.id as id,"
 				+ "r.roomNumber as roomNumber,"
-				+ "r.floorNumber as floorNumber,"
+				+ "f.floorName as floorName,"
 				+ "r.building.name as buildingName ) "
-				+ "FROM RentDetailModel d RIGHT JOIN d.room r";
+				+ "FROM RentDetailModel d RIGHT JOIN d.room r left join r.floor f ";
 		if(StringUtil.isEmpty(buildingId)){
 			hql += " GROUP BY d.room.id";
 			results = (List<Map<String, Object>>) this.dao.queryByHQL(hql);
 		}else{
-			hql += " where r.building.id = ? GROUP BY d.room.id";
-			results = (List<Map<String, Object>>) this.dao.queryByHQL(hql,buildingId);
+			hql += " where r.building.id = ? or r.building.parent.id = ? GROUP BY d.room.id";
+			results = (List<Map<String, Object>>) this.dao.queryByHQL(hql,buildingId,buildingId);
 		}
 		System.out.println(results.size());
 		for(Map<String,Object> model : results){
