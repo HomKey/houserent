@@ -51,13 +51,14 @@
   .table_tr{clear: both;}
   .table_tr div{float: left;text-align: center;line-height: 34px;border-bottom: : 0px;border-right: : 0px;}
   .tableDiv{border:1px solid #dddddd;border-right: 0;border-bottom: 0;}
-  .table_td1{width: 15%;height:35px;text-align: center;line-height: 35px;}
+  .table_td1{cursor:pointer;width: 15%;height:35px;text-align: center;line-height: 35px;}
   .table_tr .table_td2 div,.table_tr .table_td1{border:1px solid #dddddd;border-left: 0px;border-top: 0px; }
   .table_tr .table_td2{border: 0px;width: 85%;}
   .tableDiv2{width:98%;clear: both;overflow: hidden;margin:30px auto;border:1px solid #dddddd;border-right: 0;border-bottom: 0;}
   .tableDiv2 div{height:35px;line-height:35px;text-align:center;float: left;border:1px solid #dddddd;border-left: 0;border-top: 0;}
   .tableDiv2 .div1{width: 10%}
   .tableDiv2 .div2{width: 23.3%}
+  .closeDiv{font-size:18px;margin-right:10px;cursor:pointer}
 </style>
 <body class="hold-transition sidebar-mini">
 
@@ -125,7 +126,7 @@
                     </div>
                   </div>
                   <div class="table_tr">
-                    <div class="table_td1">月份租金</div>
+                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -50px"></span>月份租金</div>
                     <div class="table_td2 rent" data-type="rent">
                       <!-- <div>1</div>
                       <div>1</div>
@@ -133,7 +134,7 @@
                     </div>
                   </div>
                   <div class="table_tr">
-                    <div class="table_td1">月份电费收入</div>
+                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -36px"></span>月份电费收入</div>
                     <div class="table_td2 electricity" data-type="electricity">
                      <!--  <div>1</div>
                       <div>1</div>
@@ -141,7 +142,7 @@
                     </div>
                   </div>
                   <div class="table_tr">
-                    <div class="table_td1">月份应缴电费</div>
+                    <div class="table_td1"><span class="fa fa-minus" style="position: relative;left: -36px"></span>月份应缴电费</div>
                     <div class="table_td2 electricityPay" data-type="electricityPay">
                      <!--  <div>1</div>
                       <div>1</div>
@@ -149,7 +150,7 @@
                     </div>
                   </div>
                   <div class="table_tr">
-                    <div class="table_td1">月份水费收入</div>
+                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -36px"></span>月份水费收入</div>
                     <div class="table_td2 water" data-type="water">
                       <!-- <div>1</div>
                       <div>1</div>
@@ -157,7 +158,7 @@
                     </div>
                   </div>
                   <div class="table_tr">
-                    <div class="table_td1">月份应缴水费</div>
+                    <div class="table_td1"><span class="fa fa-minus" style="position: relative;left: -36px"></span>月份应缴水费</div>
                     <div class="table_td2 waterPay" data-type="waterPay">
                       <!-- <div>1</div>
                       <div>1</div>
@@ -165,7 +166,7 @@
                     </div>
                   </div>
                   <div class="table_tr">
-                    <div class="table_td1">月份押金</div>
+                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -50px"></span>月份押金</div>
                     <div class="table_td2 deposit" data-type="deposit">
                       <!-- <div>1</div>
                       <div>1</div>
@@ -173,7 +174,7 @@
                     </div>
                   </div>
                   <div class="table_tr">
-                    <div class="table_td1">月份退押金</div>
+                    <div class="table_td1"><span class="fa fa-minus" style="position: relative;left: -43px"></span>月份退押金</div>
                     <div class="table_td2 depositPay" data-type="depositPay">
                       <!-- <div>1</div>
                       <div>1</div>
@@ -181,7 +182,7 @@
                     </div>
                   </div>
                   <div class="table_tr">
-                    <div class="table_td1">月份门押</div>
+                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -50px"></span>月份门押</div>
                     <div class="table_td2 gate" data-type="gate">
                       <!-- <div>1</div>
                       <div>1</div>
@@ -189,7 +190,7 @@
                     </div>
                   </div>
                   <div class="table_tr">
-                    <div class="table_td1">月份退门押</div>
+                    <div class="table_td1"><span class="fa fa-minus" style="position: relative;left: -43px"></span>月份退门押</div>
                     <div class="table_td2 gatePay" data-type="gatePay">
                       <!-- <div>1</div>
                       <div>1</div>
@@ -197,7 +198,7 @@
                     </div>
                   </div>
                   <div class="table_tr">
-                    <div class="table_td1">其他收入</div>
+                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -50px"></span>其他收入</div>
                     <div class="table_td2 incidental" data-type="incidental">
                     <!--   <div>1</div>
                       <div>1</div>
@@ -205,7 +206,7 @@
                     </div>
                   </div>
                   <div class="table_tr">
-                    <div class="table_td1">其他支出</div>
+                    <div class="table_td1"><span class="fa fa-minus" style="position: relative;left: -50px"></span>其他支出</div>
                     <div class="table_td2 incidentalPay" data-type="incidentalPay">
                      <!--  <div>1</div>
                       <div>1</div>
@@ -213,7 +214,7 @@
                     </div>
                   </div>
                   <div class="table_tr">
-                    <div class="table_td1">总收入</div>
+                    <div class="table_td1"><span class="fa fa-plus" style="position: relative;left: -57px"></span>总收入</div>
                     <div class="table_td2 totalIn" data-type="totalIn">
                       <!-- <div>1</div>
                       <div>1</div>
@@ -277,6 +278,7 @@
 	var basePath = '${basePath}';
 	var time= new Date();
 	var dataNum = 0;
+	var divNum = 0;
 	var nowTime = time.getFullYear()+"-"+(time.getMonth()+1);
 	//var startDate = time.getFullYear()+"-"+(time.getMonth()-2);
 	var id=getQueryStringByName("id");
@@ -320,7 +322,7 @@
 					for(var i in dataDetail){
 						if(dataDetail[i] != null){
 							for(var j in dataDetail[i]){
-								$("."+j).append("<div>"+(dataDetail[i][j]?dataDetail[i][j]:"0")+"</div>");
+								$("."+j).append("<div class='data-"+divNum+"'>"+(dataDetail[i][j]?dataDetail[i][j]:"0")+"</div>");
 							}
 						}/* else{
 							$(".water").append("<div>0</div>");
@@ -336,15 +338,24 @@
 							$(".gate").append("<div>0</div>");
 							$(".totalIn").append("<div>0</div>");
 						} */
-						$(".tableDiv .time").append("<div>"+month+"</div>")
+						$(".tableDiv .time").append("<div class='data-"+divNum+"'><i class='closeDiv fa fa-close' dataline='"+divNum+"'></i>"+month+"</div>")
 					}
-					$(".tableDiv .table_td2 div").css("width",100/(parseFloat(dataNum)+1)+"%");
-					dataNum +=1;
+					divNum+=1;
+					changeDivCss("add");
 				}else{
 					alert("检索失败，请重新检索");
 				}
 			}
 		)
+	}
+	function changeDivCss(type){
+		if(type=="add"){
+			$(".tableDiv .table_td2 div").css("width",100/(parseFloat(dataNum)+1)+"%");
+			dataNum +=1;
+		}else{
+			$(".tableDiv .table_td2 div").css("width",100/(parseFloat(dataNum)-1)+"%");
+			dataNum = dataNum-1;
+		}
 	}
 	function getQueryStringByName(name) {
 	    var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
@@ -361,9 +372,13 @@
 	})
 	$(".table_td1").click(function(){
 		var type = $(this).next().attr("data-type");
-		window.location.href=basePath+"/templates/index6?id="+id+"&type="+type;
+		window.location.href=basePath+"/templates/index6?id="+id+"&type="+type+"&buildingName="+buildingName;
 	});
-
+	$(document).on("click",".closeDiv",function(){
+		var line = $(this).attr("dataline");
+		$(".table_td2 .data-"+line).remove();
+		changeDivCss("close");
+	})
 </script>
 
 

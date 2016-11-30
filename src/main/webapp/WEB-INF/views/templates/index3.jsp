@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
   <title>AdminLTE 2 | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -52,7 +51,7 @@ body{padding: 0px;margin: 0px; border: 0px}
 .table_tr{clear: both;}
 .table_tr div{float: left;text-align: center;line-height: 34px;border-bottom: : 0px;border-right: : 0px;}
 .tableDiv{border:1px solid #dddddd;border-right: 0;border-bottom: 0;}
-.table_td1{width: 15%;height:35px;text-align: center;line-height: 35px;}
+.table_td1{cursor:pointer;width: 15%;height:35px;text-align: center;line-height: 35px;}
 .table_tr .table_td2 div,.table_tr .table_td1{border:1px solid #dddddd;border-left: 0px;border-top: 0px; }
 .table_tr .table_td2{border: 0px;width: 85%;}
 .tableDiv2{width:98%;clear: both;overflow: hidden;margin:30px auto;border:1px solid #dddddd;border-right: 0;border-bottom: 0;}

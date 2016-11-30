@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
   <title>AdminLTE 2 | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -59,6 +58,7 @@ body{padding: 0px;margin: 0px; border: 0px}
 .tableDiv2 div{height:35px;line-height:35px;text-align:center;float: left;border:1px solid #dddddd;border-left: 0;border-top: 0;}
 .tableDiv2 .div1{width: 10%}
 .tableDiv2 .div2{width: 23.3%}
+.closeDiv{font-size:18px;margin-right:10px;cursor:pointer}
 </style>
 <body class="hold-transition sidebar-mini">
 
@@ -72,8 +72,8 @@ body{padding: 0px;margin: 0px; border: 0px}
     <small>Control panel</small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Dashboard</li>
+    <li><a class="home" onclick="reload()"><i class="fa fa-dashboard"></i>楼层详情</a></li>
+    <li class="active ">Dashboard</li>
   </ol>
 </section> 
 
@@ -141,6 +141,14 @@ body{padding: 0px;margin: 0px; border: 0px}
             </div>
             <!-- /.box-body -->
           </div>
+          <!-- <div class="tableDiv2">
+            <div class="div1 ">利润：</div>
+            <div class="div2 lirun"></div>
+            <div class="div1 ">同比：</div>
+            <div class="div2 tongbi" ></div>
+            <div class="div1 ">环比：</div>
+            <div class="div2 huanbi"></div>
+          </div> -->
           <div class="box box-solid bg-light-blue-gradient">
 			<div class="box-header">
 			    <h3 class="box-title"></h3>
@@ -152,19 +160,12 @@ body{padding: 0px;margin: 0px; border: 0px}
 			  <!-- /. tools -->
 			</div>
 			<div  class="box-body no-padding">
-				<div id="echart" style="height:300px;width:100%;background:#ffffff !important">
+				<div id="echart" style="height:400px;width:100%;background:#ffffff !important">
 				</div>
 			</div>
 		  </div>
           <!-- /.box -->
-          <!-- <div class="tableDiv2">
-              <div class="div1 ">利润：</div>
-              <div class="div2 lirun"></div>
-              <div class="div1 ">同比：</div>
-              <div class="div2 tongbi" ></div>
-              <div class="div1 ">环比：</div>
-              <div class="div2 huanbi"></div>
-            </div> -->
+          
 
 
 
@@ -208,10 +209,12 @@ body{padding: 0px;margin: 0px; border: 0px}
 
 <script type="text/javascript">
 //setTableHeight();
+var divNum=0;
 var basePath = '${basePath}';
 var time= new Date();
 var nowTime = time.getFullYear();
 var id= getQueryStringByName("id");
+var name= getQueryStringByName("buildingName");
 var type=getQueryStringByName("type");
 var showTitle={"rent":"月份租金"
 		,"electricity":"月份电费收入"
@@ -238,6 +241,9 @@ var value = [];
 	value["incidental"]=[],
 	value["incidentalPay"]=[],
 	value["totalIn"]=[];
+function reload(){
+	window.location.href=basePath+"/templates/index4?id="+id+"&buildingName="+name;
+}
 $(function(){
 	$(".box-title").text(showTitle[type]);
 	getData(nowTime,nowTime);
@@ -273,27 +279,36 @@ function getData(start,end){
 			//$(".tableDiv .table_td2").html("");
 			var dataDetail = data.data;
 			if(data.status == "success"){
-				var content = '<div class="table_tr"><div class="table_td1">'+start+'</div><div class="table_td2">';
+				var content = '<div class="table_tr data-'+divNum+'"><div class="table_td1">'+"<i class='closeDiv fa fa-close' dataline='"+divNum+"'></i>"+start+'</div><div class="table_td2">';
 				var j = 0;
 				for(var i=1;i<=12;i++){
 					if(data.data[j])
 						var time = new Date(data.data[j].rentDate).getMonth()+1;
 					if(time == i){
-						content+='<div style="width:8.33%">'+data.data[j][type]+'</div>';
+						content+='<div datatype="'+start+"-"+i+'" style="width:8.33%">'+data.data[j][type]+'</div>';
 						j+=1;
 					}
 					else{
-						content+='<div style="width:8.33%">0</div>';
+						content+='<div datatype="'+start+"-"+i+'" style="width:8.33%">0</div>';
 					}
 				}
 				content+='</div></div>';
 				$(".tableDiv").append(content);
+				divNum+=1;
 			}else{
 				alert("检索失败，请重新检索");
 			}
 		}
 	)
 }
+$(document).on("click",".closeDiv",function(){
+	var line = $(this).attr("dataline");
+	$(".tableDiv .data-"+line).remove();
+})
+/* $(document).on("click",".table_td2 div",function(){
+	var date = $(this).attr("datatype");
+	getCompair(date,date);
+}) */
 function getCompair(start,end){
 	$.getJSON(basePath+"/rent/getTotalRate"
 	,{"start":start+"-1","end":end+"-31"}

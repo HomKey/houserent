@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
   <title>出租屋数据管理系统</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -38,6 +37,7 @@
 	.iframe-bar{clear:both;overflow:hidden;background:#ffffff;padding-top:20px;padding-left:15px;border-bottom:1px solid #dddddd}
 	.iframe-bar a{border-radius:3px 3px 0 0;cursor:pointer;display:block;float:left;background:#ffffff;color:#333333;width:103px;height:43px;line-height:45px;text-align:center;font-size:16px;border:1px solid #dddddd}
 	.iframe-bar .active{background:#3c8dbc;color:#ffffff}
+	a{cursor:pointer;}
 </style>
 <body class="hold-transition sidebar-mini skin-blue ">
 <div class="wrapper">
