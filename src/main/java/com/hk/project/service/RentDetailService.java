@@ -345,8 +345,8 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 			hql += " GROUP BY d.room.id";
 			results = (List<Map<String, Object>>) this.dao.queryByHQL(hql);
 		}else{
-			hql += " where r.building.id = ? GROUP BY d.room.id";
-			results = (List<Map<String, Object>>) this.dao.queryByHQL(hql,buildingId);
+			hql += " where r.building.id = ? or r.building.parent.id = ? GROUP BY d.room.id";
+			results = (List<Map<String, Object>>) this.dao.queryByHQL(hql,buildingId,buildingId);
 		}
 		System.out.println(results.size());
 		for(Map<String,Object> model : results){
