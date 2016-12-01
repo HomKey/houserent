@@ -6,8 +6,38 @@
 <%@include file="/WEB-INF/common/head.jsp" %>
 <%@include file="/WEB-INF/common/bootstrap.jsp" %>
 <title>excel导入页面</title>
+<style type="text/css">  
+.loading{  
+    width:160px;  
+    height:56px;  
+    position: absolute;  
+    top:50%;  
+    left:50%;  
+    line-height:56px;  
+    color:#fff;  
+    margin-left: -80px;
+    padding-left: 60px;
+    font-size:15px;  
+    background: #000 url(${basePath}/resources/images/loading.gif) no-repeat 10px 50%;  
+    z-index:9999;  
+}
+#xsd-modal-mask {
+	display: none;
+    z-index: 300;
+	top: 0;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    background: #000;
+    opacity: 0.5;
+}
+</style>
 </head>
 <body>
+<div id="xsd-modal-mask">
+	<div id="loading" class="loading" >提交中</div>
+</div>
 <div class="my-content" >
 	<form id="uploadForm" style="height:45px;">
 		<input type="button" id="tijiao" class="btn btn-success" value="提交"/>
@@ -31,6 +61,8 @@ $(function(){
 	var resultData = {};
 	//导入
 	$("#tijiao").click(function(){
+		$("#loading").html("提交中...");
+		$("#xsd-modal-mask").show();
 		var forData = new FormData($( "#uploadForm" )[0]); 
 		$.ajax({ 
 			url: "${basePath}/excel/getExcelData.do",
@@ -41,10 +73,12 @@ $(function(){
 	        processData: false,  
 	        contentType: false,
 	        error:function(XMLHttpRequest, textStatus, errorThrown){
+	    		$("#xsd-modal-mask").hide();
 	        	alert("文件有误,请重新选择需要导入的文件");
 	        	location.reload();
 	        },
 			success: function(result){
+	    		$("#xsd-modal-mask").hide();
 				if(result.status == "success"){
 					$("#exportBtn").show();
 					resultData.filePath = result.filePath;
@@ -302,7 +336,10 @@ $(function(){
 		}
 	}
 	$("#exportBtn").on("click",function(){
+		$("#loading").html("导入中...");
+		$("#xsd-modal-mask").show();
 		$.post("${basePath}/excel/export",{filePath:resultData.filePath,buildingId:"1"},function(result){
+			$("#xsd-modal-mask").hide();
 			if(result.status == "success"){
 				alert("导入成功");
 			}else{
