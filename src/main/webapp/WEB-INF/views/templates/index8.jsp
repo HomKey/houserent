@@ -5,397 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@include file="/WEB-INF/common/js.jsp" %>
+<link type="text/css" rel="stylesheet" href="${basePath}/resources/css/templates/index8.css">
 <title>GF2活动页面</title>
 </head>
-<style>
-body, html {
-    font-family: 'PingFang SC','Microsoft YaHei','Helvetica Neue',Helvetica,STHeitiSC-Light,Arial,sans-serif;
-    font-size: 12px;
-    width: 100%;
-    height: 100%;
-    color: #666;
-}
-body{background-color:#f5f5f5}
-	.xsd-font-size16{font-size:16px;}
-	.xsd-color-primary{color: #499df2;}
-	.xsd-color-gray {color: #999}
-	.xsd-padding-l12 {
-		padding-left: 12px;
-	}
-	.xsd-clearfix:after {
-		display: block;
-		clear: both;
-		visibility: hidden;
-		height: 0;
-		overflow: hidden;
-		content: ".";
-	}
-	body, button, caption, dd, div, dl, dt, fieldset, figure, form, h1, h2, h3, h4, h5, h6, hr, html, input, legend, li, menu, ol, p, pre, table, td, textarea, th, ul {
-		margin: 0;
-		padding: 0;
-	}
-	address, cite, dfn, em, i, var {font-style: normal;}
-	
-	#addTop input {
-		width: 120px;
-		height: 30px;
-	}
-	.xsd-input {
-		height: 34px;
-		line-height: 34px;
-		border: 1px solid #e3e3e3;
-		border-radius: 5px;
-		background: #FFF;
-	}
-	#addTop {
-		margin-left: 310px;
-		height: 54px;
-		line-height: 54px;
-		padding-right: 20px;
-		margin-bottom: -20px;
-	}
-	
-	.xsd-select ul, .xsd-select-t ul {
-		display: none;
-		position: absolute;
-		border-radius: 5px;
-		border: 1px solid #e3e3e3;
-		top: 36px;
-		left: 0;
-		width: 100%;
-		padding: 4px 0;
-		background: #FFF;
-		z-index: 99999;
-		max-height: 280px;
-		overflow-x: hidden;
-	}
-	.xsd-select ul li, .xsd-select-t ul li {
-		padding: 4px 0 4px 12px;
-		cursor: pointer;
-		text-align: left;
-	}
-	.xsd-select ul li:hover, .xsd-select-t ul li:hover {
-		background: #f5f5f5;
-	}
-	.xsd-select, .xsd-select-t {
-		position: relative;
-	}
-	#addTop ul {
-		margin-top: -9px;
-	}
-	#addTop ul li {
-		line-height: 22px;
-	}
-	.xsd-select ul li, .xsd-select-t ul li {
-		padding: 4px 0 4px 12px;
-		cursor: pointer;
-		text-align: left;
-	}
-	#addTop .apartment {
-		width: 80px;
-		height: 30px;
-		margin-top: 12px;
-		line-height: 30px;
-		border-radius: 4px;
-	}
-	.xsd-text-center {
-		text-align: center;
-	}
-	.xsd-pull-right {
-		float: right;
-	}
-	.xsd-pull-left {
-		float: left;
-	}
-	.xsd-margin-r16 {
-		margin-right: 16px;
-	}
-	.xsd-btn-primary {
-		background: #499df2;
-		color: #FFF;
-	}
-	a, button {
-		cursor: pointer;
-	}
-#separate {
-    width: 100%;
-    padding-right: 0;
-    min-width: 799px;
-}
-#separate>div {
-    margin-left: 311px;
-    padding: 0 16px 16px;
-    margin-top: 20px;
-    margin-right: 20px;
-    background: #FFF;
-    min-height: 714px;
-}
-#separate #tools {
-    padding: 14px 0;
-    line-height: 25px;
-    border-bottom: 1px solid #f5f5f5;
-}
-#separate #tools .xsd-margin-r64 {
-    margin-right: 64px;
-}
-.xsd-font-size12 {
-    font-size: 12px!important;
-}
-#separate #tools div .iconfont {
-    color: #999;
-}
-#separate #tools a {
-    margin-left: 16px;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 4px;
-}
-.iconfont {
-    font-family: iconfont!important;
-    font-size: 16px;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -webkit-text-stroke-width: .2px;
-    -moz-osx-font-smoothing: grayscale;
-}
-.xsd-margin-r24 {
-    margin-right: 24px;
-}
-#separate #tools span {
-    margin: 0 6px;
-}
-#separate span.xsd-font-size20 {
-    font-size: 20px;
-}
-.xsd-color-yellow {
-    color: #ffae53;
-}
-#separate #tools a.btn {
-    padding: 0 12px;
-    background: #499df2;
-    color: #FFF;
-}
-#separate #tools a {
-    margin-left: 16px;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 4px;
-}
-#separate #oneFloor {
-    position: relative;
-}
-.xsd-margin-t22 {
-    margin-top: 22px;
-}
-#separate #oneFloor .floorNum {
-    position: absolute;
-}
-#separate #oneFloor .floor {
-    width: 20px;
-    height: 43px;
-    text-align: center;
-    border-top-left-radius: 2px;
-    border-bottom-left-radius: 2px;
-}
-#separate #oneFloor .oneFloor {
-    width: 40px;
-}
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-#separate #oneFloor .oneFloor td {
-    height: 20px;
-    font-size: 12px;
-    cursor: pointer;
-}
-#separate td, #separate th {
-    border: 1px solid #e3e3e3;
-    text-align: center;
-}
-#separate td {
-    height: 76px;
-    vertical-align: middle;
-    background: #FFF;
-}
-a, a:hover {
-    color: #333;
-}
-a, a:hover, del, ins, s, u {
-    text-decoration: none;
-}
-#separate #oneFloor .floorNum+div {
-    padding-left: 81px;
-    border-bottom: 1px #e7e7e7 solid;
-}
-.xsd-clearfix {
-    zoom: 1;
-}
-#separate #oneFloor .floorNum+div .xsd-margin-r16 {
-    padding-bottom: 20px;
-}
-#separate #oneFloor .allDetails {
-    position: relative;
-    display: block;
-    width: 172px;
-    height: 120px;
-    border: 1px solid #e7e7e7;
-    border-radius: 4px;
-}
-#separate #oneFloor .allDetails .not-rent {
-    background: url(./webapp/resources/images/norent.png) no-repeat;
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    right: -1px;
-}
-#separate #oneFloor .Details {
-    font-size: 12px;
-    height: 63px;
-    border-bottom: 1px solid #e7e7e7;
-    padding: 10px 14px;
-}
-#separate #oneFloor .Details p {
-    margin-bottom: 6px;
-}
-#separate #oneFloor .allDetails .empty {
-    text-align: center;
-    line-height: 48px;
-}
-#separate #oneFloor .roomDetails {
-    font-size: 12px;
-}
-#separate #oneFloor .roomDetails .meterReading {
-    display: block;
-    width: 154px;
-    line-height: 32px;
-    color: #999;
-    margin-left: 9px;
-}
-#separate #tools a.btn:active, #separate #tools a.btn:hover {
-    color: #FFF;
-    background: #59acff;
-}
-.xsd-btn-primary:active, .xsd-btn-primary:hover {
-    color: #FFF;
-    background: #59acff;
-}
-#addFloor, #addRoom {
-    height: 440px;
-    margin-top: -220px;
-}
-
-.xsd-modal {
-    display: none;
-    position: fixed;
-    padding-top: 0!important;
-    top: 50%;
-    left: 50%;
-    margin-left: -380px;
-    margin-top: -300px;
-    width: 760px;
-    height: 600px;
-    background: #FFF;
-    z-index: 400;
-    overflow-x: hidden;
-}
-.xsd-md-modal {
-    width: 500px;
-    margin-left: -250px;
-}
-.xsd-drawer-header, .xsd-modal-header {
-    padding: 20px!important;
-    position: relative;
-}
-.xsd-margin-b24 {
-    margin-bottom: 24px;
-}
-.xsd-drawer-header .xsd-modal-close, .xsd-modal-header .xsd-modal-close {
-    position: absolute;
-    right: 12px;
-    font-size: 12px;
-    color: #999;
-}
-.xsd-margin-l36 {
-    margin-left: 36px;
-}
-#addFloor .roomDetails p, #addRoom .roomDetails p {
-    margin-bottom: 16px;
-	font-size:14px;
-}
-#addFloor .marginDis, #addRoom .marginDis {
-    margin-top: 48px;
-    margin-right: 32px;
-}
-.xsd-modal-bottom .xsd-btn-primary {
-    margin-left: 20px;
-}
-.xsd-modal-bottom .xsd-btn {
-    padding: 7px 31px;
-    line-height: 20px;
-}
-.xsd-modal-bottom .xsd-btn {
-    padding: 7px 31px;
-    line-height: 20px;
-}
-.xsd-btn {
-    display: block;
-    line-height: 48px;
-    border-radius: 4px;
-    text-align: center;
-}
-.xsd-btn-gray {
-    border: 1px solid #e7e7e7;
-    color: #666;
-}
-#addFloor div p, #addRoom div p {
-    margin-bottom: 10px;
-}
-.font-size14 {
-    font-size: 14px;
-    font-weight: 300;
-}
-#xsd-modal-mask {
-    z-index: 300;
-}
-#xsd-mask, #xsd-modal-mask, #xsd-user-mask {
-    display: none;
-	top: 0;
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    z-index: 100;
-    background: #000;
-    opacity: .15;
-    filter: alpha(opacity=15);
-    -moz-opacity: .15;
-}
-#addFloor div select, #addRoom div select {
-    width: 434px;
-    padding-left: 16px;
-}
-.font-size14 {
-    font-size: 14px;
-    font-weight: 300;
-}
-.xsd-input {
-    height: 34px;
-    line-height: 34px;
-    border: 1px solid #e3e3e3;
-    border-radius: 5px;
-    background: #FFF;
-}
-#addFloor div input, #addRoom div input {
-    width: 416px;
-    padding-left: 16px;
-}
-.xsd-color-red {
-    color: #ff5153;
-}
-b {
-    font-weight: 400;
-}
-</style>
 <body>
 	<div class="xsd-clearfix">
 		<div id="addTop">
@@ -422,11 +34,11 @@ b {
 			<div>
 				<div id="tools" class="xsd-clearfix">
 					<div class="xsd-pull-left xsd-margin-r64">
-						<a class="xsd-font-size18 iconfont" data-toggle="xsd-drawer" data-target="#houseDetail">顺心园A</a><!--所选的building-->
+						<a class="xsd-font-size18 iconfont" data-toggle="xsd-drawer" data-target="#houseDetail" id="buildingName"></a><!--所选的building-->
 					</div>
 					<div class="xsd-pull-left xsd-margin-r24">
 						<span class="xsd-color-gray xsd-font-size12">房间数</span>
-						<p><span class="xsd-color-primary xsd-font-size20">75</span><!--总共房间数-->
+						<p><span id="roomTotal" class="xsd-color-primary xsd-font-size20">0</span><!--总共房间数-->
 						</p>
 					</div>
 					<!--<div class="xsd-pull-left">
@@ -438,45 +50,80 @@ b {
 						<a class="xsd-pull-right btn">添加楼层</a><!--弹出对话框-->
 						<a class="xsd-pull-right btn">添加房间</a><!--弹出对话框-->
 				</div>
-				
-				<div class="xsd-margin-t22" id="oneFloor"><!--房间详情-->
-					<!--楼层-->
-					<div class="floorNum">
-						<span class="xsd-pull-left xsd-btn-primary floor">1楼</span><!--详情当前楼楼层-->
-						<table class="oneFloor">
-							<tr>
-								<td>
-									  <a data-toggle="xsd-modal" data-target="#delFloor">删除</a><!--删除-->
-								</td>
-							</tr>
-						</table>
-					</div>
-					<!--循环每间房-->
-					<div class="xsd-clearfix">
-						<div class="xsd-pull-left xsd-margin-r16">
-							<a class="allDetails" data-toggle="xsd-drawer" data-target="#roomDetail">
-								<div class="Details xsd-font-size12">
-									<p class="xsd-font-size12 xsd-margin-b6">房间:&nbsp;0101室</p>
-									<!--<p class="xsd-color-gray empty">未出租</p>-->
-								</div>
-								<div class="roomDetails">
-									<div class="xsd-pull-left meterReading xsd-text-center" data-toggle="xsd-modal" data-target="#rentalRoom">查看</div>
-								</div>
-							</a>
+				<div id="roomListDiv">
+					<div class="xsd-margin-t22 floor-div"><!--房间详情-->
+						<!--楼层-->
+						<div class="floorNum">
+							<span class="xsd-pull-left xsd-btn-primary floor">1楼</span><!--详情当前楼楼层-->
+							<table class="floor-operation">
+								<tr>
+									<td>
+										  <a data-toggle="xsd-modal" data-target="#delFloor">删除</a><!--删除-->
+									</td>
+								</tr>
+							</table>
 						</div>
-						<div class="xsd-pull-left addRoom">
-							<div class="add">
-								<a class="btn">
-									<span class="iconfont xsd-color-gray"></span>
-									<p>添加房间</p><!--添加房间-->
+						<!--循环每间房-->
+						<div class="xsd-clearfix">
+							<div class="xsd-pull-left xsd-margin-r16">
+								<a class="allDetails" data-toggle="xsd-drawer" data-target="#roomDetail">
+									<div class="Details xsd-font-size12">
+										<p class="xsd-font-size12 xsd-margin-b6">房间:&nbsp;0101室</p>
+										<!--<p class="xsd-color-gray empty">未出租</p>-->
+									</div>
+									<div class="roomDetails">
+										<div class="xsd-pull-left meterReading xsd-text-center" data-toggle="xsd-modal" data-target="#rentalRoom">查看</div>
+									</div>
 								</a>
 							</div>
+							<div class="xsd-pull-left addRoom">
+								<div class="add">
+									<a class="btn">
+										<span class="iconfont xsd-color-gray"></span>
+										<p>添加房间</p><!--添加房间-->
+									</a>
+								</div>
+							</div>
 						</div>
-
-
+					</div>
+					<div class="xsd-margin-t22 floor-div"><!--房间详情-->
+						<!--楼层-->
+						<div class="floorNum">
+							<span class="xsd-pull-left xsd-btn-primary floor">1楼</span><!--详情当前楼楼层-->
+							<table class="floor-operation">
+								<tr>
+									<td>
+										  <a data-toggle="xsd-modal" data-target="#delFloor">删除</a><!--删除-->
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!--循环每间房-->
+						<div class="xsd-clearfix">
+							<div class="xsd-pull-left xsd-margin-r16">
+								<a class="allDetails" data-toggle="xsd-drawer" data-target="#roomDetail">
+									<div class="Details xsd-font-size12">
+										<p class="xsd-font-size12 xsd-margin-b6">房间:&nbsp;0101室</p>
+										<!--<p class="xsd-color-gray empty">未出租</p>-->
+									</div>
+									<div class="roomDetails">
+										<div class="xsd-pull-left meterReading xsd-text-center" data-toggle="xsd-modal" data-target="#rentalRoom">查看</div>
+									</div>
+								</a>
+							</div>
+							<div class="xsd-pull-left addRoom">
+								<div class="add">
+									<a class="btn">
+										<span class="iconfont xsd-color-gray"></span>
+										<p>添加房间</p><!--添加房间-->
+									</a>
+								</div>
+							</div>
+	
+	
+						</div>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</div>
@@ -547,9 +194,11 @@ $(function(){
 		var $buildingSelect = $("#apartmentSelect").empty();
 		var bHtml = '';
 		var buildingId = '';
+		var buildingName = '';
 		$.each(result,function(i,item){
 			if(i == 0){
 				buildingId = item.value;
+				buildingName = item.text;
 			}
 			bHtml += '<option value="'+item.value+'">'+item.text+'</option>';
 		});
@@ -557,21 +206,74 @@ $(function(){
 		if(buildingId != null || buildingId != ""){
 			getFloor(buildingId);
 			getRoomDetail(buildingId,null);
+			setCurrentBuilding(buildingName,"全部")
 		}
 	});
 	
 	$("#apartmentSelect").change(function(){
 		getFloor($(this).val());
 		getRoomDetail($(this).val(),null);
+		setCurrentBuilding($("#apartmentSelect").find("option:selected").text(),"全部")
 	});
 	$("#floorSelect").change(function(){
 		getRoomDetail($("#apartmentSelect").val(),$(this).val());
+		setCurrentBuilding($("#apartmentSelect").find("option:selected").text(),$("#floorSelect").find("option:selected").text());
 	});
+	function setCurrentBuilding(buildingName,floorName){
+		$("#buildingName").html(buildingName+ " | " +floorName);
+	}
 	function getRoomDetail(buildingId,floorId){
 		console.log(buildingId,floorId);
-		$.post("${basePath}/floor/getByFloor",{buildingId:buildingId,floorId:floorId},function(result){
+		$.post("${basePath}/floor/getByFloor2",{buildingId:buildingId,floorId:floorId},function(result){
 			//所有房间信息(需要自己分楼层)
 			console.log(result);
+			if(result.status == "success"){
+				//统计房间数量
+				$("#roomTotal").html(result.data.length);
+				//数据造型
+				var json = [];
+				for(var i = 0 ;i <result.data.length;i++){
+					var floorData = {
+						name:'',
+						buildingId:'',
+						data:[]
+					};
+					floorData.name = result.data[i].floorName;
+					floorData.buildingId = result.data[i].id.split(",")[0];
+					floorData.data.push(result.data[i]);
+					for(var j = (i+1) ; j < result.data.length;j++,i++){
+						if(result.data[i].floorName == result.data[j].floorName){
+							floorData.data.push(result.data[j]);
+						}else{
+							break;
+						}
+					}
+					json.push(floorData);
+				}
+				var $roomList = $("#roomListDiv").empty();
+				$.each(json,function(i,floor){
+					var html = '<div class="xsd-margin-t22 floor-div"><div class="floorNum"><span class="xsd-pull-left xsd-btn-primary floor">'
+					+floor.name+'</span></div><div class="xsd-clearfix">';
+					$.each(floor.data,function(j,room){
+						var rent = {};
+						if(room.depositTotal <= 0 && room.gateTotal <=0){
+							rent.colorClazz = "xsd-color-green";
+							rent.text = "未出租";
+						}else{
+							rent.colorClazz = "xsd-color-red";
+							rent.text = "出租中";
+						}
+						html += '<div class="xsd-pull-left xsd-margin-r16 room-module"><a id="'+room.id+'" class="allDetails" data-toggle="xsd-drawer" data-target="#roomDetail">'
+						+'<div class="Details xsd-font-size12"><p class="xsd-font-size12 xsd-margin-b6">房间:&nbsp;'+room.roomNumber+'</p>'
+						+'<p class="'+rent.colorClazz+' empty">'+rent.text+'</p></div>'
+						+'<div class="roomDetails"><div class="xsd-pull-left meterReading xsd-text-center" data-toggle="xsd-modal" data-target="#rentalRoom">查看</div></div></a></div>';
+					});
+					html += '<div class="xsd-pull-left addRoom"><div class="add"><a class="btn" onclick="addRoom(\''+floor.buildingId+'\',\''+floor.name+'\')"><span class="iconfont xsd-color-gray"></span>'
+					+'<p>添加房间</p></a></div></div></div></div>';
+					$(html).appendTo($roomList).data("data",floor);
+				});
+				
+			}
 		});
 	}
 	function getFloor(buildingId){
@@ -586,6 +288,10 @@ $(function(){
 			}
 		});
 	}
+	//每间房的点击事件
+	$("#roomListDiv").on("click",".room-module>a",function(){
+		console.log($(this).prop("id"));//房间的id
+	});
 	//添加公寓要先添加小区
 	function addApartment(){
 		//参考
@@ -605,18 +311,6 @@ $(function(){
 		/*
 		data:buildingId floorName remark
 		$.post("${basePath}/floor/save",data,function(result){
-			if(result.status == "success"){
-				//保存成功
-			}
-		});
-		*/
-	}
-	function addRoom(){
-		//参考
-		location.href = "${basePath}/system/roomAdd";
-		/*
-		data:buildingId floorId roomNumber remark
-		$.post("${basePath}/room/save",data,function(result){
 			if(result.status == "success"){
 				//保存成功
 			}
@@ -646,5 +340,18 @@ $(function(){
 		});
 	}
 });
+function addRoom(buildingId,floorName){
+	//参考
+	location.href = "${basePath}/system/roomAdd";
+	/*
+	data:buildingId floorId roomNumber remark
+	$.post("${basePath}/room/save",data,function(result){
+		if(result.status == "success"){
+			//保存成功
+		}
+	});
+	*/
+	console.log(buildingId,floorName);
+}
 </script>
 </html>

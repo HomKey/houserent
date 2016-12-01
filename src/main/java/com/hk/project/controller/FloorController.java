@@ -1,6 +1,7 @@
 package com.hk.project.controller;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
@@ -74,6 +75,14 @@ public class FloorController {
 		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","floor"}));
 		JSONArray fromArray = JSONArray.fromObject(rooms, config);
 		result.setData(fromArray);
+		result.setStatusSuccess();
+		return result;
+	}
+	@RequestMapping(value="/getByFloor2")
+	@ResponseBody
+	public ResultsData getByFloor2(String buildingId,String floorId){
+		ResultsData result = new ResultsData();
+		result.setData(floorService.getByFloor(buildingId, floorId));
 		result.setStatusSuccess();
 		return result;
 	}
