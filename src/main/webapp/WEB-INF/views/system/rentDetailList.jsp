@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="my-content" >
-	<div class="text-center table-title">租金信息表</div>
+	<div class="text-center table-title">租金信息表(所有)</div>
 	<div id="tableDiv" class="col-md-12">
 		<table id="myTable">
 		</table>

@@ -1,21 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/common/taglib.jsp"%>
 <!DOCTYPE>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@include file="/WEB-INF/common/js.jsp" %>
+<%@include file="/WEB-INF/common/bootstrap.jsp" %>
 <link type="text/css" rel="stylesheet" href="${basePath}/resources/css/templates/index8.css">
 <title>GF2活动页面</title>
 </head>
 <body>
 	<div class="xsd-clearfix">
 		<div id="addTop">
-			<span class="xsd-font-size16">共<i id="buildingCount" class="xsd-color-primary">  </i>幢公寓<!--共几多栋公寓，可有可无-->
+			<span class="xsd-font-size16">共<i id="buildingCount" class="xsd-color-primary"> 0 </i>幢公寓<!--共几多栋公寓，可有可无-->
 			</span>
 			<i class="xsd-color-gray">|</i>
 			<span class="xsd-font-size16 marginR21">
-				<i id="roomCount" class="xsd-color-primary">   </i><!--共几多个房间，可有可无-->
+				<i id="roomCount" class="xsd-color-primary"> 0  </i><!--共几多个房间，可有可无-->
 				间房间
 			</span>
 			<label class="xsd-input-group xsd-select">
@@ -28,7 +30,9 @@
 				<select id="floorSelect" class="floor xsd-input xsd-padding-l12" data-value="" type="text" readonly="" value="全部" placeholder="选择楼层">
 				</select>
 			</label>
-			<a class="xsd-pull-right btn xsd-btn-primary apartment xsd-text-center xsd-margin-r16" data-toggle="xsd-modal" data-target="#addHouse">添加公寓</a><!--弹出对话框-->
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<button id="addApartment" type="button" class="btn btn-blue apartment xsd-pull-right xsd-margin-r16">添加公寓</button>
+			</sec:authorize>
 		</div>
 		<div id="separate" class="xsd-pull-left">
 			<div>
@@ -38,38 +42,41 @@
 					</div>
 					<div class="xsd-pull-left xsd-margin-r24">
 						<span class="xsd-color-gray xsd-font-size12">房间数</span>
-						<p><span id="roomTotal" class="xsd-color-primary xsd-font-size20">0</span><!--总共房间数-->
-						</p>
+						<span id="roomTotal" class="xsd-color-primary xsd-font-size20">0</span><!--总共房间数-->
 					</div>
-					<!--<div class="xsd-pull-left">
+					<div class="xsd-pull-left">
 						<span class="xsd-color-gray xsd-font-size12">在租数</span>
-						<p><span class="xsd-color-yellow xsd-font-size20">0</span>
-						</p>
-					</div>-->
-						<!--<a class="xsd-pull-right btn" data-toggle="xsd-modal" data-target="#rentalHouse">添加托管合同</a>-->
-						<a class="xsd-pull-right btn">添加楼层</a><!--弹出对话框-->
-						<a class="xsd-pull-right btn">添加房间</a><!--弹出对话框-->
+						<span id="inRent" class="xsd-color-yellow xsd-font-size20">0</span>
+					</div>
+					<div class="xsd-pull-left">
+						<span class="xsd-color-gray xsd-font-size12">空房数</span>
+						<span id="outRent" class="xsd-color-green xsd-font-size20">0</span>
+					</div>
+					<!--<a class="xsd-pull-right btn" data-toggle="xsd-modal" data-target="#rentalHouse">添加托管合同</a>-->
+					
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<button id="addFloor" type="button" class="btn btn-blue xsd-pull-right">添加楼层</button>
+						<button id="addRoom" type="button" class="btn btn-blue xsd-pull-right">添加房间</button>
+					</sec:authorize>
 				</div>
 				<div id="roomListDiv">
-					<div class="xsd-margin-t22 floor-div"><!--房间详情-->
-						<!--楼层-->
+				<!-- 
+					<div class="xsd-margin-t22 floor-div">
 						<div class="floorNum">
-							<span class="xsd-pull-left xsd-btn-primary floor">1楼</span><!--详情当前楼楼层-->
+							<span class="xsd-pull-left xsd-btn-primary floor">1楼</span>
 							<table class="floor-operation">
 								<tr>
 									<td>
-										  <a data-toggle="xsd-modal" data-target="#delFloor">删除</a><!--删除-->
+										  <a data-toggle="xsd-modal" data-target="#delFloor">删除</a>
 									</td>
 								</tr>
 							</table>
 						</div>
-						<!--循环每间房-->
 						<div class="xsd-clearfix">
 							<div class="xsd-pull-left xsd-margin-r16">
 								<a class="allDetails" data-toggle="xsd-drawer" data-target="#roomDetail">
 									<div class="Details xsd-font-size12">
 										<p class="xsd-font-size12 xsd-margin-b6">房间:&nbsp;0101室</p>
-										<!--<p class="xsd-color-gray empty">未出租</p>-->
 									</div>
 									<div class="roomDetails">
 										<div class="xsd-pull-left meterReading xsd-text-center" data-toggle="xsd-modal" data-target="#rentalRoom">查看</div>
@@ -80,48 +87,13 @@
 								<div class="add">
 									<a class="btn">
 										<span class="iconfont xsd-color-gray"></span>
-										<p>添加房间</p><!--添加房间-->
+										<p>添加房间</p>
 									</a>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="xsd-margin-t22 floor-div"><!--房间详情-->
-						<!--楼层-->
-						<div class="floorNum">
-							<span class="xsd-pull-left xsd-btn-primary floor">1楼</span><!--详情当前楼楼层-->
-							<table class="floor-operation">
-								<tr>
-									<td>
-										  <a data-toggle="xsd-modal" data-target="#delFloor">删除</a><!--删除-->
-									</td>
-								</tr>
-							</table>
-						</div>
-						<!--循环每间房-->
-						<div class="xsd-clearfix">
-							<div class="xsd-pull-left xsd-margin-r16">
-								<a class="allDetails" data-toggle="xsd-drawer" data-target="#roomDetail">
-									<div class="Details xsd-font-size12">
-										<p class="xsd-font-size12 xsd-margin-b6">房间:&nbsp;0101室</p>
-										<!--<p class="xsd-color-gray empty">未出租</p>-->
-									</div>
-									<div class="roomDetails">
-										<div class="xsd-pull-left meterReading xsd-text-center" data-toggle="xsd-modal" data-target="#rentalRoom">查看</div>
-									</div>
-								</a>
-							</div>
-							<div class="xsd-pull-left addRoom">
-								<div class="add">
-									<a class="btn">
-										<span class="iconfont xsd-color-gray"></span>
-										<p>添加房间</p><!--添加房间-->
-									</a>
-								</div>
-							</div>
-	
-	
-						</div>
+					-->
 					</div>
 				</div>
 			</div>
@@ -131,7 +103,7 @@
 	
 	<!--添加房间对话框
 	<div id="ember1010" class="ember-view">
-		<div class="xsd-modal xsd-md-modal" id="addRoom" style="display: block;">
+		<div class="xsd-modal xsd-md-modal" id="addRoomDiv" style="display: block;">
 			<div class="xsd-modal-header xsd-margin-b24">
 				<span class="xsd-font-size16">添加房间</span><a class="xsd-modal-close iconfont xsd-margin-r12">X</a>
 			</div>
@@ -186,8 +158,8 @@ $(function(){
 			buildingCount = result.building[0].count;
 			roomCount = result.room[0].count;
 		}
-		$("#buildingCount").html(buildingCount);
-		$("#roomCount").html(roomCount);
+		$("#buildingCount").html("&nbsp;"+buildingCount+"&nbsp;");
+		$("#roomCount").html("&nbsp;"+roomCount+"&nbsp;");
 	});
 	//初始化楼房选择
 	$.post("${basePath}/building/getChildren",function(result){
@@ -251,9 +223,10 @@ $(function(){
 					json.push(floorData);
 				}
 				var $roomList = $("#roomListDiv").empty();
+				var inRent = 0;
 				$.each(json,function(i,floor){
-					var html = '<div class="xsd-margin-t22 floor-div"><div class="floorNum"><span class="xsd-pull-left xsd-btn-primary floor">'
-					+floor.name+'</span></div><div class="xsd-clearfix">';
+					var html = "";
+					var thisRent = 0;
 					$.each(floor.data,function(j,room){
 						var rent = {};
 						if(room.depositTotal <= 0 && room.gateTotal <=0){
@@ -262,17 +235,23 @@ $(function(){
 						}else{
 							rent.colorClazz = "xsd-color-red";
 							rent.text = "出租中";
+							inRent++;
+							thisRent++;
 						}
 						html += '<div class="xsd-pull-left xsd-margin-r16 room-module"><a id="'+room.id+'" class="allDetails" data-toggle="xsd-drawer" data-target="#roomDetail">'
 						+'<div class="Details xsd-font-size12"><p class="xsd-font-size12 xsd-margin-b6">房间:&nbsp;'+room.roomNumber+'</p>'
 						+'<p class="'+rent.colorClazz+' empty">'+rent.text+'</p></div>'
 						+'<div class="roomDetails"><div class="xsd-pull-left meterReading xsd-text-center" data-toggle="xsd-modal" data-target="#rentalRoom">查看</div></div></a></div>';
 					});
-					html += '<div class="xsd-pull-left addRoom"><div class="add"><a class="btn" onclick="addRoom(\''+floor.buildingId+'\',\''+floor.name+'\')"><span class="iconfont xsd-color-gray"></span>'
-					+'<p>添加房间</p></a></div></div></div></div>';
+					html = '<div class="xsd-margin-t22 floor-div"><div class="floorNum"><span class="xsd-pull-left floor floor-top">'
+					+ floor.name + '</span><span class="xsd-pull-left floor floor-bottom">'
+					+ thisRent + '/' + floor.data.length + '</span></div><div class="xsd-clearfix">'
+					+ html + '</div></div>';
 					$(html).appendTo($roomList).data("data",floor);
 				});
-				
+				//显示在租数
+				$("#inRent").html(inRent);
+				$("#outRent").html(result.data.length - inRent);
 			}
 		});
 	}
@@ -290,12 +269,28 @@ $(function(){
 	}
 	//每间房的点击事件
 	$("#roomListDiv").on("click",".room-module>a",function(){
-		console.log($(this).prop("id"));//房间的id
+		var id = $(this).prop("id");
+		var building = $("#apartmentSelect").find("option:selected").text();
+		$.post("${basePath}/isAdmin",function(result){
+			if(result){
+				window.open("${basePath}/system/rentDetailRoomList?id="+id+"&building="+building);
+			}else{
+				window.open("${basePath}/templates/rentDetailRoomList?id="+id+"&building="+building);
+			}
+		});
+	});
+	
+	$("#addApartment").click(addApartment);
+	$("#addRoom").click(function(){
+		window.open("${basePath}/system/roomAdd");
+	});
+	$("#addFloor").click(function(){
+		window.open("${basePath}/system/floorAdd");
 	});
 	//添加公寓要先添加小区
 	function addApartment(){
 		//参考
-		location.href = "${basePath}/system/buildingAdd";
+		window.open("${basePath}/system/buildingAdd");
 		/*
 		data:name parentId remark
 		$.post("${basePath}/building/save",data,function(result){

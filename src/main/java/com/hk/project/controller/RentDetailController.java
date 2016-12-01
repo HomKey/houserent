@@ -7,14 +7,21 @@ package com.hk.project.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +45,7 @@ import com.hk.project.service.RentDetailService;
 public class RentDetailController {
 	@Autowired
 	private RentDetailService rentDetailService;
-
+	
 	//不分页
 	@RequestMapping(value="/getData")
 	@ResponseBody
@@ -61,7 +68,21 @@ public class RentDetailController {
 		ResultsData result = new ResultsData();
 		List<RentDetailModel> rentDetail = rentDetailService.criteria(RentDetailModel.class, Restrictions.eq("building.id", buildingId), null, null);
 		JsonConfig config = new JsonConfig();
-		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","room"}));
+		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","floor","room"}));
+		JSONArray fromArray = JSONArray.fromObject(rentDetail, config);
+		result.setStatusSuccess();
+		result.setData(fromArray);
+		return result;
+	}
+	//不分页
+	@RequestMapping(value="/getDataByRoom")
+	@ResponseBody
+	public ResultsData getDataByRoom(int limit,int offset,String order,String roomId){
+		System.out.println("limit:"+limit+",offset:"+offset+",order:"+order);
+		ResultsData result = new ResultsData();
+		List<RentDetailModel> rentDetail = rentDetailService.criteria(RentDetailModel.class, Restrictions.eq("room.id", roomId), null, null);
+		JsonConfig config = new JsonConfig();
+		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","floor","room"}));
 		JSONArray fromArray = JSONArray.fromObject(rentDetail, config);
 		result.setStatusSuccess();
 		result.setData(fromArray);

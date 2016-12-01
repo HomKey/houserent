@@ -44,6 +44,23 @@ public class SysController extends BaseController{
 		return "templates/index2";
 	}
 	/**
+	 * 首页
+	 */
+	@RequestMapping("/isAdmin")
+	@ResponseBody
+	public boolean isAdmin() {
+		logger.info("index");
+		System.out.println("index");
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Collection<? extends GrantedAuthority> anth = userDetails.getAuthorities();
+		for(GrantedAuthority model : anth){
+			if(model.toString().equals("ROLE_ADMIN")){
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
 	 * 默认请求处理方法，调用请求路径对应的jsp
 	 */
 	@RequestMapping
