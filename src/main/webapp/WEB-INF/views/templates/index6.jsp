@@ -67,13 +67,13 @@ body{padding: 0px;margin: 0px; border: 0px}
 
 
 <section class="content-header">
-  <h1>
-    Dashboard
-    <small>Control panel</small>
+  <h1 class="box-title">
+    详情
+    <!-- <small>Control panel</small> -->
   </h1>
   <ol class="breadcrumb">
-    <li><a class="home" onclick="reload()"><i class="fa fa-dashboard"></i>楼层详情</a></li>
-    <li class="active ">Dashboard</li>
+    <li><a style="cursor:pointer" class="home" onclick="reload()"><i class="fa fa-dashboard"></i>楼层统计详情</a></li>
+    <li class="active ">分类统计</li>
   </ol>
 </section> 
 

@@ -29,6 +29,7 @@
   <![endif]-->
 </head>
 <style>
+	.ml10{margin-left:10px}
 	.dn{display:none}
 	.treemenu{padding:0px}
 	.treemenu li{padding:12px 20px;color:#b8c7ce;}
@@ -111,7 +112,7 @@
         <li class="active allData"><a><i class="fa fa-home"></i> <span>总览</span></a></li>
         <ul class="tree">
 		</ul>
-        <li><a><i class="fa fa-book"></i> <span>押金池</span></a></li>
+        <li><a href="${basePath}/templates/index8" target="_blank"><i class="fa fa-book"></i> <span>押金池</span></a></li>
         <li><a href="${basePath}/system/index" target="_blank"><i class="fa fa-laptop"></i> <span>数据管理</span></a></li>
       </ul>
     </section>
@@ -278,7 +279,7 @@ Date.prototype.Format = function(fmt)
     	$("#iframeId"+iframeNum).attr("src","${basePath}/templates/index4?id="+buildingID+"&buildingName="+buildingName);
     	loadIframe("iframeId"+iframeNum);
     	content="";
-    	content+='<a class="active" iframenum="'+iframeNum+'">'+$(this).text()+'</a>';
+    	content+='<a class="active iframe-bar-click" iframenum="'+iframeNum+'">'+$(this).text()+"<i class='closeDiv ml10 fa fa-close'></i>"+'</a>';
     	$(".iframe-bar").append(content);
     })
     $(document).on("click",".iframe-bar a",function(e){
@@ -288,8 +289,32 @@ Date.prototype.Format = function(fmt)
     	$(".content-iframe iframe").addClass("dn");
     	$("#iframeId"+num).removeClass("dn");
     })
-    $(".allData").click(function(){
+    /* $(".allData").click(function(){
     	$("#iframeId1").attr("src","${basePath}/templates/index3");
+    }) */
+    $(document).on("click",".fa-close",function(e){
+    	var obj = $(this).parent();
+    	var iframenum = obj.attr("iframenum");
+    	var previframenum = obj.prev().attr("iframenum");
+    	if(obj.hasClass("active")){
+	    	obj.prev().addClass("active");
+	    	$("#iframeId"+previframenum).removeClass("dn");
+    	}
+    	$("#iframeId"+iframenum).remove();
+    	obj.remove();
+    	e.stopPropagation()
+    })
+    $(document).on("dblclick",".iframe-bar-click",function(e){
+    	var obj = $(this);
+    	var iframenum = obj.attr("iframenum");
+    	var previframenum = obj.prev().attr("iframenum");
+    	if(obj.hasClass("active")){
+	    	obj.prev().addClass("active");
+	    	$("#iframeId"+previframenum).removeClass("dn");
+    	}
+    	$("#iframeId"+iframenum).remove();
+    	obj.remove();
+    	e.stopPropagation()
     })
 </script>
 </body>

@@ -67,12 +67,12 @@ body{padding: 0px;margin: 0px; border: 0px}
 
 <section class="content-header">
   <h1>
-    Dashboard
-    <small>Control panel</small>
+    总览
+    <!-- <small>Control panel</small> -->
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Dashboard</li>
+    <li><a><i class="fa fa-dashboard"></i>总览详情</a></li>
+    <!-- <li class="active">Dashboard</li> -->
   </ol>
 </section> 
 
