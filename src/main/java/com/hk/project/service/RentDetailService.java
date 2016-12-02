@@ -309,11 +309,12 @@ public class RentDetailService extends BaseService<RentDetailModel>{
 		List<Map<String,Object>> monthData = new ArrayList<Map<String,Object>>();
 		List<Map<String,Object>> yearData =  new ArrayList<Map<String,Object>>();
 		String hql = "SELECT new map("
+				+ "date_format(r.rentDate,'%Y-%m') as rentDate,"
 				+ "sum(r.rent + r.electricity + r.water + r.incidental + r.deposit + r.gate) as totalIn,"
 				+ "r.rent as rent,r.electricity as electricity,r.water as water,r.incidental as incidental,r.deposit as deposit,r.gate as gate,"
 				+ "sum(r.electricityPay + r.waterPay + r.incidentalPay + r.depositPay + r.gatePay) as totalOut,"
 				+ "r.electricityPay as electricityPay,r.waterPay as waterPay,r.incidentalPay as incidentalPay,r.depositPay as depositPay,r.gatePay as gatePay )"
-				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE (r.rentDate BETWEEN ? AND ?) ";
+				+ " FROM RentDetailModel r LEFT JOIN r.building b WHERE (r.rentDate BETWEEN ? AND ?) group by date_format(r.rentDate,'%Y-%m')";
 		if(StringUtil.isEmpty(buildingId)){
 			nowData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,start,end);
 			monthData = (List<Map<String, Object>>) this.dao.queryByHQL(hql,startMonth,endMonth);
