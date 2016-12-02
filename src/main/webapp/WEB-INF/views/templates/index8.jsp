@@ -8,7 +8,7 @@
 <%@include file="/WEB-INF/common/js.jsp" %>
 <%@include file="/WEB-INF/common/bootstrap.jsp" %>
 <link type="text/css" rel="stylesheet" href="${basePath}/resources/css/templates/index8.css">
-<title>GF2活动页面</title>
+<title>出租屋数据管理系统</title>
 </head>
 <body>
 	<div class="xsd-clearfix">
