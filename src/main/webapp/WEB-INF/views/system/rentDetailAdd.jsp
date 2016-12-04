@@ -6,13 +6,13 @@
 <%@include file="/WEB-INF/common/head.jsp" %>
 <%@include file="/WEB-INF/common/bootstrap.jsp" %>
 <link rel="stylesheet" href="${basePath}/resources/js/dist/css/AdminLTE.min.css">
-<title>新增租金详细</title>
+<title>添加租金详细</title>
 </head>
 <body>
 
 
 <section class="content-header">
-  <h1>新增租金详细</h1>
+  <h1>添加租金详细</h1>
   <!-- 
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>

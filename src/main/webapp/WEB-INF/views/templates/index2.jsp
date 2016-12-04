@@ -47,7 +47,7 @@
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
@@ -57,7 +57,7 @@
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <a href="#" class="sidebar-toggle" data-toggle="" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
       <!-- Navbar Right Menu -->
@@ -66,13 +66,13 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="${basePath}/resources/images/user2-160x160-2.jpg" class="user-image" alt="User Image">
               <span class="hidden-xs">Admin</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="${basePath}/resources/images/user2-160x160-2.jpg" class="img-circle" alt="User Image">
 
                 <p class=nowTime>
                 </p>
@@ -100,7 +100,7 @@
       <!-- 侧栏 用户信息 -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" style="height:45px;">
+          <img src="${basePath}/resources/images/user2-160x160-2.jpg" class="img-circle" alt="User Image" style="height:45px;">
         </div>
         <div class="pull-left info">
           <p>Admin</p>
@@ -113,11 +113,8 @@
         <li class="active allData"><a><i class="fa fa-home"></i> <span>总览</span></a></li>
         <ul class="tree">
 		</ul>
-        <li><a href="${basePath}/templates/index8" target="_blank"><i class="fa fa-book"></i> <span>押金池</span></a></li>
-        
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-        	<li><a href="${basePath}/system/index" target="_blank"><i class="fa fa-laptop"></i> <span>数据管理</span></a></li>
-        </sec:authorize>
+        <li><a href="${basePath}/templates/deposit" target="_blank"><i class="fa fa-book"></i> <span>押金池</span></a></li>
+        <li><a href="${basePath}/templates/index8" target="_blank"><i class="fa fa-laptop"></i> <span>数据管理</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
