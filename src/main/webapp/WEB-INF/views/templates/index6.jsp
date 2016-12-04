@@ -340,8 +340,8 @@ function getCharts(start,end){
 			,{"start":start+"-1-1","end":end+"-12-31","buildingId":id}
 			,function(data){
 				//$(".tableDiv .table_td2").html("");
-				var dataDetail = data.data;
 				if(data.status == "success"){
+					var dataDetail = data.data;
 					var j = 0;
 					for(var i=1;i<=12;i++){
 						if(data.data[j])

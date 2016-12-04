@@ -113,7 +113,7 @@
         <li class="active allData"><a><i class="fa fa-home"></i> <span>总览</span></a></li>
         <ul class="tree">
 		</ul>
-        <li><a href="${basePath}/templates/deposit" target="_blank"><i class="fa fa-book"></i> <span>押金池</span></a></li>
+        <li><a class="deposit" target="_blank"><i class="fa fa-book"></i> <span>押金池</span></a></li>
         <li><a href="${basePath}/templates/index8" target="_blank"><i class="fa fa-laptop"></i> <span>数据管理</span></a></li>
       </ul>
     </section>
@@ -317,6 +317,19 @@ Date.prototype.Format = function(fmt)
     	$("#iframeId"+iframenum).remove();
     	obj.remove();
     	e.stopPropagation()
+    })
+    $(document).on("click",".deposit",function(e){
+    	$(".iframe-bar a").removeClass("active");
+    	$(".content-iframe iframe").addClass("dn");
+    	var content="";
+    	iframeNum+=1;
+    	content+='<iframe id="iframeId'+iframeNum+'" src="" style="width: 100%;height: 100%;padding: 0px;border: 0px"></iframe>'
+    	$(".content-iframe").append(content);
+    	$("#iframeId"+iframeNum).attr("src","${basePath}/templates/deposit");
+    	loadIframe("iframeId"+iframeNum);
+    	content="";
+    	content+='<a class="active iframe-bar-click" iframenum="'+iframeNum+'">'+"押金池"+"<i class='closeDiv ml10 fa fa-close'></i>"+'</a>';
+    	$(".iframe-bar").append(content);
     })
 </script>
 </body>

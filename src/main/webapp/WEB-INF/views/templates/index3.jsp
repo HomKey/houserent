@@ -235,14 +235,30 @@ body{padding: 0px;margin: 0px; border: 0px}
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
+          
           <div class="tableDiv2">
-              <div class="div1 ">利润：</div>
-              <div class="div2 lirun"></div>
-              <div class="div1 ">同比：</div>
-              <div class="div2 tongbi" ></div>
-              <div class="div1 ">环比：</div>
-              <div class="div2 huanbi"></div>
-            </div>
+			  <div class="div1 ">利润：</div>
+			  <div class="div2 lirun"></div>
+			  <div class="div1 ">同比：</div>
+			  <div class="div2 tongbi" ></div>
+			  <div class="div1 ">环比：</div>
+			  <div class="div2 huanbi"></div>
+		  </div>
+		  <div class="box box-solid bg-light-blue-gradient">
+			<div class="box-header">
+			    <h3 class="box-title">总收入</h3>
+			    <!-- tools box -->
+			  <div class="pull-right box-tools">
+			    <button type="button" class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+			    </button>
+			  </div>
+			  <!-- /. tools -->
+			</div>
+			<div  class="box-body no-padding">
+				<div id="echart" style="height:400px;width:100%;background:#ffffff !important">
+				</div>
+			</div>
+		  </div>
 
 
 
@@ -281,15 +297,19 @@ body{padding: 0px;margin: 0px; border: 0px}
 <script src="${basePath}/resources/js/dist/js/pages/dashboard2.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="${basePath}/resources/js/dist/js/demo.js"></script>
+<!-- echarts -->
+<script src="${basePath}/resources/js/echarts/echarts.js"></script>
 
 <script type="text/javascript">
 setTableHeight();
 var basePath = '${basePath}';
 var time= new Date();
 var nowTime = time.getFullYear()+"-"+(time.getMonth()+1);
+var nowYear = time.getFullYear();
 $(function(){
 	getData(nowTime,nowTime);
 	getCompair(nowTime,nowTime);
+	getCharts(nowYear,nowYear); 
 })
 $(".startDate input").val(nowTime);
 $(".startDate").datetimepicker({
@@ -357,19 +377,127 @@ function getCompair(start,end){
 	,{"start":start+"-1","end":end+"-31"}
 	,function(data){
 		if(data.status == "success"){
-			var now = (data.now[0].totalIn?data.now[0].totalIn:0)-(data.now[0].totalOut?data.now[0].totalOut:0);
-			var month = (data.month[0].totalIn?data.month[0].totalIn:0)-(data.month[0].totalOut?data.month[0].totalOut:0);
-			var year = (data.year[0].totalIn?data.year[0].totalIn:0)-(data.year[0].totalOut?data.year[0].totalOut:0);
+			if(!!data.now && data.now.length !=0){
+				var now = (data.now[0].totalIn?data.now[0].totalIn:0)-(data.now[0].totalOut?data.now[0].totalOut:0);
+			}else{
+				var now =0;
+			}
+			if(!!data.month && data.month.length !=0){
+				var month = (data.month[0].totalIn?data.month[0].totalIn:0)-(data.month[0].totalOut?data.month[0].totalOut:0);
+			}else{
+				var month =0;
+			}
+			if(!!data.year && data.year.length !=0){
+				var year = (data.year[0].totalIn?data.year[0].totalIn:0)-(data.year[0].totalOut?data.year[0].totalOut:0);
+			}else{
+				var year =0;
+			}
 			$(".lirun").text(now);
 			$(".tongbi").text(now-year);
 			$(".huanbi").text(now-month);
 		}
 	})
 }
+var value=[];
+function getCharts(start,end){
+	$.getJSON(basePath+"/rent/getTotalRate"
+			,{"start":start+"-1-1","end":end+"-12-31"}
+			,function(data){
+				//$(".tableDiv .table_td2").html("");
+				if(data.status == "success"){
+					var series=[];
+					var selected={};
+					if(!!data.now && data.now.length >0){
+						var j=0;
+						for(var i=0; i<12;i++){
+							var index = i+1;
+							if(i>9){
+								if(!!data.now[j] && data.now[j].rentDate == (start+"-"+index)){
+									var now =(data.now[j].totalIn?data.now[j].totalIn:0)-(data.now[j].totalOut?data.now[j].totalOut:0);
+									value[i]=now/10000;
+									j+=1;
+								}else{
+									value[i]=0;
+								}
+							}else{
+								if(i<9 && !!data.now[j] && data.now[j].rentDate == (start+"-0"+index)){
+									var now =(data.now[j].totalIn?data.now[j].totalIn:0)-(data.now[j].totalOut?data.now[j].totalOut:0);
+									value[i]=now/10000;
+									j+=1;
+								}else{
+									value[i]=0;
+								}
+							}
+						}
+					}else{
+						for(var i=0; i<12;i++){
+							value[i]=0;
+						}
+					}
+					var mark = {
+			            name:"总收入",
+			            type:'line',
+			            data:value,
+			        };
+					series.push(mark);
+					require.config({
+						paths: {
+						    echarts: basePath+"/resources/js/echarts"
+						  }
+						});
+
+						// 使用
+						require(
+						  [
+						    'echarts',
+						    'echarts/chart/line', // 使用柱状图就加载bar模块，按需加载
+						  ],function(){
+								var myChart=require('echarts').init(document.getElementById("echart"));
+								var option = {
+								    title : {
+								    },
+								    tooltip : {
+								        trigger: 'axis'
+								    },
+								    legend: {
+								        data:["总收入"]
+								    },
+								    calculable : true,
+								    xAxis : [
+								        {
+								            type : 'category',
+								            boundaryGap : false,
+								            data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+								        }
+								    ],
+								    yAxis : [
+								        {
+								            type : 'value',
+								            axisLabel : {
+								                formatter: '{value} 万元'
+								            }
+								        }
+								    ],
+								    series :series
+								};
+								myChart.setOption(option);
+						  });
+				}else{
+					alert("检索失败，请重新检索");
+				}
+			}
+		)
+	
+}
 $(".search").click(function(){
 	var time = $(".startDate input").val();
+	var year = time.substring(0,4);
 	getData(time,time);
 	getCompair(time,time);
+	if(year != nowYear){
+		getCharts(year,year);
+		nowYear = year;
+	}
 })
 </script>
 
