@@ -5,6 +5,7 @@ package com.hk.project.dto;
 public class RentDetailDto {
 	private String id;
 	private String buildingId;
+	private String floorId;
 	private String roomId;
 	private String rentDate;
 	private float rent;
@@ -31,6 +32,12 @@ public class RentDetailDto {
 	}
 	public void setBuildingId(String buildingId) {
 		this.buildingId = buildingId;
+	}
+	public String getFloorId() {
+		return floorId;
+	}
+	public void setFloorId(String floorId) {
+		this.floorId = floorId;
 	}
 	public String getRoomId() {
 		return roomId;

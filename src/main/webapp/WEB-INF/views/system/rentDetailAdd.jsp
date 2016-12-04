@@ -5,98 +5,159 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@include file="/WEB-INF/common/head.jsp" %>
 <%@include file="/WEB-INF/common/bootstrap.jsp" %>
-<title>租金详细新增</title>
-<style type="text/css">
-.form-edit{
-    padding: 20px 50px 20px 50px;
-}
-</style>
+<link rel="stylesheet" href="${basePath}/resources/js/dist/css/AdminLTE.min.css">
+<title>新增租金详细</title>
 </head>
 <body>
-<div class="my-content" >
-	<form class="form-edit" id="rentDetailForm">
-		<table>
-			<tbody>
-				<tr>
-					<td><input id="id" name="id" hidden="true"/></td>
-				</tr>
-				<tr>
-					<td>楼房名称:</td>
-					<td>
-						<select id="buildingId" name="buildingId">
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>房间号:</td>
-					<td>
-						<select id="roomId" name="roomId">
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>日期</td>
-					<td>
-						<input type="date" id="rentDate" name="rentDate"/>
-					</td>
-				</tr>
-				<tr>
-					<td>房租:</td>
-					<td><input type="number" name="rent"/></td>
-				</tr>
-				<tr>
-					<td>水费:</td>
-					<td><input type="number" name="water"/></td>
-				</tr>
-				<tr>
-					<td>电费:</td>
-					<td><input type="number" name="electricity"/></td>
-				</tr>
-				<tr>
-					<td>杂费:</td>
-					<td><input type="number" name="incidental"/></td>
-				</tr>
-				<tr>
-					<td>押金:</td>
-					<td><input type="number" name="deposit"/></td>
-				</tr>
-				<tr>
-					<td>门押:</td>
-					<td><input type="number" name="gate"/></td>
-				</tr>
-				<tr>
-					<td>缴电费:</td>
-					<td><input type="number" name="electricityPay"/></td>
-				</tr>
-				<tr>
-					<td>缴水费:</td>
-					<td><input type="number" name="waterPay"/></td>
-				</tr>
-				<tr>
-					<td>其它支出:</td>
-					<td><input type="number" name="incidentalPay"/></td>
-				</tr>
-				<tr>
-					<td>退押金:</td>
-					<td><input type="number" name="depositPay"/></td>
-				</tr>
-				<tr>
-					<td>退门押:</td>
-					<td><input type="number" name="gatePay"/></td>
-				</tr>
-				<tr>
-					<td>入住时间:</td>
-					<td><input type="text" name="checkIn"/></td>
-				</tr>
-				<tr>
-					<td>备注:</td>
-					<td><input type="text" name="remark"/></td>
-				</tr>
-			</tbody>
-		</table>
+
+
+<section class="content-header">
+  <h1>新增租金详细</h1>
+  <!-- 
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="#">Forms</a></li>
+    <li class="active">General Elements</li>
+  </ol>
+   -->
+</section>
+
+<section class="content">
+	<form id="rentDetailForm" class="form-horizontal">
+	<input id="id" name="id" hidden="true"/>
+	  <div class="box-body">
+	    <div class="form-group">
+	      <label for="buildingId" class="col-sm-1 control-label">楼房名称:</label>
+	      <div class="col-sm-4">
+            <select class="form-control" id="buildingId" name="buildingId">
+            </select>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+		      <label for="floorId" class="col-sm-1 control-label">楼层号:</label>
+		      <div class="col-sm-4">
+		        <select class="form-control" id="floorId" name="floorId">
+            	</select>
+		      </div>
+	   		<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+		      <label for="roomId" class="col-sm-1 control-label">房间号:</label>
+		      <div class="col-sm-4">
+		        <select class="form-control" id="roomId" name="roomId">
+            	</select>
+		      </div>
+	   		<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="rentDate" class="col-sm-1 control-label">日期:</label>
+	      <div class="col-sm-4">
+	        <input type="date" class="form-control" id="rentDate" name="rentDate" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="rent" class="col-sm-1 control-label">租金:</label>
+	      <div class="col-sm-4">
+	        <input type="number" class="form-control" id="rent" name="rent" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="water" class="col-sm-1 control-label">水费:</label>
+	      <div class="col-sm-4">
+	        <input type="number" class="form-control" id="water" name="water" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="electricity" class="col-sm-1 control-label">电费:</label>
+	      <div class="col-sm-4">
+	        <input type="number" class="form-control" id="electricity" name="electricity" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="incidental" class="col-sm-1 control-label">杂费:</label>
+	      <div class="col-sm-4">
+	        <input type="number" class="form-control" id="incidental" name="incidental" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="deposit" class="col-sm-1 control-label">押金:</label>
+	      <div class="col-sm-4">
+	        <input type="number" class="form-control" id="deposit" name="deposit" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="gate" class="col-sm-1 control-label">门押:</label>
+	      <div class="col-sm-4">
+	        <input type="number" class="form-control" id="gate" name="gate" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="electricityPay" class="col-sm-1 control-label">缴电费:</label>
+	      <div class="col-sm-4">
+	        <input type="number" class="form-control" id="electricityPay" name="electricityPay" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="waterPay" class="col-sm-1 control-label">缴水费:</label>
+	      <div class="col-sm-4">
+	        <input type="number" class="form-control" id="waterPay" name="waterPay" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="incidentalPay" class="col-sm-1 control-label">其它支出:</label>
+	      <div class="col-sm-4">
+	        <input type="number" class="form-control" id="incidentalPay" name="incidentalPay" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="depositPay" class="col-sm-1 control-label">退押金:</label>
+	      <div class="col-sm-4">
+	        <input type="number" class="form-control" id="depositPay" name="depositPay" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="gatePay" class="col-sm-1 control-label">退门押:</label>
+	      <div class="col-sm-4">
+	        <input type="number" class="form-control" id="gatePay" name="gatePay" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="checkIn" class="col-sm-1 control-label">入住时间:</label>
+	      <div class="col-sm-4">
+	        <input type="text" class="form-control" id="checkIn" name="checkIn" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	    <div class="form-group">
+	      <label for="remark" class="col-sm-1 control-label">备注:</label>
+	      <div class="col-sm-4">
+	        <input type="text" class="form-control" id="remark" name="remark" placeholder=""/>
+	      </div>
+	    	<div class="col-sm-7"></div>
+	    </div>
+	  </div>
+	  <div class="box-footer">
+	    	<div class="col-sm-1"></div>
+	    	<div class="col-sm-4">
+	    	<button type="button" id="saveRent" class="btn btn-info">保存</button>
+	    	</div>
+	    	<div class="col-sm-7"></div>
+	  </div>
 	</form>
-	<button id="saveRent">保存</button>
-</div>
+</section>
 </body>
 <script type="text/javascript">
 $(function(){
@@ -104,6 +165,7 @@ $(function(){
 		var $buildingSelect = $("#buildingId").empty();
 		var bHtml = '';
 		var buildingId = '';
+		var floorId = '';
 		$.each(result,function(i,item){
 			if(i == 0){
 				buildingId = item.value;
@@ -111,29 +173,81 @@ $(function(){
 			bHtml += '<option value="'+item.value+'">'+item.text+'</option>';
 		});
 		$(bHtml).appendTo($buildingSelect);
-		$.post("${basePath}/room/getByBuilding",{
-			id:buildingId
+		if(buildingId != null && buildingId != ""){
+			$.post("${basePath}/floor/getByBuilding",{id:buildingId},function(floorResult){
+				if(floorResult.status == "success"){
+					var $floorSelect = $("#floorId").empty();
+					var fHtml = '';
+					$.each(floorResult.data,function(i,item){
+						if(i == 0){
+							floorId = item.id;
+						}
+						fHtml += '<option value="'+item.id+'">'+item.floorName+'</option>';
+					});
+					$(fHtml).appendTo($floorSelect);
+					if(floorId != null && floorId != ""){
+						$.post("${basePath}/room/getByFloor",{
+							id:floorId
+						},function(result){
+							if(result.status == "success" ){
+								if(result.data.length > 0){
+									var $roomSelect = $("#roomId").empty();
+									$.each(result.data,function(i,item){
+										var rHtml = '<option value="'+item.id+'">'+item.roomNumber+'</option>';
+										$(rHtml).appendTo($roomSelect).data("data",item);
+									});
+								}
+							}
+						});
+					}
+				}
+			});
+		}
+	});
+	$("#buildingId").change(function(){
+		$.post("${basePath}/floor/getByBuilding",{id:$(this).children('option:selected').val()},function(floorResult){
+			var floorId = '';
+			if(floorResult.status == "success"){
+				var $floorSelect = $("#floorId").empty();
+				var fHtml = '';
+				$.each(floorResult.data,function(i,item){
+					if(i == 0){
+						floorId = item.id;
+					}
+					fHtml += '<option value="'+item.id+'">'+item.floorName+'</option>';
+				});
+				$(fHtml).appendTo($floorSelect);
+				var $roomSelect = $("#roomId").empty();
+				if(floorId != null && floorId != ""){
+					$.post("${basePath}/room/getByFloor",{
+						id:floorId
+					},function(result){
+						if(result.status == "success" ){
+							if(result.data.length > 0){
+								$.each(result.data,function(i,item){
+									var rHtml = '<option value="'+item.id+'">'+item.roomNumber+'</option>';
+									$(rHtml).appendTo($roomSelect).data("data",item);
+								});
+							}
+						}
+					});
+				}
+			}
+		});
+	});
+	$("#floorId").change(function(){
+		$.post("${basePath}/room/getByFloor",{
+			id:$(this).children('option:selected').val()
 		},function(result){
+			var $roomSelect = $("#roomId").empty();
 			if(result.status == "success" ){
 				if(result.data.length > 0){
-					var $roomSelect = $("#roomId").empty();
 					$.each(result.data,function(i,item){
 						var rHtml = '<option value="'+item.id+'">'+item.roomNumber+'</option>';
 						$(rHtml).appendTo($roomSelect).data("data",item);
 					});
 				}
 			}
-		});
-	});
-	$("#buildingId").change(function(){
-		$.post("${basePath}/room/getByBuilding",{
-			id:$(this).children('option:selected').val()
-		},function(result){
-			var $roomSelect = $("#roomId").empty();
-			$.each(result.data,function(i,item){
-				var optHtml = '<option value="'+item.id+'">'+item.roomNumber+'</option>';
-				$(optHtml).appendTo($roomSelect).data("data",item);
-			});
 		});
 	});
 	$("#saveRent").click(function(){

@@ -53,7 +53,19 @@ public class RoomController {
 		ResultsData result = new ResultsData();
 		List<RoomModel> rooms = roomService.criteria(RoomModel.class, Restrictions.eq("building.id", id), null, null);
 		JsonConfig config = new JsonConfig();
-		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building"}));
+		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","floor"}));
+		JSONArray fromArray = JSONArray.fromObject(rooms, config);
+		result.setData(fromArray);
+		result.setStatusSuccess();
+		return result;
+	}
+	@RequestMapping(value="/getByFloor")
+	@ResponseBody
+	public ResultsData getByFloor(String id){
+		ResultsData result = new ResultsData();
+		List<RoomModel> rooms = roomService.criteria(RoomModel.class, Restrictions.eq("floor.id", id), null, null);
+		JsonConfig config = new JsonConfig();
+		config.setJsonPropertyFilter(new IgnoreFieldProcessorImpl(false,new String[]{"building","floor"}));
 		JSONArray fromArray = JSONArray.fromObject(rooms, config);
 		result.setData(fromArray);
 		result.setStatusSuccess();

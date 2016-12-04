@@ -35,6 +35,7 @@ import com.hk.base.support.ResultsData;
 import com.hk.base.support.StringUtil;
 import com.hk.project.dto.RentDetailDto;
 import com.hk.project.model.BuildingModel;
+import com.hk.project.model.FloorModel;
 import com.hk.project.model.RentDetailModel;
 import com.hk.project.model.RoomModel;
 import com.hk.project.service.BuildingService;
@@ -138,6 +139,9 @@ public class RentDetailController {
 		BuildingModel building = new BuildingModel();
 		building.setId(model.getBuildingId());
 		rent.setBuilding(building);
+		FloorModel floor = new FloorModel();
+		floor.setId(model.getFloorId());
+		rent.setFloor(floor);
 		RoomModel room = new RoomModel();
 		room.setId(model.getRoomId());
 		rent.setRoom(room);

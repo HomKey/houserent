@@ -38,12 +38,12 @@
 <div id="xsd-modal-mask">
 	<div id="loading" class="loading" >提交中</div>
 </div>
-<div class="my-content" >
+<div style="padding: 20px;">
 	<form id="uploadForm" style="height:45px;">
-		<input type="button" id="tijiao" class="btn btn-success" value="提交"/>
 		<input type="button" id="exportBtn" class="btn btn-success" value="导入数据" style="display:none;"/>
 		<input type="text" name="buildingId" value="${param.buildingId}" style="display:none;"/>
-		<input type="file" name="file"/>
+		<input type="file" id="file" name="file"/>
+		<input type="button" id="tijiao" class="btn btn-success" value="提交" disabled="true"/>
 	</form>
 	<div id="tableDiv" class="col-md-12">
 		<table id="myTable">
@@ -59,6 +59,10 @@ $(function(){
         return height;
     }
 	var resultData = {};
+	$("#file").change(function(){
+		$("#tijiao").attr("disabled",false); 
+	});
+	
 	//导入
 	$("#tijiao").click(function(){
 		$("#loading").html("提交中...");

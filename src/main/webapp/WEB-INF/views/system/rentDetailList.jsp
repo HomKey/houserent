@@ -322,7 +322,6 @@ function removeRentById(id){
  			}
  		},
 		error:function(e){
-			console.log(e);
 			alert("删除失败(异常)");
  		}
  	});

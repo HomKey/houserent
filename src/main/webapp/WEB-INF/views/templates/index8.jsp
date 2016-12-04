@@ -8,7 +8,7 @@
 <%@include file="/WEB-INF/common/js.jsp" %>
 <%@include file="/WEB-INF/common/bootstrap.jsp" %>
 <link type="text/css" rel="stylesheet" href="${basePath}/resources/css/templates/index8.css">
-<title>GF2活动页面</title>
+<title>出租屋数据管理系统</title>
 </head>
 <body>
 	<div class="xsd-clearfix">
@@ -195,10 +195,8 @@ $(function(){
 		$("#buildingName").html(buildingName+ " | " +floorName);
 	}
 	function getRoomDetail(buildingId,floorId){
-		console.log(buildingId,floorId);
 		$.post("${basePath}/floor/getByFloor2",{buildingId:buildingId,floorId:floorId},function(result){
 			//所有房间信息(需要自己分楼层)
-			console.log(result);
 			if(result.status == "success"){
 				//统计房间数量
 				$("#roomTotal").html(result.data.length);
@@ -346,7 +344,6 @@ function addRoom(buildingId,floorName){
 		}
 	});
 	*/
-	console.log(buildingId,floorName);
 }
 </script>
 </html>

@@ -91,7 +91,6 @@ $(function(){
 	                	},function(){
 	                		
 	                	});
-	                	console.log(value);
 	                    
 	                }
        	     	},
@@ -121,11 +120,7 @@ $(function(){
                 align: "center",//水平
                 valign: "middle",//垂直
                	formatter: function (value, row, index) {
-               		var b = false;
-               		if(row.longcode == ""){
-               			b = true;
-               		}
-               		return "<button class='btn btn-danger btn-xs' onclick='removeBuildById(\""+row.id+"\",\""+b+"\")'>删除</button>";
+               		return "<button class='btn btn-danger btn-xs' onclick='removeBuildById(\""+row.id+"\")'>删除</button>";
                	}
        	    }]
 		});
@@ -140,10 +135,7 @@ $(function(){
 		})
 	}
 });
-function removeBuildById(id,b){
-	if(b){
-		alert("请先删除下属楼房!");
-	}
+function removeBuildById(id){
 	$.ajax({
 		url:"${basePath}/building/remove",
 		type:"post",
@@ -156,7 +148,6 @@ function removeBuildById(id,b){
  			}
  		},
 		error:function(e){
-			console.log(e);
 			alert("删除失败(异常)");
  		}
  	});

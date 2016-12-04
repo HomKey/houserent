@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/common/taglib.jsp"%>
 <html>
 <head>
   <meta charset="utf-8">
@@ -59,6 +60,7 @@
   .tableDiv2 .div1{width: 10%}
   .tableDiv2 .div2{width: 23.3%}
   .closeDiv{font-size:18px;margin-right:10px;cursor:pointer}
+  .import{margin-top:20px;margin-left:20px;display:none;}
 </style>
 <body class="hold-transition sidebar-mini">
 
@@ -76,6 +78,12 @@
 
 <!-- dateTimePicker -->
 <div class="" style="    overflow: hidden;">
+	<div class="fl import">
+		
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+    		<button id="importData" class="btn btn-block btn-success "> 导入数据</button>
+    	</sec:authorize>
+  </div>
 	<div class="fr search">
     	检索
   </div>
@@ -283,6 +291,10 @@
 	//var startDate = time.getFullYear()+"-"+(time.getMonth()-2);
 	var id=getQueryStringByName("id");
 	var buildingName = decodeURI(getQueryStringByName("buildingName"));
+	var buildingLC = decodeURI(getQueryStringByName("buildingLC"));
+	if(buildingLC != "" && buildingLC != null){
+		$(".import").show();
+	}
 	var month = time.getFullYear()+"-"+(time.getMonth()+1);
 	$(function(){
 		$(".box-title").text(buildingName);
@@ -379,6 +391,9 @@
 		$(".table_td2 .data-"+line).remove();
 		changeDivCss("close");
 	})
+	$("#importData").click(function(){
+		location.href = "${basePath}/system/import?buildingId="+id;
+	});
 </script>
 
 

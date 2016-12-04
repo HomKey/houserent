@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/common/taglib.jsp"%>
 <html>
 <head>
   <meta charset="utf-8">
@@ -113,7 +114,10 @@
         <ul class="tree">
 		</ul>
         <li><a href="${basePath}/templates/index8" target="_blank"><i class="fa fa-book"></i> <span>押金池</span></a></li>
-        <li><a href="${basePath}/system/index" target="_blank"><i class="fa fa-laptop"></i> <span>数据管理</span></a></li>
+        
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+        	<li><a href="${basePath}/system/index" target="_blank"><i class="fa fa-laptop"></i> <span>数据管理</span></a></li>
+        </sec:authorize>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -250,7 +254,7 @@ Date.prototype.Format = function(fmt)
 	}
 	function showBuildingList(buildingList){
 		for(var i in buildingList){
-			content += "<li><a data-id='"+buildingList[i].id+"'>"+buildingList[i].name+"</a>"
+			content += "<li><a data-id='"+buildingList[i].id+"' data-lc='"+buildingList[i].longCode+"'>"+buildingList[i].name+"</a>"
 			if(buildingList.children != ""){
 				content +="<ul>";
 				showBuildingList(buildingList[i].children);
@@ -269,6 +273,7 @@ Date.prototype.Format = function(fmt)
     })
     $(document).on("click",".treemenu a",function(e){
     	var buildingID = $(this).attr("data-id");
+    	var buildingLC = $(this).attr("data-lc");
     	var buildingName = encodeURI($(this).text());
     	$(".iframe-bar a").removeClass("active");
     	$(".content-iframe iframe").addClass("dn");
@@ -276,7 +281,7 @@ Date.prototype.Format = function(fmt)
     	iframeNum+=1;
     	content+='<iframe id="iframeId'+iframeNum+'" src="" style="width: 100%;height: 100%;padding: 0px;border: 0px"></iframe>'
     	$(".content-iframe").append(content);
-    	$("#iframeId"+iframeNum).attr("src","${basePath}/templates/index4?id="+buildingID+"&buildingName="+buildingName);
+    	$("#iframeId"+iframeNum).attr("src","${basePath}/templates/index4?id="+buildingID+"&buildingName="+buildingName+"&buildingLC="+buildingLC);
     	loadIframe("iframeId"+iframeNum);
     	content="";
     	content+='<a class="active iframe-bar-click" iframenum="'+iframeNum+'">'+$(this).text()+"<i class='closeDiv ml10 fa fa-close'></i>"+'</a>';
