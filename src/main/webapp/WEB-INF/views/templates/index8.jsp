@@ -38,7 +38,7 @@
 			<div>
 				<div id="tools" class="xsd-clearfix">
 					<div class="xsd-pull-left xsd-margin-r64">
-						<a class="xsd-font-size18 iconfont" data-toggle="xsd-drawer" data-target="#houseDetail" id="buildingName"></a><!--所选的building-->
+						<p class="xsd-font-size18 iconfont" data-toggle="xsd-drawer" data-target="#houseDetail" id="buildingName"></p><!--所选的building-->
 					</div>
 					<div class="xsd-pull-left xsd-margin-r24">
 						<span class="xsd-color-gray xsd-font-size12">房间数</span>
@@ -284,6 +284,12 @@ $(function(){
 	});
 	$("#addFloor").click(function(){
 		window.open("${basePath}/system/floorAdd");
+	});
+	$("#buildingCount").click(function(){
+		window.open("${basePath}/system/buildingList")
+	});
+	$("#roomCount").click(function(){
+		window.open("${basePath}/system/roomList")
 	});
 	//添加公寓要先添加小区
 	function addApartment(){

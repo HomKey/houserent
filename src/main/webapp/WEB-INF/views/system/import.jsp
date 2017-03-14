@@ -342,7 +342,7 @@ $(function(){
 	$("#exportBtn").on("click",function(){
 		$("#loading").html("导入中...");
 		$("#xsd-modal-mask").show();
-		$.post("${basePath}/excel/export",{filePath:resultData.filePath,buildingId:"1"},function(result){
+		$.post("${basePath}/excel/export",{filePath:resultData.filePath,buildingId:"${param.buildingId}"},function(result){
 			$("#xsd-modal-mask").hide();
 			if(result.status == "success"){
 				alert("导入成功");

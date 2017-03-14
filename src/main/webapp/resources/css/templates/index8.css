@@ -413,3 +413,6 @@ b {
     background-color:#59acff;
     color:#FFF;
 }
+#buildingCount,#roomCount{
+	cursor:pointer;
+}
